@@ -1,18 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
 import MainButton from './components/Buttons.js'
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
-import { fill } from './features/matches/matchesSlice'
+import { fill } from './pages/matchesList/matchesSlice'
+import Header from './components/Header.js'
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './app/theme.js'
 
 function App() {
   const matches = useSelector((state) => state.matches.value)
   const dispatch = useDispatch()
 
   return (
-    <div className="App">
-      <MainButton sx={{boxShadow: 2}} onClick={async () => dispatch(fill(await testAxios()))}>HI</MainButton>
-      <span>{matches[0]["match_id"]}</span>
+    <div>
+      <ThemeProvider theme={theme}>
+        <Header/>
+        <div className="App">
+          <MainButton sx={{boxShadow: 2}} onClick={async () => dispatch(fill(await testAxios()))}>HI</MainButton>
+          <span>{matches[0]["match_id"]}</span>
+        </div>
+      </ThemeProvider>
     </div>
   );
 }

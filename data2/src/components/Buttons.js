@@ -8,6 +8,7 @@ const MainButton = styled(Button)({
   background: "#FFA750",
   color: "white",
   transition: "background 0.3s, color 0.3s",
+  borderRadius: 4,
   transitionTimingFunction: 'ease-in-out',
   ":hover": {
     backgroundColor: alpha("#FFFFE4", 0.6),
