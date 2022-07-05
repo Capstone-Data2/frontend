@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles';
 
 const theme = createTheme({
     palette: {
@@ -36,8 +37,56 @@ const theme = createTheme({
             fontFamily: "Roboto Slab", 
             fontSize: 52, 
             fontWeight: "bold", 
+        },
+        subtitle2: {
+          fontFamily: "Roboto Slab", 
+          fontSize: 16, 
+          fontWeight: 500, 
         }
         
+    },
+    components: {
+      MuiButton:
+      {
+        variants: [
+          {
+            props: { variant: 'main'},
+            style: {
+              minWidth: 150,
+              height: "max-content",
+              marginRight: 8,
+              marginLeft: 8,
+              border: "solid",
+              borderColor: "#FFA750",
+              transition: "background 0.4s, color 0.3s, border-color 0.3s",
+              transitionTimingFunction: 'ease-in-out',
+              background: "#FFA750",
+              color: "white",
+              ":hover": {
+                background: alpha("#FFA750", 0.7),
+                color: "#FFFFE4",
+                border: "solid",
+                borderColor: alpha("#FFA750", 0.7),
+                
+              }
+            },
+          },
+          {
+            props: { variant: 'main', color: 'secondary'},
+            style: {
+              background: "#FFFFE4",
+              color: "#FFA750",
+              borderColor: alpha("#FFFFFF", 0.6),
+              ":hover": {
+                backgroundColor: "#FFA750",
+                color: "white",
+                border: "solid",
+                borderColor: "#FFA750",
+              } 
+            },
+          }
+        ]
+      }
     }
   });
 

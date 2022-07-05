@@ -1,122 +1,153 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
-import { ReactComponent as SteamIcon} from '../steam.svg'
+import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import { ReactComponent as SteamIcon } from "../steam.svg";
+import {
+  Typography,
+  Toolbar,
+  Box,
+  AppBar,
+  InputBase,
+  Button,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const Bar = styled(Toolbar)(({theme}) => ({
-    backgroundColor: theme.palette.primary.dark
-}))
+const Bar = styled(Toolbar)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.dark,
+}));
 
-const TitleButton = styled(Button)(({theme}) => ({  
-    fontFamily: "Roboto Slab", 
-    fontSize: 52, 
-    fontWeight: "bold", 
-    padding: 8,
-    marginRight: 100,
-    marginLeft: 12,
-    color: "white",
-    backgroundColor: "transparent",
-    border: 0,
-    '&:hover': {
-        color: alpha(theme.palette.common.white, 0.6),
-    },
-}))
+const TitleButton = styled(Typography)(({ theme }) => ({
+  fontFamily: "Roboto Slab",
+  fontSize: 52,
+  fontWeight: "bold",
+  padding: 8,
+  marginRight: 100,
+  marginLeft: 12,
+  color: "white",
+  transition: theme.transitions.create(["color"]),
+  "&:hover": {
+    color: alpha(theme.palette.common.white, 0.6),
+  },
+}));
 
-const Wrapper = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Wrapper = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  transition: theme.transitions.create(['background-color']),
-  '&:hover': {
+  transition: theme.transitions.create(["background-color"]),
+  "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   color: alpha(theme.palette.common.white, 0.6),
-  width: '100%',
+  width: "100%",
   marginRight: 15,
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     marginLeft: "auto",
-    width: 'auto',
+    width: "auto",
   },
-
 }));
 
-const IconWrapper = styled('div')(({ theme }) => ({
+const IconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
+  color: "inherit",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    width: '100%',
+    width: "100%",
     color: "white",
   },
 }));
 
 const HeadButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.common.white,
-    textTransform: "uppercase",
-    fontSize: 20,
-    marginRight: 20,
-    '&:hover': {
-        color: alpha(theme.palette.common.white, 0.6),
-    },
+  color: theme.palette.common.white,
+  textTransform: "uppercase",
+  fontSize: 20,
+  marginRight: 20,
+  "&:hover": {
+    color: alpha(theme.palette.common.white, 0.6),
+  },
 }));
 
 const LoginButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.common.white,
-    textTransform: "uppercase",
-    fontSize: 14,
-    fontWeight: 400,
-    paddingRight: 40,
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(2)})`,
+  color: theme.palette.common.white,
+  textTransform: "uppercase",
+  fontSize: 14,
+  fontWeight: 400,
+  paddingRight: 40,
+  padding: theme.spacing(1, 1, 1, 0),
+  // vertical padding + font size from SteamIcon
+  paddingLeft: `calc(1em + ${theme.spacing(2)})`,
 }));
 
 export default function Header() {
+  let navigate = useNavigate();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Bar>
-            <TitleButton
-                disableRipple
-            >
-                Data 2
-            </TitleButton>
-            <HeadButton>Matches</HeadButton>
-            <HeadButton>Meta</HeadButton>
-            <HeadButton>Team Builder</HeadButton>
-            <Box sx={{display: "flex", marginLeft: "auto"}}>
-                <Wrapper>
-                    <IconWrapper>
-                        <SearchIcon />
-                    </IconWrapper>
-                    <StyledInputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
-                </Wrapper>
-                <Wrapper sx={{backgroundColor: "transparent",}}>
-                    <IconWrapper sx={{paddingLeft: 1}}>
-                        <SteamIcon height="16" fill="white"/>
-                    </IconWrapper>
-                    <LoginButton>Login</LoginButton>
-                </Wrapper>
-            </Box>
+          <TitleButton
+            noWrap
+            variant="div"
+            onClick={() => {
+              navigate("/");
+            }}
+            sx={{
+              textDecoration: "none",
+              boxShadow: "none",
+              ":hover": { cursor: "pointer" },
+            }}
+          >
+            Data 2
+          </TitleButton>
+          <HeadButton
+            onClick={() => {
+              navigate("/matches");
+            }}
+          >
+            Matches
+          </HeadButton>
+          <HeadButton
+            onClick={() => {
+              navigate("/meta");
+            }}
+          >
+            Meta
+          </HeadButton>
+          <HeadButton
+            onClick={() => {
+              navigate("/teambuilder");
+            }}
+          >
+            Team Builder
+          </HeadButton>
+          <Box sx={{ display: "flex", marginLeft: "auto" }}>
+            <Wrapper>
+              <IconWrapper>
+                <SearchIcon />
+              </IconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Wrapper>
+            <Wrapper sx={{ backgroundColor: "transparent" }}>
+              <IconWrapper sx={{ paddingLeft: 1 }}>
+                <SteamIcon height="16" fill="white" />
+              </IconWrapper>
+              <LoginButton>Login</LoginButton>
+            </Wrapper>
+          </Box>
         </Bar>
       </AppBar>
     </Box>

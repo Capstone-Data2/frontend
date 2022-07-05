@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const matchesSlice = createSlice({
   name: 'matches',
   initialState: {
-    value: ["nothing", "hiii"],
+    value: [],
   },
   reducers: {
     fill: (state, action) => {
