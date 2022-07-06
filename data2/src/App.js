@@ -1,40 +1,55 @@
-import './App.css';
-import MainButton from './components/Buttons.js'
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux'
-import { fill } from './pages/matchesList/matchesSlice'
-import Header from './components/Header.js'
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './app/theme.js'
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./app/theme.js";
+import Header from "./components/Header.js";
+import MatchesList from "./pages/matchesList/matchesList";
+import MatchOverview from "./pages/matchOverview/matchOverview";
 
 function App() {
-  const matches = useSelector((state) => state.matches.value)
-  const dispatch = useDispatch()
-
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <Header/>
-        <div className="App">
-          <MainButton sx={{boxShadow: 2}} onClick={async () => dispatch(fill(await testAxios()))}>HI</MainButton>
-          <span>{matches[0]["match_id"]}</span>
-        </div>
-      </ThemeProvider>
-    </div>
+    <Router>
+      <div>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route
+                path="matches/professional"
+                element={<MatchesList />}
+              />
+              <Route path="matches/public" element={<MatchesList />} />
+              <Route path="matches/:id" element={<MatchOverview />} />
+              <Route
+                path="/"
+                element={<Navigate to="/matches/professional" replace />}
+              />
+              <Route
+                path="matches"
+                element={<Navigate to="/matches/professional" replace />}
+              />
+            </Route>
+          </Routes>
+        </ThemeProvider>
+      </div>
+    </Router>
   );
 }
 
-async function testAxios() {
-  var response = []
-  await axios.get(`http://127.0.0.1:8000/matches/`)
-  .then(res => {
-    response = res.data.matches
-  })
-  .catch(error => {
-    console.log(error)
-  })
-  return(response)
-
+function Layout() {
+  return (
+    <div>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  );
 }
 
 export default App;

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const matchesSlice = createSlice({
   name: 'matches',
   initialState: {
-    value: ["nothing", "hiii"],
+    value: [[], 0],
   },
   reducers: {
     fill: (state, action) => {
@@ -12,7 +12,18 @@ export const matchesSlice = createSlice({
   },
 })
 
+export const rankSlice = createSlice({
+  name: 'rank',
+  initialState: {
+    value: "8"
+  },
+  reducers: {
+    select: (state, action) => {
+      state.value = action.payload
+    },
+  },
+})
+
 // Action creators are generated for each case reducer function
 export const { fill } = matchesSlice.actions
-
-export default matchesSlice.reducer
+export const { select } = rankSlice.actions
