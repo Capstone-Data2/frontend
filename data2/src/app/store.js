@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import matchesReducer from '../pages/matchesList/matchesSlice'
+import { matchesSlice, rankSlice } from '../pages/matchesList/matchesSlice'
 
 export default configureStore({
   reducer: {
-    matches: matchesReducer,
+    matches: matchesSlice.reducer,
+    rank: rankSlice.reducer
   },
 })
