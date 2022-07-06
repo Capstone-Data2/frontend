@@ -10,8 +10,8 @@ import {
   Wrapper,
   BtnWrapper,
   MatchListTable,
-  MatchTypeButton
 } from "../../components/MatchList";
+import { MatchButton } from "../../components/Buttons";
 
 export default function MatchesList() {
   const matches = useSelector((state) => state.matches.value);
@@ -19,13 +19,14 @@ export default function MatchesList() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const [page, setPage] = useState(window.location.href.split("/").pop());
-  let location = useLocation()
-  
+  let location = useLocation();
+
   useEffect(() => {
-    
     const fetchData = async () => {
       await axios
-        .get(`http://127.0.0.1:8000/matches/`, {params: {rank: selected_rank}})
+        .get(`http://127.0.0.1:8000/matches/`, {
+          params: { rank: selected_rank },
+        })
         .then(async (res) => {
           dispatch(fill([res.data.matches, selected_rank]));
         })
@@ -34,44 +35,41 @@ export default function MatchesList() {
         });
     };
 
-    setPage(location.pathname.split("/").pop())
-    if(page === "professional"){
-      dispatch(select("8"))
+    setPage(location.pathname.split("/").pop());
+    if (page === "professional") {
+      dispatch(select("8"));
+    } else if (selected_rank === "9") {
+      dispatch(select("0"));
     }
-    else if (selected_rank === "9"){
-      dispatch(select("0"))
-    }
-    if(matches[1] !== selected_rank){
+    if (matches[1] !== selected_rank) {
       fetchData().catch(console.error);
     }
-    
   }, [dispatch, location, selected_rank, matches, page]);
 
   return (
     <ThemeProvider theme={theme}>
       <Wrapper>
         <BtnWrapper>
-          <MatchTypeButton
-            type="professional"
+          <MatchButton
+            type={page === "professional" ? "main" : "secondary"}
             click={() => {
-              navigate("/matches/professional")
+              navigate("/matches/professional");
             }}
             text="Professional"
           />
-          <MatchTypeButton
-            type="public"
+          <MatchButton
+            type={page === "public" ? "main" : "secondary"}
             click={() => {
-              navigate("/matches/public")
+              navigate("/matches/public");
             }}
             text="Public Matches"
           />
         </BtnWrapper>
-        {page === "public" 
-          && 
-          <Wrapper sx={{width: "40%"}}>
-            <ListRankImgs/>
+        {page === "public" && (
+          <Wrapper sx={{ width: "40%" }}>
+            <ListRankImgs />
           </Wrapper>
-        }
+        )}
         <MatchListTable type={page} />
       </Wrapper>
     </ThemeProvider>

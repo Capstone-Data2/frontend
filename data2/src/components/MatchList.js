@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   Box,
-  Button,
   Typography,
   Table,
   TableBody,
@@ -58,20 +57,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function MatchTypeButton({ type, click, text }){
-  var current_page = window.location.href.split("/").pop()
-  var btn_color = current_page === type ? "main" : "secondary"
-  return (
-    <Button
-      variant="main"
-      color={btn_color}
-      sx={{ boxShadow: 2 }}
-      onClick={click}
-    >
-      {text}
-    </Button>
-  );
-}
+
 
 function MatchListTable({ type }) {
   const matches = useSelector((state) => state.matches.value);
@@ -110,7 +96,7 @@ function MatchListTable({ type }) {
           <StyledTableRow
             key={match.match_id}
             onClick={() => {
-              navigate(`/matches/${match.match_id}`);
+              navigate(`/matches/${match.match_id}/overview`);
             }}
             sx={{ ":hover": { cursor: "pointer" } }}
           >
@@ -146,4 +132,4 @@ function MatchListTable({ type }) {
   );
 }
 
-export { Wrapper, BtnWrapper, MatchListTable, MatchTypeButton };
+export { Wrapper, BtnWrapper, MatchListTable };
