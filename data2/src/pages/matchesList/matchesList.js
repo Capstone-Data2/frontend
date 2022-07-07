@@ -6,11 +6,7 @@ import { ListRankImgs } from "../../common/images";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  Wrapper,
-  BtnWrapper,
-  MatchListTable,
-} from "../../components/MatchList";
+import { CommonBox, MatchListTable } from "../../components/MatchList";
 import { MatchButton } from "../../components/Buttons";
 
 export default function MatchesList() {
@@ -48,8 +44,20 @@ export default function MatchesList() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Wrapper>
-        <BtnWrapper>
+      <CommonBox
+        sx={{
+          flexDirection: "column",
+          backgroundColor: theme.palette.primary.main,
+          height: "100%",
+        }}
+      >
+        <CommonBox
+          sx={{
+            marginTop: 3,
+            marginBottom: 3,
+            width: "100%",
+          }}
+        >
           <MatchButton
             type={page === "professional" ? "main" : "secondary"}
             click={() => {
@@ -64,14 +72,21 @@ export default function MatchesList() {
             }}
             text="Public Matches"
           />
-        </BtnWrapper>
+        </CommonBox>
         {page === "public" && (
-          <Wrapper sx={{ width: "40%" }}>
+          <CommonBox
+            sx={{
+              flexDirection: "column",
+              backgroundColor: theme.palette.primary.main,
+              height: "100%",
+              width: "40%",
+            }}
+          >
             <ListRankImgs />
-          </Wrapper>
+          </CommonBox>
         )}
         <MatchListTable type={page} />
-      </Wrapper>
+      </CommonBox>
     </ThemeProvider>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-import { MatchRank, LoadHeroIcons } from "../common/images";
+import { MatchRank, HeroImageList } from "../common/images";
 import { TimeDifference, FormatTime } from "../common/time";
 import { useNavigate } from "react-router-dom";
 
@@ -19,18 +19,6 @@ const CommonBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-}));
-
-const Wrapper = styled(CommonBox)(({ theme }) => ({
-  flexDirection: "column",
-  backgroundColor: theme.palette.primary.main,
-  height: "100%",
-}));
-
-const BtnWrapper = styled(CommonBox)(({ theme }) => ({
-  marginTop: 30,
-  marginBottom: 10,
-  width: "100%",
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -56,8 +44,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.primary.light,
   },
 }));
-
-
 
 function MatchListTable({ type }) {
   const matches = useSelector((state) => state.matches.value);
@@ -120,10 +106,10 @@ function MatchListTable({ type }) {
               <Typography> {FormatTime(match.duration)} </Typography>
             </StyledTableCell>
             <StyledTableCell sx={{ pt: 0, pb: 0 }}>
-              {LoadHeroIcons(match.radiant_team)}
+              {HeroImageList(match.radiant_team)}
             </StyledTableCell>
             <StyledTableCell sx={{ pt: 0, pb: 0 }}>
-              {LoadHeroIcons(match.dire_team)}
+              {HeroImageList(match.dire_team)}
             </StyledTableCell>
           </StyledTableRow>
         ))}
@@ -132,4 +118,4 @@ function MatchListTable({ type }) {
   );
 }
 
-export { Wrapper, BtnWrapper, MatchListTable };
+export { CommonBox, MatchListTable };

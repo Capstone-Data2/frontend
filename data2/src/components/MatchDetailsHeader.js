@@ -9,7 +9,7 @@ import { FormatTime, TimeDifference } from "../common/time";
 import { MatchButton } from "./Buttons";
 
 export default function MatchDetailsHeader({ page }) {
-    const match_details = useSelector((state) => state.match_details.value);
+    const { match_details } = useSelector((state) => state.match_details);
     
   return (
     <Box
