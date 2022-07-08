@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import heroes_json from "../constants/heroes.json";
 import items_json from "../constants/items.json";
 import item_ids_json from "../constants/item_ids.json"
+import permanent_buffs_json from "../constants/permanent_buffs.json"
 import theme from "../app/theme";
 import { select } from "../pages/matchesList/matchesSlice";
 import BackpackIcon from '@mui/icons-material/Backpack';
@@ -122,10 +123,11 @@ export function updateItemImgs(){
 
 export function ItemImageList(player){
   var items = getItems(player)
-  var srcs = LoadItemIcons(items)
+  var srcs = LoadItemIcons(items, player)
+
   return (
     <Box sx={{minWidth: 240, display: "flex"}}>
-      <Box sx={{ width: 150}}>
+      <Box sx={{ width: 130}}>
         <ImageList cols={3} gap={1} sx={{marginBlock: 0, paddingInline: 0, maxWidth: 120,}}>
           {srcs.active.map((src, i) => (
             <ImageListItem sx={{ width: "60%" }} key={player.hero_id+i}>
@@ -140,7 +142,7 @@ export function ItemImageList(player){
 
       {srcs.backpack.length !== 0 &&
         <Box sx={{display: "flex", width: "70%", justifyContent: "start", alignItems: "center", mt: 1}}>
-          <BackpackIcon sx={{width: "10%"}}/>
+          <BackpackIcon sx={{width: 20}}/>
           <ImageList cols={3} gap={1} sx={{marginBlock: 0}}>
           {srcs.backpack.map((src, i) => (
             <ImageListItem sx={{ width: "70%" }} key={player.hero_id+i}>
@@ -159,7 +161,7 @@ export function ItemImageList(player){
         <svg height="50" width="50">
           <defs>
             <clipPath id="circleView">
-              <circle cx="20" cy="23" r="16" stroke="black" stroke-width="3" fill="none"/>
+              <circle cx="20" cy="23" r="16" stroke="black" strokeWidth={3} fill="none"/>
             </clipPath>
           </defs>
           
@@ -168,9 +170,21 @@ export function ItemImageList(player){
             xlinkHref={srcs.neutral}
             alt={srcs.neutral}
             height="46" width="46"
-            clip-path="url(#circleView)"
+            clipPath="url(#circleView)"
           />
         </svg>
+      </Box>
+      <Box sx={{display:"flex", alignItems: "center", width: 40, flexDirection: "column", justifyContent: "center", ml: 2}}>
+        <img
+          src={srcs.scepter}
+          alt={srcs.scepter}
+          style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
+        />
+        <img
+          src={srcs.shard}
+          alt={srcs.shard}
+          style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
+        />
       </Box>
     </Box>
   );
@@ -183,7 +197,7 @@ function getItems(player){
   return {active: active, neutral: neutral, backpack: backpack}
 }
 
-function LoadItemIcons(items){
+function LoadItemIcons(items, player){
   const images = importImgs(
     require.context("../constants/item_icons", false, /\.(png|jpe?g|svg)$/)
   );
@@ -193,8 +207,6 @@ function LoadItemIcons(items){
       active_srcs.push(images[items_json[item_ids_json[item]].img])
     }
   });
-  console.log(active_srcs)
-  console.log("------")
   var neutral_srcs = []
   items.neutral.forEach(item => {
     if(item !== 0){
@@ -207,5 +219,31 @@ function LoadItemIcons(items){
       backpack_srcs.push(images[items_json[item_ids_json[item]].img])
     }
   });
-  return {active: active_srcs, neutral: neutral_srcs, backpack: backpack_srcs}
+  var scepter = false
+  var shard = false
+  var buffs = []
+
+  if(items.active.includes(108)){
+    scepter = images["ultimate_scepter_activated.png"]
+  }
+  else{
+    scepter = images["ultimate_scepter.png"]
+  }
+  if (player.permanent_buffs.length !== 0)
+  {
+    player.permanent_buffs.forEach(buff => {
+      if(buff.permanent_buff === 12){
+        shard = images["aghanims_shard_active.png"]
+      }
+      else{
+        shard = images["aghanims_shard.png"]
+        var name = permanent_buffs_json[buff.permanent_buff]
+        buffs.push({permanent_buff: name, count: buff.stack_count, src: images[name+".png"]})
+      }
+    });
+  }
+  else{
+    shard = images["aghanims_shard.png"]
+  }
+  return {active: active_srcs, neutral: neutral_srcs, backpack: backpack_srcs, scepter, shard, buffs}
 }

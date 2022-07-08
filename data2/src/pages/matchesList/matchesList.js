@@ -47,6 +47,7 @@ export default function MatchesList() {
       <CommonBox
         sx={{
           flexDirection: "column",
+          backgroundImage: "linear-gradient(to right, rgb(215, 205, 178), rgb(190, 175, 153));",
           backgroundColor: theme.palette.primary.main,
           height: "100%",
         }}
@@ -77,7 +78,6 @@ export default function MatchesList() {
           <CommonBox
             sx={{
               flexDirection: "column",
-              backgroundColor: theme.palette.primary.main,
               height: "100%",
               width: "40%",
             }}
