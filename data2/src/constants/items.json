@@ -2852,7 +2852,7 @@
       "Active: Energy Burst Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.Damage: 400,500,600,700,800Range: 700,750,800,850,900Mana Cost: 120,140,160,180,200"
     ],
     "id": 104,
-    "img": "Dagon_icon.png",
+    "img": "Dagon_1_icon.png",
     "dname": "Dagon",
     "qual": "rare",
     "cost": 2700,
@@ -2889,7 +2889,7 @@
       "Active: Energy Burst Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.Damage: 400,500,600,700,800Range: 700,750,800,850,900Mana Cost: 120,140,160,180,200"
     ],
     "id": 201,
-    "img": "Dagon_icon.png",
+    "img": "Dagon_2_icon.png",
     "dname": "Dagon",
     "qual": "rare",
     "cost": 3950,
@@ -2926,7 +2926,7 @@
       "Active: Energy Burst Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.Damage: 400,500,600,700,800Range: 700,750,800,850,900Mana Cost: 120,140,160,180,200"
     ],
     "id": 202,
-    "img": "Dagon_icon.png",
+    "img": "Dagon_3_icon.png",
     "dname": "Dagon",
     "qual": "rare",
     "cost": 5200,
@@ -2963,7 +2963,7 @@
       "Active: Energy Burst Emits a powerful burst of magical damage upon a targeted enemy unit. Upgradable.Damage: 400,500,600,700,800Range: 700,750,800,850,900Mana Cost: 120,140,160,180,200"
     ],
     "id": 203,
-    "img": "Dagon_icon.png",
+    "img": "Dagon_4_icon.png",
     "dname": "Dagon",
     "qual": "rare",
     "cost": 6450,
@@ -3000,7 +3000,7 @@
       "Active: Energy Burst Emits a powerful burst of magical damage upon a targeted enemy unit.Damage: 400,500,600,700,800Range: 700,750,800,850,900Mana Cost: 120,140,160,180,200"
     ],
     "id": 204,
-    "img": "Dagon_icon.png",
+    "img": "Dagon_5_icon.png",
     "dname": "Dagon",
     "qual": "rare",
     "cost": 7700,
