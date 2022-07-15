@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   ImageList,
   ImageListItem,
   Radio,
   Typography,
+  Paper
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import heroes_json from "../constants/heroes.json";
@@ -32,6 +33,13 @@ export function importAbilityImgs() {
   return abilities;
 }
 
+function ImportGameMap() {
+  const map = importImgs(
+    require.context("../constants/map_icons/", false, /\.(png|jpe?g|svg)$/)
+  );
+  return map;
+}
+
 export function importImgs(r) {
   let images = {};
   r.keys().map((item) => (images[item.replace("./", "")] = r(item)));
@@ -40,7 +48,7 @@ export function importImgs(r) {
 
 export function LoadHeroIcons(heroes) {
   const images = importImgs(
-    require.context("../constants/hero_icons/big", false, /\.(png|jpe?g|svg)$/)
+    require.context("../constants/hero_icons/", false, /\.(png|jpe?g|svg)$/)
   );
   var srcs = [];
   heroes.forEach((hero) => {
@@ -122,7 +130,7 @@ export function updateAbilityImgs() {
   console.log(Object.keys(abilities_json).length)
   for (const [key, value] of Object.entries(abilities_json)) {
     if (value.img) {
-      if (value.dname){
+      if (value.dname) {
         abilities_json[key].img = value.dname.replace(/ /g, "_") + "_icon.png";
       }
     }
@@ -389,7 +397,7 @@ function loadPicks(picks_bans) {
         {loadRadiantPicks(radiant_picks)}
         {loadDirePicks(dire_picks)}
       </Box>
-      <Box sx={{ display: "flex", width: 600,  mb: 2, ml: 2 }}>{loadBans(bans)}</Box>
+      <Box sx={{ display: "flex", width: 600, mb: 2, ml: 2 }}>{loadBans(bans)}</Box>
     </Box>
   );
 }
@@ -463,22 +471,55 @@ const PickBanImg = styled("img")(({ theme, src }) => ({
 }));
 
 
-export function LoadAbilityIcon(ability){
+export function LoadAbilityIcon(ability) {
+  const [hover, setHover] = useState({hover: false, location: [0,0]})
   var srcs = importAbilityImgs()
-  return(
-    <Box sx={{ minWidth: 15, maxWidth: 15}}>
-      {ability_ids_json[ability].split("_")[0] === "special" && 
+
+  return (
+    <Box
+      sx={{ minWidth: 15, maxWidth: 15 }}
+      onMouseEnter={(event) => setHover({ hover: true, location: [(event.pageX) + 20, (event.pageY) - 10] })}
+      onMouseLeave={() => setHover({ hover: false, location: [0, 0] })}
+    >
+      {ability_ids_json[ability].split("_")[0] === "special" &&
         <img
           src={srcs["talent_tree.svg"]}
           style={{ borderRadius: 2, height: 30, border: "solid", borderWidth: 2 }}
         />
       }
-      {ability_ids_json[ability].split("_")[0] !== "special" && 
+      {ability_ids_json[ability].split("_")[0] !== "special" &&
         <img
-            src={srcs[abilities_json[ability_ids_json[ability]].img]}
-            style={{ borderRadius: 2, width: 30, border: "solid", borderWidth: 2 }}
+          src={srcs[abilities_json[ability_ids_json[ability]].img]}
+          style={{ borderRadius: 2, width: 30, border: "solid", borderWidth: 2 }}
         />
       }
+      {hover.hover &&
+        hoverPaper(abilities_json[ability_ids_json[ability]], hover.location[0], hover.location[1])
+      }
+    </Box>
+
+  );
+}
+
+function hoverPaper(ability, x, y) {
+  var name = ability.dname
+
+  return (
+    <Paper sx={{ position: "absolute", left: x, top: y, color: "black", backgroundColor: alpha(theme.palette.primary.light, 0.8), width: "fit", height: 30 }}>
+      <Typography sx={{ fontWeight: 700 }}>{name}</Typography>
+    </Paper>
+  )
+}
+
+export function GameMap() {
+  var src = ImportGameMap()
+
+  return(
+    <Box>
+      <img
+          src={src['map_img.png']}
+          style={{ borderRadius: 2, border: "solid", borderWidth: 2 }}
+        />
     </Box>
   );
 }

@@ -6,9 +6,10 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import { Box, Typography, Paper, Button, CircularProgress } from "@mui/material";
 import MatchDetailsHeader from "../../components/MatchDetailsHeader";
-import { PicksAndBansList, updateAbilityImgs } from "../../common/images";
+import { PicksAndBansList, GameMap } from "../../common/images";
 import { MatchDetailsTable } from "../../components/MatchDetailsTable";
 import { AbilityBuildsTable } from "../../components/AbilityBuildsTable";
+
 
 export default function MatchOverview() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ export default function MatchOverview() {
     (state) => state.match_details.match_details
   );
   const loading = useSelector((state) => state.match_details.loading);
+  const hover = useSelector((state) => state.hover)
   const dispatch = useDispatch();
   const [page, setPage] = useState(window.location.href.split("/").pop());
   const [players, setPlayers] = useState({});
@@ -29,6 +31,7 @@ export default function MatchOverview() {
     if (match_details.match_id !== 0) {
       setPlayers(getPlayerDetails(match_details.players));
     }
+
   }, [dispatch, id, location, match_details, loading]);
 
   return (
@@ -164,6 +167,19 @@ export default function MatchOverview() {
               {Object.keys(players).length !== 0 && (
                 <AbilityBuildsTable players={players.dire} />
               )}
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "start",
+                flexDirection: "column",
+                width: "75%",
+              }}
+            >
+              <Box sx={{ display: "flex", mb: 1 }}>
+                <Typography sx={{}}>Building Map</Typography>
+              </Box>
+              <GameMap/>
             </Box>
           </Box>
         </Box>

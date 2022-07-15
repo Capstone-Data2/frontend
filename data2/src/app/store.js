@@ -6,6 +6,6 @@ export default configureStore({
   reducer: {
     matches: matchesSlice.reducer,
     rank: rankSlice.reducer,
-    match_details: matchDetailsSlice.reducer
+    match_details: matchDetailsSlice.reducer,
   },
 })

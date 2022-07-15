@@ -35215,7 +35215,7 @@
     "lore": "Where we going?",
     "mc": ["100", "125", "150", "175"],
     "cd": ["39", "36", "33", "30"],
-    "img": "Blast_Off!_icon.png"
+    "img": "Blast_Off_icon.png"
   },
   "techies_sticky_bomb": {
     "dname": "Sticky Bomb",

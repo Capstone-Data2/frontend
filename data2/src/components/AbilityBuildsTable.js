@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useMemo} from "react";
 import theme from "../app/theme.js";
 import {
   Box,
@@ -8,15 +8,16 @@ import {
   TableHead,
   TableRow,
   Link,
+  Paper,
 } from "@mui/material";
 import { LoadHeroIcons, LoadAbilityIcon } from "../common/images";
 import { StyledTableCell, StyledTableRow } from "../common/styled.js";
 import hero_abilities_json from "../constants/hero_abilities.json";
 import ability_ids_json from "../constants/ability_ids.json";
 import heroes_json from "../constants/heroes.json";
+import { alpha, styled } from "@mui/material/styles";
 
 export function AbilityBuildsTable({ players }) {
-  const [ability_upgrades, setAbilityUpgrades] = useState({});
   var ranks = [
     "Unranked",
     "Herald",
@@ -29,69 +30,61 @@ export function AbilityBuildsTable({ players }) {
     "Immortal",
   ];
 
-  useEffect(() => {
-    checkHeroAbilities(players);
-  }, []);
-
-  function checkHeroAbilities(players) {
-    var ability_upgrades_obj = {};
-    players.forEach((hero) => {
-      var hero_ab = hero_abilities_json[heroes_json[hero.hero_id].name];
-      var upgrade_arr = [];
-      var ultiCount = 0;
-      var talentCount = 0;
-      var count = 0;
-      while (25 > count) {
-        if (count < hero.ability_upgrades_arr.length) {
-          var element = hero.ability_upgrades_arr[count];
-          var length = upgrade_arr.length;
-          if (
-            ability_ids_json[element] ===
-            hero_ab.abilities[hero_ab.abilities.length - 1]
-          ) {
-            if (length >= 5 && ultiCount == 0) {
-              ultiCount++;
-              count++;
-              upgrade_arr.push(element);
-            } else if (length >= 11 && ultiCount == 1) {
-              ultiCount++;
-              count++;
-              upgrade_arr.push(element);
-            } else if (length >= 17) {
-              ultiCount++;
-              count++;
-              upgrade_arr.push(element);
-            } else {
-              upgrade_arr.push(undefined);
-            }
-          } else if (ability_ids_json[element].split("_")[0] === "special") {
-            if (length >= 9 && talentCount == 0) {
-              talentCount++;
-              count++;
-              upgrade_arr.push(element);
-            } else if (length >= 14 && talentCount == 1) {
-              talentCount++;
-              count++;
-              upgrade_arr.push(element);
-            } else if (length >= 19) {
-              talentCount++;
-              count++;
-              upgrade_arr.push(element);
-            } else {
-              upgrade_arr.push(undefined);
-            }
-          } else {
+  function checkHeroAbilities(hero) {
+    var hero_ab = hero_abilities_json[heroes_json[hero.hero_id].name];
+    var upgrade_arr = [];
+    var ultiCount = 0;
+    var talentCount = 0;
+    var count = 0;
+    while (25 > count) {
+      if (count < hero.ability_upgrades_arr.length) {
+        var element = hero.ability_upgrades_arr[count];
+        var length = upgrade_arr.length;
+        if (
+          ability_ids_json[element] ===
+          hero_ab.abilities[hero_ab.abilities.length - 1]
+        ) {
+          if (length >= 5 && ultiCount == 0) {
+            ultiCount++;
             count++;
             upgrade_arr.push(element);
+          } else if (length >= 11 && ultiCount == 1) {
+            ultiCount++;
+            count++;
+            upgrade_arr.push(element);
+          } else if (length >= 17) {
+            ultiCount++;
+            count++;
+            upgrade_arr.push(element);
+          } else {
+            upgrade_arr.push(undefined);
+          }
+        } else if (ability_ids_json[element].split("_")[0] === "special") {
+          if (length >= 9 && talentCount == 0) {
+            talentCount++;
+            count++;
+            upgrade_arr.push(element);
+          } else if (length >= 14 && talentCount == 1) {
+            talentCount++;
+            count++;
+            upgrade_arr.push(element);
+          } else if (length >= 19) {
+            talentCount++;
+            count++;
+            upgrade_arr.push(element);
+          } else {
+            upgrade_arr.push(undefined);
           }
         } else {
           count++;
-          upgrade_arr.push(undefined);
+          upgrade_arr.push(element);
         }
+      } else {
+        count++;
+        upgrade_arr.push(undefined);
       }
-      ability_upgrades_obj[hero.hero_id] = upgrade_arr;
-    });
-    setAbilityUpgrades(ability_upgrades_obj);
+    }
+    return upgrade_arr
   }
 
   return (
@@ -102,7 +95,7 @@ export function AbilityBuildsTable({ players }) {
             <Typography variant="subtitle2">Player</Typography>
           </StyledTableCell>
           {[...Array(25)].map((e, i) => (
-            <StyledTableCell key={i} sx={{ textAlign: "start", px: 0}}>
+            <StyledTableCell key={i} sx={{ textAlign: "start", px: 0 }}>
               <Typography variant="subtitle2">{i + 1}</Typography>
             </StyledTableCell>
           ))}
@@ -177,14 +170,17 @@ export function AbilityBuildsTable({ players }) {
                   </Box>
                 </Box>
               </StyledTableCell>
-              {Object.keys(ability_upgrades).length !== 0 &&
-                ([...Array(25)].map((e, i) => (
-                    <StyledTableCell key={i} sx={{ maxWidth: 25, px: 0 }}>
-                    {ability_upgrades[player.hero_id][i] !== undefined &&
-                        LoadAbilityIcon(ability_upgrades[player.hero_id][i])}
-                    </StyledTableCell>
-                )))
-              }
+              {(checkHeroAbilities(player).map((ability, i) => (
+                <StyledTableCell key={i} sx={{ maxWidth: 25, px: 0 }}>
+                  {ability !== undefined &&
+                    <Box 
+                    sx={{":hover": {cursor: "help"}}} 
+                    >
+                      {LoadAbilityIcon(ability)}
+                    </Box>
+                  }
+                </StyledTableCell>
+              )))}
             </StyledTableRow>
           ))}
         </TableBody>
@@ -192,6 +188,3 @@ export function AbilityBuildsTable({ players }) {
     </Table>
   );
 }
-
-//  {(player.ability_upgrades_arr[i] && checkHeroAbilities(player, i)) && LoadAbilityIcon(player.ability_upgrades_arr[i])}
-// LoadAbilityIcon(ability_upgrades[player.hero_id][i])
