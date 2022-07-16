@@ -137,14 +137,11 @@ export function MatchLogTable({ players, log_data, teams }) {
         }
     }
 
-
     function loadLog() {
         var res = []
         var time_in_seconds = []
-
             //Buildings
             var buildings_array = log_data['Buildings']
-            
             for (var i = 0; i <= buildings_array.length - 1; i++) {
                 var unit = hero_names[buildings_array[i].unit]
 
@@ -221,9 +218,9 @@ export function MatchLogTable({ players, log_data, teams }) {
                     }
                 }
             }
+
             //Kills
             var kills_array = log_data['Kills']
-
             for (var k = 0; k <= kills_array.length - 1; k++) {
                 var hero_killing = Object.keys(kills_array[k])[0]
 
@@ -282,6 +279,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                 }
                 
             }
+
             //Runes
             var runes_array = log_data['Runes']
             for (var l = 0; l <= runes_array.length - 1; l++) {
@@ -301,7 +299,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Radiant Hero Rune"
                                         />
-                                        <Typography>-Activated {runeName(String(rune))} {getTime(array_of_pickups[d].time)}</Typography>
+                                        <Typography>-Activated {runeName(String(rune))}  {getTime(array_of_pickups[d].time)}</Typography>
                                     </Box>
                                 )
                                 time_in_seconds.push(array_of_pickups[d].time)
@@ -328,12 +326,42 @@ export function MatchLogTable({ players, log_data, teams }) {
                 }
             }
 
-            //TimeStamps
+            //Roshan 2= radiant 3=dire
+            var roshans_array = log_data['Roshan']
+            for( var n= 0; n<=roshans_array.length - 1; n++){
+                var team_killing = roshans_array[n]['rosh_kill_team']
+                if(team_killing === 2 && players ===''){
+                    res.push(
+                        <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
+                            <img
+                                src={loadTeamIcons('radiant')}
+                                style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                alt="Radiant Roshan Kill"
+                            />
+                            <Typography>Slained Roshan {getTime(roshans_array[n].rosh_kill_time)}</Typography>
+                        </Box>
+                    )
+                    time_in_seconds.push(roshans_array[n].rosh_kill_time)
+                }
+                else if(team_killing === 3 && players === ''){
+                    res.push(
+                        <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
+                            <Typography>{getTime(roshans_array[n].rosh_kill_time)} Slained Roshan</Typography>
+                            <img
+                                src={loadTeamIcons('dire')}
+                                style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                alt="Dire Roshan Kill"
+                            />
+                            
+                        </Box>
+                    )
+                    time_in_seconds.push(roshans_array[n].rosh_kill_time)
+                }
+            }
 
             return sortResponseByTime(res, time_in_seconds)
-
     }
-  
+    
     return (
         <Box
             sx={{
