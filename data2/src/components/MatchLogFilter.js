@@ -1,15 +1,12 @@
 import {
     Box,
     Typography,
-    Paper,
     Button,
   } from "@mui/material";
 
-  import { LoadHeroIcons } from "../common/images";
-  import { useDispatch, useSelector } from "react-redux";
-  import {toggle, clear} from '../pages/matchLog/matchLogSlice'
-
-
+import { LoadHeroIcons } from "../common/images";
+import { useDispatch, useSelector } from "react-redux";
+import {toggle, clear} from '../pages/matchLog/matchLogSlice'
 
 export function MatchLogFilter({ players }) {
     const dispatch = useDispatch()
@@ -25,11 +22,11 @@ export function MatchLogFilter({ players }) {
         justifyContent: "start",
         flexDirection: "row",
         height: '40px',
-        backgroundColor: 'white',
+        
       }}>
         <Typography sx={{}}>Match Filter</Typography>
         <Button size='small' variant='outlined' 
-         sx={{marginLeft: "auto"}} onClick={() => clearSelection()}>Clear selections</Button>
+         sx={{marginLeft: "auto", color: 'black', variant: 'outlined'}} onClick={() => clearSelection()}>Clear selections</Button>
     </Box>
     <Box
     sx={{
@@ -67,6 +64,7 @@ export function MatchLogFilter({ players }) {
                         src={LoadHeroIcons(players[i])}
                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                         onClick={() => clicked(players[i])}
+                        alt="Hero Icon"
                         />
                     </Box>
                 )
@@ -79,6 +77,7 @@ export function MatchLogFilter({ players }) {
                         src={LoadHeroIcons(players[i])}
                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                         onClick={() => clicked(players[i])}
+                        alt="Hero Icon"
                         />
                     </Box>
                 )

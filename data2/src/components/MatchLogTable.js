@@ -1,15 +1,13 @@
 import {
     Box,
     Typography,
-    Paper,
-    Button,
 } from "@mui/material";
 
 import { LoadHeroIcons } from "../common/images";
-import { useDispatch, useSelector } from "react-redux";
-import { toggle, clear } from '../pages/matchLog/matchLogSlice'
+import { loadTeamIcons } from "../common/images";
 import hero_names from '../constants/hero_names.json'
-import heroes from '../constants/heroes.json'
+import theme from "../app/theme.js";
+
 export function MatchLogTable({ players, log_data, teams }) {
     const radiant = teams[0]
     const dire = teams[1]
@@ -112,6 +110,34 @@ export function MatchLogTable({ players, log_data, teams }) {
         return false
     }
 
+    function runeName(key){
+        if(key==='0'){
+            return('Double Damage Rune')
+        }
+        else if(key==='1'){
+            return('Haste Rune')
+        }
+        else if(key==='2'){
+            return('Illusion Rune')
+        }
+        else if(key==='3'){
+            return('Invisibility Rune')
+        }
+        else if(key==='4'){
+            return('Regeneration Rune')
+        }
+        else if(key==='5'){
+            return('Gold Rune')
+        }
+        else if(key==='6'){
+            return('Arcane Rune')
+        }
+        else if(key==='7'){
+            return('Water Rune')
+        }
+    }
+
+
     function loadLog() {
         var res = []
         var time_in_seconds = []
@@ -128,7 +154,13 @@ export function MatchLogTable({ players, log_data, teams }) {
                         if(players === ''){
                             res.push(
                                 <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
-                                    <Typography>{'The Radiant ---> '}</Typography>
+                                    <img
+                                        src={loadTeamIcons('radiant')}
+                                        style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                        alt="Radiant"
+                                        
+                                    />
+                                    <Typography>{'--Destroyed--> '}</Typography>
                                     <Typography>{getTowerName(buildings_array[i].tower)} {getTime(buildings_array[i].time)}</Typography>
                                 </Box>
 
@@ -140,8 +172,15 @@ export function MatchLogTable({ players, log_data, teams }) {
                         if(players === ''){
                             res.push(
                                 <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
+                                    
                                     <Typography>{getTime(buildings_array[i].time)} {getTowerName(buildings_array[i].tower)}</Typography>
-                                    <Typography>{' <--- The Dire '}</Typography>
+                                    <Typography>{' <--Destroyed-- '}</Typography>
+                                    <img
+                                        src={loadTeamIcons('dire')}
+                                        style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                        alt="Dire"
+                                        
+                                    />
                                 </Box>
                             )
                             time_in_seconds.push(buildings_array[i].time)
@@ -157,8 +196,9 @@ export function MatchLogTable({ players, log_data, teams }) {
                                     <img
                                         src={LoadHeroIcons(String(hero_id))}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                        alt="Radiant Hero Destroying Tower"
                                     />
-                                    <Typography> {'---> '} {getTowerName(buildings_array[i].tower)} {getTime(buildings_array[i].time)}</Typography>
+                                    <Typography> {'--Destroyed--> '} {getTowerName(buildings_array[i].tower)} {getTime(buildings_array[i].time)}</Typography>
                                 </Box>
                             )
                             time_in_seconds.push(buildings_array[i].time)
@@ -168,10 +208,11 @@ export function MatchLogTable({ players, log_data, teams }) {
                         if(isSelected(String(hero_id), players.split(',')) || players === ''){
                             res.push(
                                 <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
-                                    <Typography>{getTime(buildings_array[i].time)} {getTowerName(buildings_array[i].tower)}{' <---'}</Typography>
+                                    <Typography>{getTime(buildings_array[i].time)} {getTowerName(buildings_array[i].tower)}{' <--Destroyed--'}</Typography>
                                     <img
                                         src={LoadHeroIcons(String(hero_id))}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                        alt="Dire Hero Destroying Tower"
                                     />
                                 </Box>
                             )
@@ -197,13 +238,17 @@ export function MatchLogTable({ players, log_data, teams }) {
                                         <img
                                             src={LoadHeroIcons(String(hero_killing))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                            alt="Hero Killing"
                                         />
-                                        <Typography> {' ---> '} </Typography>
+                                        <Typography> {' --Killed--> '} </Typography>
                                         <img
                                             src={LoadHeroIcons(String(slained_hero_id))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                            alt="Slained Hero"
                                         />
-                                        <Typography> {getTime(array_of_kills[p].time)} </Typography>
+                                        <Typography
+                                        sx={{marginLeft: 1}}
+                                        >{getTime(array_of_kills[p].time)} </Typography>
                                     </Box>
                                 )
 
@@ -214,15 +259,19 @@ export function MatchLogTable({ players, log_data, teams }) {
                             if(isSelected(String(hero_killing), players.split(',')) || players===''){
                                 res.push(
                                     <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
-                                        <Typography> {getTime(array_of_kills[p].time)} </Typography>
+                                        <Typography
+                                            sx={{marginRight: 1}}
+                                        > {getTime(array_of_kills[p].time)} </Typography>
                                         <img
                                             src={LoadHeroIcons(String(slained_hero_id))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                            alt="Slained Hero"
                                         />
-                                        <Typography> {' <--- '} </Typography>
+                                        <Typography> {' <--Killed-- '} </Typography>
                                         <img
                                             src={LoadHeroIcons(String(hero_killing))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                            alt="Hero Killing"
                                         />
                                     </Box>
                                 )
@@ -250,10 +299,9 @@ export function MatchLogTable({ players, log_data, teams }) {
                                         <img
                                             src={LoadHeroIcons(String(hero_picking))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                            alt="Radiant Hero Rune"
                                         />
-                                        <Typography> {' ---> '} </Typography>
-
-                                        <Typography> Rune: {rune} {getTime(array_of_pickups[d].time)} </Typography>
+                                        <Typography>-Activated {runeName(String(rune))} {getTime(array_of_pickups[d].time)}</Typography>
                                     </Box>
                                 )
                                 time_in_seconds.push(array_of_pickups[d].time)
@@ -264,11 +312,11 @@ export function MatchLogTable({ players, log_data, teams }) {
                                 res.push(
                                     
                                     <Box sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
-                                        <Typography>  {getTime(array_of_pickups[d].time)} Rune: {rune}</Typography>
-                                        <Typography> {' <--- '} </Typography>
+                                        <Typography>  {getTime(array_of_pickups[d].time)} Activated {runeName(String(rune))} -</Typography>
                                         <img
                                             src={LoadHeroIcons(String(hero_picking))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                            alt="Dire Hero Rune"
                                         />
 
                                     </Box>
@@ -286,14 +334,17 @@ export function MatchLogTable({ players, log_data, teams }) {
 
     }
   
-return (
-    <Box
-        sx={{
-            flexDirection: 'row',
-        }}
-    >
-        <Typography>Game Log</Typography>
-        {loadLog()}
-    </Box>
-)
+    return (
+        <Box
+            sx={{
+                flexDirection: 'row',
+                backgroundColor: theme.palette.primary.main,
+                marginTop: 5,
+                padding: 3,
+                borderRadius: 2,
+            }}
+        >
+            {loadLog()}
+        </Box>
+    )
 }

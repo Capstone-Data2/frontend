@@ -22,6 +22,18 @@ export function importImgs(r) {
   return images;
 }
 
+export function importTeamIcons() {
+  const team_icons = importImgs(
+    require.context("../constants/team_icons/", false, /.(png|jpe?g|svg)$/)
+  );
+  return team_icons;
+}
+
+export function loadTeamIcons(team){
+  var srcs = importTeamIcons()
+  return(srcs[team+'_icon.png'])
+}
+
 export function LoadHeroIcons(heroes) {
   var heroes_arr = heroes.split(",");
   const images = importImgs(

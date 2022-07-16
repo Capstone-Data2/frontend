@@ -1,14 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import theme from "../../app/theme.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import MatchDetailsHeader from "../../components/MatchDetailsHeader";
-import { alpha, styled } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import {
     Box,
-    Typography,
-    Paper,
-    CircularProgress,
 } from "@mui/material";
 
 import { getMatchLog } from '../../common/api'
@@ -64,7 +61,9 @@ export default function MatchLog() {
                         flexDirection: "column",
                         width: "50%",
                         height: '200px',
-                        backgroundColor: 'white',
+                        backgroundColor: theme.palette.primary.main,
+                        borderRadius: 2,
+                       
                     }}>
                     <MatchLogFilter players={teamHeroIds(match_details.picks_bans)} />
                 </Box>
