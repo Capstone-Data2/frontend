@@ -14,7 +14,7 @@ import { ItemImageList, LoadHeroIcons, BuffImageList } from "../common/images";
 import ProgressBar from "./ProgressBar";
 import { StyledTableCell, StyledTableRow } from "../common/styled.js";
 
-export function MatchDetailsTable({ players }) {
+function MatchDetailsTable({ players }) {
     var headers = [
         "Player",
         "Level",
@@ -131,3 +131,5 @@ export function MatchDetailsTable({ players }) {
         </Table>
     );
 }
+
+export default React.memo(MatchDetailsTable)

@@ -5,17 +5,21 @@ import {
   ImageListItem,
   Radio,
   Typography,
-  Paper
+  Paper,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import heroes_json from "../constants/heroes.json";
 import items_json from "../constants/items.json";
 import item_ids_json from "../constants/item_ids.json";
 import permanent_buffs_json from "../constants/permanent_buffs.json";
-import abilities_json from "../constants/abilities.json"
-import ability_ids_json from "../constants/ability_ids.json"
+import abilities_json from "../constants/abilities.json";
+import ability_ids_json from "../constants/ability_ids.json";
 import theme from "../app/theme";
 import { select } from "../pages/matchesList/matchesSlice";
+import {
+  removeHover,
+  setHover,
+} from "../pages/matchOverview/matchDetailsSlice";
 import BackpackIcon from "@mui/icons-material/Backpack";
 import { alpha, styled } from "@mui/material/styles";
 
@@ -127,7 +131,7 @@ export function ListRankImgs() {
 }
 
 export function updateAbilityImgs() {
-  console.log(Object.keys(abilities_json).length)
+  console.log(Object.keys(abilities_json).length);
   for (const [key, value] of Object.entries(abilities_json)) {
     if (value.img) {
       if (value.dname) {
@@ -359,14 +363,16 @@ export function BuffImageList(player) {
   );
 }
 
-export function PicksAndBansList({ picks_bans }) {
+export const PicksAndBansList = React.memo(function PicksAndBansList({
+  picks_bans,
+}) {
   return (
     <Box sx={{ width: "75%", mt: -2 }}>
       <Typography>Picks and Bans</Typography>
       {loadPicks(picks_bans)}
     </Box>
   );
-}
+});
 
 function loadPicks(picks_bans) {
   var radiant_picks = [];
@@ -397,7 +403,9 @@ function loadPicks(picks_bans) {
         {loadRadiantPicks(radiant_picks)}
         {loadDirePicks(dire_picks)}
       </Box>
-      <Box sx={{ display: "flex", width: 600, mb: 2, ml: 2 }}>{loadBans(bans)}</Box>
+      <Box sx={{ display: "flex", width: 600, mb: 2, ml: 2 }}>
+        {loadBans(bans)}
+      </Box>
     </Box>
   );
 }
@@ -433,7 +441,7 @@ function PickImages(w1, w2, w3, w4, srcs, mleft = 0) {
 function loadBans(bans) {
   var srcs = LoadHeroIcons(bans);
   return (
-    <Box sx={{ display: "flex", }}>
+    <Box sx={{ display: "flex" }}>
       {srcs.map((src, i) => PickImage(src, "Ban " + (i + 1)))}
     </Box>
   );
@@ -470,56 +478,343 @@ const PickBanImg = styled("img")(({ theme, src }) => ({
   marginBottom: 0,
 }));
 
-
-export function LoadAbilityIcon(ability) {
-  const [hover, setHover] = useState({hover: false, location: [0,0]})
-  var srcs = importAbilityImgs()
+export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
+  ability,
+}) {
+  const dispatch = useDispatch();
+  var srcs = importAbilityImgs();
 
   return (
     <Box
       sx={{ minWidth: 15, maxWidth: 15 }}
-      onMouseEnter={(event) => setHover({ hover: true, location: [(event.pageX) + 20, (event.pageY) - 10] })}
-      onMouseLeave={() => setHover({ hover: false, location: [0, 0] })}
+      onMouseLeave={() => dispatch(removeHover())}
     >
-      {ability_ids_json[ability].split("_")[0] === "special" &&
+      {ability_ids_json[ability].split("_")[0] === "special" && (
         <img
           src={srcs["talent_tree.svg"]}
-          style={{ borderRadius: 2, height: 30, border: "solid", borderWidth: 2 }}
+          style={{
+            borderRadius: 2,
+            height: 30,
+            border: "solid",
+            borderWidth: 2,
+          }}
+          onMouseOver={(event) =>
+            dispatch(
+              setHover({
+                type: "talent",
+                hovered: ability,
+                location: { x: event.pageX + 30, y: event.pageY },
+              })
+            )
+          }
         />
-      }
-      {ability_ids_json[ability].split("_")[0] !== "special" &&
+      )}
+      {ability_ids_json[ability].split("_")[0] !== "special" && (
         <img
           src={srcs[abilities_json[ability_ids_json[ability]].img]}
-          style={{ borderRadius: 2, width: 30, border: "solid", borderWidth: 2 }}
+          style={{
+            borderRadius: 2,
+            width: 30,
+            border: "solid",
+            borderWidth: 2,
+          }}
+          onMouseOver={(event) =>
+            dispatch(
+              setHover({
+                type: "ability",
+                hovered: ability,
+                location: { x: event.pageX + 30, y: event.pageY },
+              })
+            )
+          }
         />
-      }
-      {hover.hover &&
-        hoverPaper(abilities_json[ability_ids_json[ability]], hover.location[0], hover.location[1])
-      }
+      )}
     </Box>
-
   );
-}
+});
 
-function hoverPaper(ability, x, y) {
-  var name = ability.dname
-
+export const GameMap = React.memo(function GameMap(objectives) {
+  var srcs = ImportGameMap();
+  /*console.log(objectives);
+  objectives.objectives.forEach((objective) => {
+    if (objective.type === "building_kill") {
+      console.log(objective.key);
+    }
+  });
+  //console.log(srcs);
+        {srcs.map((src) => (
+        <ImageListItem sx={{ width: "100%" }} key={src}>
+          <img src={src} style={{ borderRadius: 2 }} />
+        </ImageListItem>
+      ))}
+  */
   return (
-    <Paper sx={{ position: "absolute", left: x, top: y, color: "black", backgroundColor: alpha(theme.palette.primary.light, 0.8), width: "fit", height: 30 }}>
-      <Typography sx={{ fontWeight: 700 }}>{name}</Typography>
-    </Paper>
-  )
-}
+    <Box sx={{ display: "flex", position: "relative", width: 300, mb: 4 }}>
+      <img src={srcs["map_img.png"]} style={{ borderRadius: 2 }} />
+      {renderStructures(srcs)}
+    </Box>
+  );
+});
 
-export function GameMap() {
-  var src = ImportGameMap()
-
-  return(
+function renderStructures(srcs) {
+  return (
     <Box>
-      <img
-          src={src['map_img.png']}
-          style={{ borderRadius: 2, border: "solid", borderWidth: 2 }}
-        />
+      {renderStructure([45, 135, 205], [27], srcs["badguys_tower.png"], 20)}
+      {renderStructure([70, 135, 230], [255], srcs["goodguys_tower.png"], 20)}
+      {renderStructure([21], [100, 150, 200], srcs["goodguys_tower.png"], 20)}
+      {renderStructure([256], [85, 135, 185], srcs["badguys_tower.png"], 20)}
+      {renderStructure(
+        [60, 80, 115],
+        [210, 190, 160],
+        srcs["goodguys_tower_angle.png"],
+        20
+      )}
+      {renderStructure(
+        [220, 190, 155],
+        [70, 95, 125],
+        srcs["badguys_tower_angle.png"],
+        20
+      )}
+      {renderStructure([18, 30], [215], srcs["goodguys_rax.png"], 15)}
+      {renderStructure([60], [252, 264], srcs["goodguys_rax.png"], 15)}
+      {renderStructure([48, 58], [215, 225], srcs["goodguys_rax.png"], 15)}
+      {renderStructure([252, 264], [72], srcs["badguys_rax.png"], 15)}
+      {renderStructure([220], [22, 34], srcs["badguys_rax.png"], 15)}
+      {renderStructure([225, 235], [58, 68], srcs["badguys_rax.png"], 15)}
+      {renderStructure([35, 50], [225, 240], srcs["goodguys_tower.png"], 20)}
+      {renderStructure([235, 250], [40, 55], srcs["badguys_tower.png"], 20)}
+      {renderStructure([23], [240], srcs["goodguys_fort.png"], 30)}
+      {renderStructure([250], [27], srcs["badguys_fort.png"], 30)}
     </Box>
   );
 }
+
+function renderStructure(x, y, src, width) {
+  return (
+    <Box>
+      {x.length > y.length &&
+        x.map((x, i) => (
+          <img
+            key={x + i}
+            src={src}
+            style={{ position: "absolute", width: width, left: x, top: y[0] }}
+          />
+        ))}
+      {y.length > x.length &&
+        y.map((y, i) => (
+          <img
+            key={y + i}
+            src={src}
+            style={{ position: "absolute", width: width, left: x[0], top: y }}
+          />
+        ))}
+      {x.length === y.length &&
+        x.map((x, i) => (
+          <img
+            key={x + i}
+            src={src}
+            style={{ position: "absolute", width: width, left: x, top: y[i] }}
+          />
+        ))}
+    </Box>
+  );
+}
+
+const MapImg = styled("img")(({ theme, src, width, x, y }) => ({
+  width: width,
+  backgroundImage: src,
+}));
+
+function botTowers() {
+  var x = [55, 135, 205];
+  var y = 27;
+}
+
+function midTowers() {
+  var x = [60, 80, 115];
+  var y = [70, 90, 120];
+}
+
+function topTowers() {
+  var x = 22;
+  var y = [85, 130, 180];
+}
+
+function barracks() {
+  var x = [20, 32, 65, 65];
+  var y = [72, 72, 24, 36];
+}
+
+function angledBarracks() {
+  var x = [48, 58];
+  var y = [66, 58];
+}
+
+function tier4Towers() {
+  var x = [30, 40];
+  var y = [55, 40];
+}
+
+function ancients() {
+  var x = 19;
+  var y = 33;
+}
+
+/*
+      <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 22, bottom: 180 }}
+        />
+        <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 22, bottom: 130 }}
+        />
+        <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 22, bottom: 85 }}
+        />
+        <img // 258, [90, 130, 180] // 19, [175, 125, 85] // 22,
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 55, bottom: 27 }}
+        />
+        <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 135, bottom: 27 }}
+        />
+        <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 205, bottom: 27 }}
+        />
+
+        <img
+          src={srcs["goodguys_tower_angle.png"]}
+          style={{ position: "absolute", width: 20, left: 60, bottom: 70 }}
+        />
+        <img
+          src={srcs["goodguys_tower_angle.png"]}
+          style={{ position: "absolute", width: 20, left: 115, bottom: 120 }}
+        />
+        <img
+          src={srcs["goodguys_tower_angle.png"]}
+          style={{ position: "absolute", width: 20, left: 80, bottom: 90 }}
+        />
+        <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 30, bottom: 55 }}
+        />
+
+        <img
+          src={srcs["goodguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 40, bottom: 40 }}
+        />
+        <img
+          src={srcs["goodguys_rax.png"]}
+          style={{ position: "absolute", width: 15, left: 20, bottom: 72 }}
+        />
+
+        <img
+          src={srcs["goodguys_rax.png"]}
+          style={{ position: "absolute", width: 15, left: 32, bottom: 72 }}
+        />
+        <img
+          src={srcs["goodguys_rax.png"]}
+          style={{ position: "absolute", width: 15, left: 65, bottom: 24 }}
+        />
+
+        <img 
+          src={srcs["goodguys_rax.png"]}
+          style={{ position: "absolute", width: 15, left: 65, bottom: 36 }}
+        />
+        <img
+          src={srcs["goodguys_rax_angle.png"]}
+          style={{ position: "absolute", width: 15, left: 48, bottom: 66 }}
+        />
+        <img
+          src={srcs["goodguys_rax_angle.png"]}
+          style={{ position: "absolute", width: 15, left: 58, bottom: 58 }}
+        />
+        <img
+          src={srcs["goodguys_fort.png"]}
+          style={{
+            position: "absolute",
+            width: 30,
+            left: 19,
+            bottom: 33,
+            filter: "grayscale(100%)",
+          }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 55, top: 27 }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 135, top: 27 }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, left: 205, top: 27 }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 22, top: 85 }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 22, top: 130 }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 22, top: 180 }}
+        />
+        <img
+          src={srcs["badguys_tower_angle.png"]}
+          style={{ position: "absolute", width: 20, right: 60, top: 70 }}
+        />
+        <img
+          src={srcs["badguys_tower_angle.png"]}
+          style={{ position: "absolute", width: 20, right: 80, top: 90 }}
+        />
+        <img
+          src={srcs["badguys_tower_angle.png"]}
+          style={{ position: "absolute", width: 20, right: 115, top: 120 }}
+        />
+        <img
+          src={srcs["badguys_rax.png"]}
+          style={{ position: "absolute", width: 15, right: 20, top: 72 }}
+        />
+        <img
+          src={srcs["badguys_rax.png"]}
+          style={{ position: "absolute", width: 15, right: 32, top: 72 }}
+        />
+        <img
+          src={srcs["badguys_rax.png"]}
+          style={{ position: "absolute", width: 15, right: 65, top: 24 }}
+        />
+        <img
+          src={srcs["badguys_rax.png"]}
+          style={{ position: "absolute", width: 15, right: 65, top: 36 }}
+        />
+        <img
+          src={srcs["badguys_rax_angle.png"]}
+          style={{ position: "absolute", width: 15, right: 48, top: 66 }}
+        />
+
+        <img 
+          src={srcs["badguys_rax_angle.png"]}
+          style={{ position: "absolute", width: 15, right: 58, top: 58 }}
+        />
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 30, top: 55 }}
+        />
+
+        <img
+          src={srcs["badguys_tower.png"]}
+          style={{ position: "absolute", width: 20, right: 40, top: 40 }}
+        />
+        <img
+          src={srcs["badguys_fort.png"]}
+          style={{ position: "absolute", width: 30, right: 19, top: 33 }}
+        />
+        */

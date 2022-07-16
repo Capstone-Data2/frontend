@@ -17,7 +17,7 @@ import ability_ids_json from "../constants/ability_ids.json";
 import heroes_json from "../constants/heroes.json";
 import { alpha, styled } from "@mui/material/styles";
 
-export function AbilityBuildsTable({ players }) {
+function AbilityBuildsTable({ players }) {
   var ranks = [
     "Unranked",
     "Herald",
@@ -173,10 +173,8 @@ export function AbilityBuildsTable({ players }) {
               {(checkHeroAbilities(player).map((ability, i) => (
                 <StyledTableCell key={i} sx={{ maxWidth: 25, px: 0 }}>
                   {ability !== undefined &&
-                    <Box 
-                    sx={{":hover": {cursor: "help"}}} 
-                    >
-                      {LoadAbilityIcon(ability)}
+                    <Box sx={{":hover": {cursor: "help"}}} >
+                      <LoadAbilityIcon ability={ability}/>
                     </Box>
                   }
                 </StyledTableCell>
@@ -188,3 +186,5 @@ export function AbilityBuildsTable({ players }) {
     </Table>
   );
 }
+
+export default React.memo(AbilityBuildsTable)

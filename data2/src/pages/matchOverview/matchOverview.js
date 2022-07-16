@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { fetchMatchDetails } from "./matchDetailsSlice";
+import { fetchMatchDetails, removeHover, setHover } from "./matchDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
-import { Box, Typography, Paper, Button, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import { PicksAndBansList, GameMap } from "../../common/images";
-import { MatchDetailsTable } from "../../components/MatchDetailsTable";
-import { AbilityBuildsTable } from "../../components/AbilityBuildsTable";
-
+import MatchDetailsTable from "../../components/MatchDetailsTable";
+import AbilityBuildsTable from "../../components/AbilityBuildsTable";
+import { hoverPaper } from "../../components/HoverPaper";
 
 export default function MatchOverview() {
   const { id } = useParams();
@@ -17,21 +23,20 @@ export default function MatchOverview() {
     (state) => state.match_details.match_details
   );
   const loading = useSelector((state) => state.match_details.loading);
-  const hover = useSelector((state) => state.hover)
+  const hover = useSelector((state) => state.hover);
   const dispatch = useDispatch();
   const [page, setPage] = useState(window.location.href.split("/").pop());
-  const [players, setPlayers] = useState({});
   let location = useLocation();
+  const playersMemoized = useMemo(
+    () => getPlayerDetails(match_details.players),
+    [match_details]
+  );
 
   useEffect(() => {
     setPage(location.pathname.split("/").pop());
     if (match_details.match_id !== parseInt(id) && !loading) {
       dispatch(fetchMatchDetails(id));
     }
-    if (match_details.match_id !== 0) {
-      setPlayers(getPlayerDetails(match_details.players));
-    }
-
   }, [dispatch, id, location, match_details, loading]);
 
   return (
@@ -67,6 +72,11 @@ export default function MatchOverview() {
                 "linear-gradient(to right, rgb(225, 215, 188, 0.7), rgb(215, 205, 178, 0.7));",
             }}
           >
+            <Box>
+              {hover && 
+                hoverPaper(hover.type, hover.hovered, hover.location.x, hover.location.y)
+              }
+            </Box>
             <Box
               sx={{
                 display: "flex",
@@ -98,8 +108,8 @@ export default function MatchOverview() {
                   </Paper>
                 )}
               </Box>
-              {Object.keys(players).length !== 0 && (
-                <MatchDetailsTable players={players.radiant} />
+              {Object.keys(playersMemoized).length !== 0 && (
+                <MatchDetailsTable players={playersMemoized.radiant} />
               )}
             </Box>
             <PicksAndBansList picks_bans={match_details.picks_bans} />
@@ -134,8 +144,8 @@ export default function MatchOverview() {
                   </Paper>
                 )}
               </Box>
-              {Object.keys(players).length !== 0 && (
-                <MatchDetailsTable players={players.dire} />
+              {Object.keys(playersMemoized).length !== 0 && (
+                <MatchDetailsTable players={playersMemoized.dire} />
               )}
             </Box>
             <Box
@@ -149,8 +159,8 @@ export default function MatchOverview() {
               <Box sx={{ display: "flex", mb: 1 }}>
                 <Typography sx={{}}>Radiant Ability Builds</Typography>
               </Box>
-              {Object.keys(players).length !== 0 && (
-                <AbilityBuildsTable players={players.radiant} />
+              {Object.keys(playersMemoized).length !== 0 && (
+                <AbilityBuildsTable players={playersMemoized.radiant} />
               )}
             </Box>
             <Box
@@ -164,8 +174,9 @@ export default function MatchOverview() {
               <Box sx={{ display: "flex", mb: 1 }}>
                 <Typography sx={{}}>Dire Ability Builds</Typography>
               </Box>
-              {Object.keys(players).length !== 0 && (
-                <AbilityBuildsTable players={players.dire} />
+
+              {Object.keys(playersMemoized).length !== 0 && (
+                <AbilityBuildsTable players={playersMemoized.dire} />
               )}
             </Box>
             <Box
@@ -179,7 +190,7 @@ export default function MatchOverview() {
               <Box sx={{ display: "flex", mb: 1 }}>
                 <Typography sx={{}}>Building Map</Typography>
               </Box>
-              <GameMap/>
+              <GameMap objectives={match_details.objectives}/>
             </Box>
           </Box>
         </Box>
@@ -189,14 +200,16 @@ export default function MatchOverview() {
 }
 
 function getPlayerDetails(players) {
-  var radiant_players = [];
-  var dire_players = [];
-  players.forEach((player) => {
-    if (player.is_radiant) {
-      radiant_players.push(player);
-    } else {
-      dire_players.push(player);
-    }
-  });
-  return { radiant: radiant_players, dire: dire_players };
+  if (players !== undefined) {
+    var radiant_players = [];
+    var dire_players = [];
+    players.forEach((player) => {
+      if (player.is_radiant) {
+        radiant_players.push(player);
+      } else {
+        dire_players.push(player);
+      }
+    });
+    return { radiant: radiant_players, dire: dire_players };
+  }
 }
