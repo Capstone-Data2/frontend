@@ -44,6 +44,13 @@ function ImportGameMap() {
   return map;
 }
 
+function ImportHeroMap() {
+  const heroes = importImgs(
+    require.context("../constants/map_icons/heroes", false, /\.(png|jpe?g|svg)$/)
+  );
+  return heroes;
+}
+
 export function importImgs(r) {
   let images = {};
   r.keys().map((item) => (images[item.replace("./", "")] = r(item)));
@@ -67,7 +74,7 @@ export function HeroImageList(heroes) {
     <ImageList cols={5} gap={1}>
       {srcs.map((src) => (
         <ImageListItem sx={{ width: "100%" }} key={src}>
-          <img src={src} style={{ borderRadius: 2 }} />
+          <img src={src} alt="" style={{ borderRadius: 2 }} />
         </ImageListItem>
       ))}
     </ImageList>
@@ -498,6 +505,7 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
             border: "solid",
             borderWidth: 2,
           }}
+          alt=""
           onMouseOver={(event) =>
             dispatch(
               setHover({
@@ -518,6 +526,7 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
             border: "solid",
             borderWidth: 2,
           }}
+          alt=""
           onMouseOver={(event) =>
             dispatch(
               setHover({
@@ -533,288 +542,201 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
   );
 });
 
-export const GameMap = React.memo(function GameMap(objectives) {
-  var srcs = ImportGameMap();
-  /*console.log(objectives);
-  objectives.objectives.forEach((objective) => {
+export const GameMap = React.memo(function GameMap({ objectives, players }) {
+  var map_srcs = ImportGameMap();
+  var hero_srcs = ImportHeroMap()
+  var destroyed_obj = []
+  objectives.forEach((objective) => {
     if (objective.type === "building_kill") {
-      console.log(objective.key);
+      destroyed_obj.push(objective.key);
     }
   });
-  //console.log(srcs);
-        {srcs.map((src) => (
-        <ImageListItem sx={{ width: "100%" }} key={src}>
-          <img src={src} style={{ borderRadius: 2 }} />
-        </ImageListItem>
-      ))}
-  */
   return (
     <Box sx={{ display: "flex", position: "relative", width: 300, mb: 4 }}>
-      <img src={srcs["map_img.png"]} style={{ borderRadius: 2 }} />
-      {renderStructures(srcs)}
+      <img src={map_srcs["map_img.png"]} alt="" style={{ borderRadius: 2 }} />
+      {renderStructures(map_srcs, destroyed_obj)}
+      <RenderHeroes srcs={hero_srcs} players={players} />
     </Box>
   );
 });
 
-function renderStructures(srcs) {
+function renderStructures(srcs, destroyed_obj) {
+  var structures = [
+    [[45, 135, 205], [27], srcs["badguys_tower.png"], 20, ["npc_dota_badguys_tower1_top", "npc_dota_badguys_tower2_top", "npc_dota_badguys_tower3_top"], [0, 0, 0]],
+    [[230, 135, 70], [255], srcs["goodguys_tower.png"], 20, ["npc_dota_goodguys_tower1_bot", "npc_dota_goodguys_tower2_bot", "npc_dota_goodguys_tower3_bot"], [0, 0, 0]],
+    [[21], [100, 150, 200], srcs["goodguys_tower.png"], 20, ["npc_dota_goodguys_tower1_top", "npc_dota_goodguys_tower2_top", "npc_dota_goodguys_tower3_top"], [0, 0, 0]],
+    [[256], [185, 135, 85], srcs["badguys_tower.png"], 20, ["npc_dota_badguys_tower1_bot", "npc_dota_badguys_tower2_bot", "npc_dota_badguys_tower3_bot"], [0, 0, 0]],
+    [[115, 80, 60], [160, 190, 210], srcs["goodguys_tower_angle.png"], 20, ["npc_dota_goodguys_tower1_mid", "npc_dota_goodguys_tower2_mid", "npc_dota_goodguys_tower3_mid"], [0, 0, 0]],
+    [[155, 190, 220], [125, 95, 70], srcs["badguys_tower_angle.png"], 20, ["npc_dota_badguys_tower1_mid", "npc_dota_badguys_tower2_mid", "npc_dota_badguys_tower3_mid"], [0, 0, 0]],
+    [[18, 30], [215], srcs["goodguys_rax.png"], 15, ["npc_dota_goodguys_melee_rax_top", "npc_dota_goodguys_range_rax_top"], [0, 0]],
+    [[60], [252, 264], srcs["goodguys_rax.png"], 15, ["npc_dota_goodguys_melee_rax_bot", "npc_dota_goodguys_range_rax_bot"], [0, 0]],
+    [[48, 58], [215, 225], srcs["goodguys_rax_angle.png"], 15, ["npc_dota_goodguys_melee_rax_mid", "npc_dota_goodguys_range_rax_mid"], [0, 0]],
+    [[252, 264], [72], srcs["badguys_rax.png"], 15, ["npc_dota_badguys_melee_rax_bot", "npc_dota_badguys_range_rax_bot"], [0, 0]],
+    [[220], [22, 34], srcs["badguys_rax.png"], 15, ["npc_dota_badguys_melee_rax_top", "npc_dota_badguys_range_rax_top"], [0, 0]],
+    [[225, 235], [58, 68], srcs["badguys_rax_angle.png"], 15, ["npc_dota_badguys_melee_rax_mid", "npc_dota_badguys_range_rax_mid"], [0, 0]],
+    [[35, 50], [225, 240], srcs["goodguys_tower.png"], 20, ["npc_dota_goodguys_tower4", "npc_dota_goodguys_tower4"], [0, 0]],
+    [[235, 250], [40, 55], srcs["badguys_tower.png"], 20, ["npc_dota_badguys_tower4", "npc_dota_badguys_tower4"], [0, 0]],
+    [[23], [240], srcs["goodguys_fort.png"], 30, ["npc_dota_goodguys_fort"], [0]],
+    [[250], [27], srcs["badguys_fort.png"], 30, ["npc_dota_badguys_fort"], [0]]
+  ]
+
+  structures.forEach(structure => {
+    structure[4].forEach((name, i) => {
+      destroyed_obj.forEach(obj => {
+        if (name === obj) {
+          structure[5][i] = 100
+        }
+      });
+    });
+  });
+  return (
+    structures.map((structure, i) => (
+      <Box key={i}>
+        <RenderStructure structure={structure} />
+      </Box>
+    ))
+  );
+}
+
+function RenderStructure(structure) {
+  const dispatch = useDispatch();
+
   return (
     <Box>
-      {renderStructure([45, 135, 205], [27], srcs["badguys_tower.png"], 20)}
-      {renderStructure([70, 135, 230], [255], srcs["goodguys_tower.png"], 20)}
-      {renderStructure([21], [100, 150, 200], srcs["goodguys_tower.png"], 20)}
-      {renderStructure([256], [85, 135, 185], srcs["badguys_tower.png"], 20)}
-      {renderStructure(
-        [60, 80, 115],
-        [210, 190, 160],
-        srcs["goodguys_tower_angle.png"],
-        20
-      )}
-      {renderStructure(
-        [220, 190, 155],
-        [70, 95, 125],
-        srcs["badguys_tower_angle.png"],
-        20
-      )}
-      {renderStructure([18, 30], [215], srcs["goodguys_rax.png"], 15)}
-      {renderStructure([60], [252, 264], srcs["goodguys_rax.png"], 15)}
-      {renderStructure([48, 58], [215, 225], srcs["goodguys_rax.png"], 15)}
-      {renderStructure([252, 264], [72], srcs["badguys_rax.png"], 15)}
-      {renderStructure([220], [22, 34], srcs["badguys_rax.png"], 15)}
-      {renderStructure([225, 235], [58, 68], srcs["badguys_rax.png"], 15)}
-      {renderStructure([35, 50], [225, 240], srcs["goodguys_tower.png"], 20)}
-      {renderStructure([235, 250], [40, 55], srcs["badguys_tower.png"], 20)}
-      {renderStructure([23], [240], srcs["goodguys_fort.png"], 30)}
-      {renderStructure([250], [27], srcs["badguys_fort.png"], 30)}
+      {structure.structure[0].length > structure.structure[1].length &&
+        structure.structure[0].map((x, i) => (
+          <MapImg
+            key={structure.structure[4][i]}
+            src={structure.structure[2]}
+            width={structure.structure[3]}
+            grayscale={structure.structure[5][i]}
+            sx={{ left: x, top: structure.structure[1][0] }}
+            alt=""
+            onMouseOver={(event) =>
+              dispatch(
+                setHover({
+                  type: "tower",
+                  hovered: structure.structure[4][i],
+                  location: { x: event.pageX + 30, y: event.pageY },
+                })
+              )
+            }
+            onMouseLeave={() => dispatch(removeHover())}
+          />
+        ))}
+      {structure.structure[1].length > structure.structure[0].length &&
+        structure.structure[1].map((y, i) => (
+          <MapImg
+            key={structure.structure[4][i]}
+            src={structure.structure[2]}
+            width={structure.structure[3]}
+            grayscale={structure.structure[5][i]}
+            sx={{ left: structure.structure[0][0], top: y }}
+            alt=""
+            onMouseOver={(event) =>
+              dispatch(
+                setHover({
+                  type: "tower",
+                  hovered: structure.structure[4][i],
+                  location: { x: event.pageX + 30, y: event.pageY },
+                })
+              )
+            }
+            onMouseLeave={() => dispatch(removeHover())}
+          />
+        ))}
+      {structure.structure[0].length === structure.structure[1].length &&
+        structure.structure[0].map((x, i) => (
+          <MapImg
+            key={structure.structure[4][i] + i}
+            src={structure.structure[2]}
+            width={structure.structure[3]}
+            grayscale={structure.structure[5][i]}
+            sx={{ left: x, top: structure.structure[1][i] }}
+            alt=""
+            onMouseOver={(event) =>
+              dispatch(
+                setHover({
+                  type: "tower",
+                  hovered: structure.structure[4][i],
+                  location: { x: event.pageX + 30, y: event.pageY },
+                })
+              )
+            }
+            onMouseLeave={() => dispatch(removeHover())}
+          />
+        ))}
     </Box>
   );
 }
 
-function renderStructure(x, y, src, width) {
-  return (
-    <Box>
-      {x.length > y.length &&
-        x.map((x, i) => (
-          <img
-            key={x + i}
-            src={src}
-            style={{ position: "absolute", width: width, left: x, top: y[0] }}
-          />
-        ))}
-      {y.length > x.length &&
-        y.map((y, i) => (
-          <img
-            key={y + i}
-            src={src}
-            style={{ position: "absolute", width: width, left: x[0], top: y }}
-          />
-        ))}
-      {x.length === y.length &&
-        x.map((x, i) => (
-          <img
-            key={x + i}
-            src={src}
-            style={{ position: "absolute", width: width, left: x, top: y[i] }}
-          />
-        ))}
-    </Box>
-  );
-}
-
-const MapImg = styled("img")(({ theme, src, width, x, y }) => ({
+const MapImg = styled("img")(({ theme, width, grayscale }) => ({
+  position: "absolute",
   width: width,
-  backgroundImage: src,
+  filter: `grayscale(${grayscale}%)`,
+  ":hover": {
+    cursor: "help"
+  }
 }));
 
-function botTowers() {
-  var x = [55, 135, 205];
-  var y = 27;
+function RenderHeroes({ srcs, players }) {
+  const dispatch = useDispatch();
+  var dire_top = [[45], [27]]
+  var dire_bot = [[256], [185]]
+  var dire_mid = [[155], [125]]
+  var radiant_top = [[21], [100]]
+  var radiant_bot = [[230], [255]]
+  var radiant_mid = [[115], [160]]
+  var x = []
+  var y = []
+  var all_players = []
+  players.radiant.map(player => all_players.push(player))
+  players.dire.map(player => all_players.push(player))
+
+  all_players.forEach(player => {
+    var new_x_y = []
+    if (player.ml_lane_role === 1) {
+      new_x_y = player.is_radiant ? [210, 255] : [60, 27]
+    }
+    if (player.ml_lane_role === 2) {
+      new_x_y = player.is_radiant ? [130, 160] : [130, 110]
+    }
+    if (player.ml_lane_role === 3) {
+      new_x_y = player.is_radiant ? [40, 100] : [233, 185]
+    }
+    if (player.ml_lane_role === 4) {
+      new_x_y = player.is_radiant ? [40, 125] : [233, 160]
+    }
+    if (player.ml_lane_role === 5) {
+      new_x_y = player.is_radiant ? [185, 255] : [85, 27]
+    }
+    x.push(new_x_y[0])
+    y.push(new_x_y[1])
+  });
+
+
+  return (
+    <Box>
+      {all_players.map((player, i) =>
+        <MapImg
+          key={player.hero_id + i}
+          src={srcs[heroes_json[player.hero_id].icon]}
+          width={25}
+          grayscale={0}
+          sx={{left: x[i], top: y[i]}}
+          onMouseOver={(event) =>
+            dispatch(
+              setHover({
+                type: "hero",
+                hovered: player,
+                location: { x: event.pageX + 30, y: event.pageY },
+              })
+            )
+          }
+          onMouseLeave={() => dispatch(removeHover())}
+        />
+      )}
+    </Box>
+
+  );
 }
-
-function midTowers() {
-  var x = [60, 80, 115];
-  var y = [70, 90, 120];
-}
-
-function topTowers() {
-  var x = 22;
-  var y = [85, 130, 180];
-}
-
-function barracks() {
-  var x = [20, 32, 65, 65];
-  var y = [72, 72, 24, 36];
-}
-
-function angledBarracks() {
-  var x = [48, 58];
-  var y = [66, 58];
-}
-
-function tier4Towers() {
-  var x = [30, 40];
-  var y = [55, 40];
-}
-
-function ancients() {
-  var x = 19;
-  var y = 33;
-}
-
-/*
-      <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 22, bottom: 180 }}
-        />
-        <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 22, bottom: 130 }}
-        />
-        <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 22, bottom: 85 }}
-        />
-        <img // 258, [90, 130, 180] // 19, [175, 125, 85] // 22,
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 55, bottom: 27 }}
-        />
-        <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 135, bottom: 27 }}
-        />
-        <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 205, bottom: 27 }}
-        />
-
-        <img
-          src={srcs["goodguys_tower_angle.png"]}
-          style={{ position: "absolute", width: 20, left: 60, bottom: 70 }}
-        />
-        <img
-          src={srcs["goodguys_tower_angle.png"]}
-          style={{ position: "absolute", width: 20, left: 115, bottom: 120 }}
-        />
-        <img
-          src={srcs["goodguys_tower_angle.png"]}
-          style={{ position: "absolute", width: 20, left: 80, bottom: 90 }}
-        />
-        <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 30, bottom: 55 }}
-        />
-
-        <img
-          src={srcs["goodguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 40, bottom: 40 }}
-        />
-        <img
-          src={srcs["goodguys_rax.png"]}
-          style={{ position: "absolute", width: 15, left: 20, bottom: 72 }}
-        />
-
-        <img
-          src={srcs["goodguys_rax.png"]}
-          style={{ position: "absolute", width: 15, left: 32, bottom: 72 }}
-        />
-        <img
-          src={srcs["goodguys_rax.png"]}
-          style={{ position: "absolute", width: 15, left: 65, bottom: 24 }}
-        />
-
-        <img 
-          src={srcs["goodguys_rax.png"]}
-          style={{ position: "absolute", width: 15, left: 65, bottom: 36 }}
-        />
-        <img
-          src={srcs["goodguys_rax_angle.png"]}
-          style={{ position: "absolute", width: 15, left: 48, bottom: 66 }}
-        />
-        <img
-          src={srcs["goodguys_rax_angle.png"]}
-          style={{ position: "absolute", width: 15, left: 58, bottom: 58 }}
-        />
-        <img
-          src={srcs["goodguys_fort.png"]}
-          style={{
-            position: "absolute",
-            width: 30,
-            left: 19,
-            bottom: 33,
-            filter: "grayscale(100%)",
-          }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 55, top: 27 }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 135, top: 27 }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, left: 205, top: 27 }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 22, top: 85 }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 22, top: 130 }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 22, top: 180 }}
-        />
-        <img
-          src={srcs["badguys_tower_angle.png"]}
-          style={{ position: "absolute", width: 20, right: 60, top: 70 }}
-        />
-        <img
-          src={srcs["badguys_tower_angle.png"]}
-          style={{ position: "absolute", width: 20, right: 80, top: 90 }}
-        />
-        <img
-          src={srcs["badguys_tower_angle.png"]}
-          style={{ position: "absolute", width: 20, right: 115, top: 120 }}
-        />
-        <img
-          src={srcs["badguys_rax.png"]}
-          style={{ position: "absolute", width: 15, right: 20, top: 72 }}
-        />
-        <img
-          src={srcs["badguys_rax.png"]}
-          style={{ position: "absolute", width: 15, right: 32, top: 72 }}
-        />
-        <img
-          src={srcs["badguys_rax.png"]}
-          style={{ position: "absolute", width: 15, right: 65, top: 24 }}
-        />
-        <img
-          src={srcs["badguys_rax.png"]}
-          style={{ position: "absolute", width: 15, right: 65, top: 36 }}
-        />
-        <img
-          src={srcs["badguys_rax_angle.png"]}
-          style={{ position: "absolute", width: 15, right: 48, top: 66 }}
-        />
-
-        <img 
-          src={srcs["badguys_rax_angle.png"]}
-          style={{ position: "absolute", width: 15, right: 58, top: 58 }}
-        />
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 30, top: 55 }}
-        />
-
-        <img
-          src={srcs["badguys_tower.png"]}
-          style={{ position: "absolute", width: 20, right: 40, top: 40 }}
-        />
-        <img
-          src={srcs["badguys_fort.png"]}
-          style={{ position: "absolute", width: 30, right: 19, top: 33 }}
-        />
-        */

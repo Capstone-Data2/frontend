@@ -46,7 +46,7 @@ const ListTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MatchListTable({ type }) {
-  const matches = useSelector((state) => state.matches.value);
+  const matches = useSelector((state) => state.matches.match_list);
   let navigate = useNavigate();
 
   return (
@@ -78,7 +78,7 @@ function MatchListTable({ type }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {matches[0].map((match) => (
+        {matches.map((match) => (
           <ListTableRow
             key={match.match_id}
             onClick={() => {

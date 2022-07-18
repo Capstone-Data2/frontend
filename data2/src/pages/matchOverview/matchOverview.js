@@ -16,6 +16,7 @@ import { PicksAndBansList, GameMap } from "../../common/images";
 import MatchDetailsTable from "../../components/MatchDetailsTable";
 import AbilityBuildsTable from "../../components/AbilityBuildsTable";
 import { hoverPaper } from "../../components/HoverPaper";
+import { Loading } from "../../components/loading"
 
 export default function MatchOverview() {
   const { id } = useParams();
@@ -41,22 +42,9 @@ export default function MatchOverview() {
 
   return (
     <ThemeProvider theme={theme}>
-      {loading && (
-        <Box
-          flexGrow={1}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "91.3vh",
-            width: "100wh",
-            backgroundColor: theme.palette.primary.main,
-          }}
-        >
-          <CircularProgress sx={{ color: "black" }} />
-        </Box>
-      )}
+      {loading && 
+        <Loading/>
+      }
       {!loading && match_details.match_id !== 0 && (
         <Box>
           <MatchDetailsHeader page={page} />
@@ -190,8 +178,10 @@ export default function MatchOverview() {
               <Box sx={{ display: "flex", mb: 1 }}>
                 <Typography sx={{}}>Building Map</Typography>
               </Box>
-              <GameMap objectives={match_details.objectives}/>
-            </Box>
+              {Object.keys(playersMemoized).length !== 0 && (
+                <GameMap objectives={match_details.objectives} players={playersMemoized}/>
+              )}
+              </Box>
           </Box>
         </Box>
       )}
