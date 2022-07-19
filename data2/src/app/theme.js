@@ -19,27 +19,35 @@ const theme = createTheme({
       red: "#EB3223",
     },
     radiant: {
-      darker: "#4A0905",
-      dark: "#7C160D",
+      darker: "#225213",
+      dark: "#3B8524",
+      text: "#1cb823",
       main: "#75F94C",
     },
     dire: {
-      darker: "#225213",
-      dark: "#3B8524",
+      darker: "#4A0905",
+      dark: "#7C160D",
       main: "#EB3223",
     },
   },
   typography: {
     fontFamily: ["Roboto Slab"],
     h1: {
-      fontFamily: "Roboto Slab",
       fontSize: 52,
       fontWeight: "bold",
     },
+    h2: {
+      fontSize: 32,
+      fontWeight: 600,
+    },
     subtitle2: {
-      fontFamily: "Roboto Slab",
       fontSize: 16,
       fontWeight: 500,
+    },
+    match_time: {
+      fontFamily: ["Roboto Slab"],
+      fontSize: 28,
+      fontWeight: 400,
     },
   },
   components: {

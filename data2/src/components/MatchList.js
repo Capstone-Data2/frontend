@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   Box,
-  Button,
   Typography,
   Table,
   TableBody,
@@ -12,7 +11,7 @@ import {
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-import { MatchRank, LoadHeroIcons } from "../common/images";
+import { MatchRank, HeroImageList } from "../common/images";
 import { TimeDifference, FormatTime } from "../common/time";
 import { useNavigate } from "react-router-dom";
 
@@ -22,19 +21,7 @@ const CommonBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
 }));
 
-const Wrapper = styled(CommonBox)(({ theme }) => ({
-  flexDirection: "column",
-  backgroundColor: theme.palette.primary.main,
-  height: "100%",
-}));
-
-const BtnWrapper = styled(CommonBox)(({ theme }) => ({
-  marginTop: 30,
-  marginBottom: 10,
-  width: "100%",
-}));
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const ListTableCell = styled(TableCell)(({ theme }) => ({
   
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.primary.light,
@@ -45,7 +32,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const ListTableRow = styled(TableRow)(({ theme }) => ({
   transition: theme.transitions.create(["background-color"]),
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.primary.dark,
@@ -58,92 +45,77 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function MatchTypeButton({ type, click, text }){
-  var current_page = window.location.href.split("/").pop()
-  var btn_color = current_page === type ? "main" : "secondary"
-  return (
-    <Button
-      variant="main"
-      color={btn_color}
-      sx={{ boxShadow: 2 }}
-      onClick={click}
-    >
-      {text}
-    </Button>
-  );
-}
-
 function MatchListTable({ type }) {
-  const matches = useSelector((state) => state.matches.value);
+  const matches = useSelector((state) => state.matches.match_list);
   let navigate = useNavigate();
 
   return (
     <Table sx={{ width: "75%",  }} aria-label="customized table">
       <TableHead>
         <TableRow>
-          <StyledTableCell sx={{ width: "10%", borderTopLeftRadius: 5 }}>
+          <ListTableCell sx={{ width: "10%", borderTopLeftRadius: 5 }}>
             <Typography variant="subtitle2">Match ID</Typography>
-          </StyledTableCell>
+          </ListTableCell>
           {type === "public" && (
-            <StyledTableCell sx={{ width: "10%" }}>
+            <ListTableCell sx={{ width: "10%" }}>
               <Typography variant="subtitle2">Rank</Typography>
-            </StyledTableCell>
+            </ListTableCell>
           )}
           {type === "professional" && (
-            <StyledTableCell sx={{ width: "10%" }}>
+            <ListTableCell sx={{ width: "10%" }}>
               <Typography variant="subtitle2">Teams</Typography>
-            </StyledTableCell>
+            </ListTableCell>
           )}
-          <StyledTableCell sx={{ width: "10%" }}>
+          <ListTableCell sx={{ width: "10%" }}>
             <Typography variant="subtitle2">Duration</Typography>
-          </StyledTableCell>
-          <StyledTableCell sx={{ width: "30%" }}>
+          </ListTableCell>
+          <ListTableCell sx={{ width: "30%" }}>
             <Typography variant="subtitle2">Radiant</Typography>
-          </StyledTableCell>
-          <StyledTableCell sx={{ width: "30%", borderTopRightRadius: 5 }}>
+          </ListTableCell>
+          <ListTableCell sx={{ width: "30%", borderTopRightRadius: 5 }}>
             <Typography variant="subtitle2">Dire</Typography>
-          </StyledTableCell>
+          </ListTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {matches[0].map((match) => (
-          <StyledTableRow
+        {matches.map((match) => (
+          <ListTableRow
             key={match.match_id}
             onClick={() => {
-              navigate(`/matches/${match.match_id}`);
+              navigate(`/matches/${match.match_id}/overview`);
             }}
             sx={{ ":hover": { cursor: "pointer" } }}
           >
-            <StyledTableCell>
+            <ListTableCell>
               <Typography variant="subtitle1">{match.match_id}</Typography>
               <Typography variant="caption">
                 {TimeDifference(match.time_difference)}
               </Typography>
-            </StyledTableCell>
+            </ListTableCell>
             {type === "public" && (
-              <StyledTableCell> {MatchRank(match)} </StyledTableCell>
+              <ListTableCell> {MatchRank(match)} </ListTableCell>
             )}
             {type === "professional" && (
-              <StyledTableCell>
+              <ListTableCell>
                 <Typography variant="caption"> Team1 </Typography>
                 <Typography variant="caption"> vs </Typography>
                 <Typography variant="caption"> Team2 </Typography>
-              </StyledTableCell>
+              </ListTableCell>
             )}
-            <StyledTableCell>
+            <ListTableCell>
               <Typography> {FormatTime(match.duration)} </Typography>
-            </StyledTableCell>
-            <StyledTableCell sx={{ pt: 0, pb: 0 }}>
-              {LoadHeroIcons(match.radiant_team)}
-            </StyledTableCell>
-            <StyledTableCell sx={{ pt: 0, pb: 0 }}>
-              {LoadHeroIcons(match.dire_team)}
-            </StyledTableCell>
-          </StyledTableRow>
+            </ListTableCell>
+            <ListTableCell sx={{ pt: 0, pb: 0 }}>
+              {HeroImageList(match.radiant_team)}
+            </ListTableCell>
+            <ListTableCell sx={{ pt: 0, pb: 0 }}>
+              {HeroImageList(match.dire_team)}
+            </ListTableCell>
+          </ListTableRow>
         ))}
       </TableBody>
     </Table>
   );
 }
 
-export { Wrapper, BtnWrapper, MatchListTable, MatchTypeButton };
+export { CommonBox, MatchListTable };

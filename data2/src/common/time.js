@@ -9,7 +9,8 @@ export function FormatTime(totalseconds) {
     }
   }
   
-export function TimeDifference(time) {
+export function TimeDifference(time=null) {
+  if(time != null) {
     if (time.includes("day")) {
       return time.split(",")[0] + " ago";
     } else {
@@ -25,3 +26,4 @@ export function TimeDifference(time) {
       }
     }
   }
+}

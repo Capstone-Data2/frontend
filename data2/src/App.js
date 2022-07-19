@@ -24,7 +24,7 @@ function App() {
                 element={<MatchesList />}
               />
               <Route path="matches/public" element={<MatchesList />} />
-              <Route path="matches/:id" element={<MatchOverview />} />
+              <Route path="matches/:id/overview" element={<MatchOverview />} />
               <Route
                 path="/"
                 element={<Navigate to="/matches/professional" replace />}
