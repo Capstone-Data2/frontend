@@ -5,11 +5,13 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { FormatTime, TimeDifference } from "../common/time";
 import { MatchButton } from "./Buttons";
 
 export default function MatchDetailsHeader({ page }) {
     const { match_details } = useSelector((state) => state.match_details);
+    let navigate = useNavigate();
     
   return (
     <Box
@@ -100,7 +102,7 @@ export default function MatchDetailsHeader({ page }) {
           />
           <MatchButton
             type={page === "log" ? "main" : "secondary"}
-            click={() => {console.log("hi")}}
+            click={() => navigate("/matches/"+match_details.match_id+"/log")}
             text="Log"
           />
         </Box>
