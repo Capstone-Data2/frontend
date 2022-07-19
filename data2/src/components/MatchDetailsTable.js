@@ -6,16 +6,15 @@ import {
     Typography,
     Table,
     TableBody,
-    TableCell,
-    tableCellClasses,
     TableHead,
     TableRow,
     Link
 } from "@mui/material";
 import { ItemImageList, LoadHeroIcons, BuffImageList } from "../common/images";
 import ProgressBar from "./ProgressBar";
+import { StyledTableCell, StyledTableRow } from "../common/styled.js";
 
-export function MatchDetailsTable({ players }) {
+function MatchDetailsTable({ players }) {
     var headers = [
         "Player",
         "Level",
@@ -40,7 +39,7 @@ export function MatchDetailsTable({ players }) {
     ]
 
     return (
-        <Table sx={{ width: "100%", backgroundColor: "white", mb: 4, }}>
+        <Table sx={{ minWidth: 1160, maxWidth: "100%", backgroundColor: "white", mb: 4, }}>
             <TableHead>
                 <TableRow>
                     {headers.map((header) => (
@@ -58,7 +57,7 @@ export function MatchDetailsTable({ players }) {
                                 <Box sx={{ display: "flex" }}>
                                     <Box sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>
                                         <img
-                                            src={LoadHeroIcons(player.hero_id.toString())}
+                                            src={LoadHeroIcons(player.hero_id.toString().split(","))}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         />
                                     </Box>
@@ -75,7 +74,7 @@ export function MatchDetailsTable({ players }) {
                                     </Box>
                                 </Box>
                             </StyledTableCell>
-                            <StyledTableCell sx={{}}>
+                            <StyledTableCell>
                                 <ProgressBar
                                     progress={player.level}
                                     size={30}
@@ -133,26 +132,4 @@ export function MatchDetailsTable({ players }) {
     );
 }
 
-
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.black,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        backgroundColor: alpha(theme.palette.primary.dark, 0.8),
-    },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    transition: theme.transitions.create(["background-color"]),
-    "&:last-child td, &:last-child th": {
-        border: 0,
-    },
-    "&:hover": {
-        backgroundColor: "#FFD97F",
-    },
-}));
+export default React.memo(MatchDetailsTable)

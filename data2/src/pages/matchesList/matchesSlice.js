@@ -1,14 +1,38 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getMatchesList } from '../../common/api';
+
+export const fetchMatchesList = createAsyncThunk(
+  "matches/fetchMatchesListStatus",
+  async (selected_rank, thunkAPI) => {
+    const response = await getMatchesList(selected_rank);
+    return response;
+  }
+);
 
 export const matchesSlice = createSlice({
   name: 'matches',
   initialState: {
-    value: [[], 0],
+    match_list: [],
+    rank: 0,
+    loading: true
   },
   reducers: {
     fill: (state, action) => {
-      state.value = action.payload
+      state.match_list = action.payload.match_list
+      state.rank = action.payload.rank
+      state.loading = false
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchMatchesList.fulfilled, (state, action) => {
+      state.match_list = action.payload.match_list
+      state.rank = action.payload.rank
+      state.loading = false
+    });
+    builder.addCase(fetchMatchesList.pending, (state) => {
+      state.loading = true
+    });
+
   },
 })
 
