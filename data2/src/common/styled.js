@@ -1,4 +1,3 @@
-import React from "react";
 import { alpha, styled } from "@mui/material/styles";
 import {
     TableCell,

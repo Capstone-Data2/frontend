@@ -1,5 +1,5 @@
 import React from "react";
-import { alpha, styled } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import theme from "../app/theme.js";
 import {
     Box,
@@ -58,6 +58,7 @@ function MatchDetailsTable({ players }) {
                                     <Box sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>
                                         <img
                                             src={LoadHeroIcons(player.hero_id.toString().split(","))}
+                                            alt=""
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         />
                                     </Box>

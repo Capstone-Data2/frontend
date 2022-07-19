@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   ImageList,
   ImageListItem,
   Radio,
   Typography,
-  Paper,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import heroes_json from "../constants/heroes.json";
@@ -120,6 +119,7 @@ export function ListRankImgs() {
     if (rank.split("-")[1] === "0.png") {
       return rank;
     }
+    return undefined
   });
 
   const handleChange = (event) => {
@@ -693,12 +693,6 @@ const MapImg = styled("img")(({ theme, width, grayscale }) => ({
 
 function RenderHeroes({ srcs, players }) {
   const dispatch = useDispatch();
-  var dire_top = [[45], [27]]
-  var dire_bot = [[256], [185]]
-  var dire_mid = [[155], [125]]
-  var radiant_top = [[21], [100]]
-  var radiant_bot = [[230], [255]]
-  var radiant_mid = [[115], [160]]
   var x = []
   var y = []
   var all_players = []

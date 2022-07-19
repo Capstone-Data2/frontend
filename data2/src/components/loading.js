@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import theme from "../app/theme.js";
 
-export function Loading({ }) {
+export function Loading() {
     return (
         <Box
             flexGrow={1}

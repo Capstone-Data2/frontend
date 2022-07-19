@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { fetchMatchDetails, removeHover, setHover } from "./matchDetailsSlice";
+import { fetchMatchDetails } from "./matchDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
@@ -8,8 +8,6 @@ import {
   Box,
   Typography,
   Paper,
-  Button,
-  CircularProgress,
 } from "@mui/material";
 import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import { PicksAndBansList, GameMap } from "../../common/images";

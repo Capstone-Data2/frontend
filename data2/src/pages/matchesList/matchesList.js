@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fill, select, fetchMatchesList } from "./matchesSlice";
+import { select, fetchMatchesList } from "./matchesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ListRankImgs } from "../../common/images";
 import { ThemeProvider } from "@mui/material/styles";
@@ -31,7 +31,6 @@ export default function MatchesList() {
 
   return (
     <ThemeProvider theme={theme}>
-      {console.log(matches)}
       {matches.loading &&
 
         <Loading />

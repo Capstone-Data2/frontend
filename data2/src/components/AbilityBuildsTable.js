@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from "react";
+import React from "react";
 import theme from "../app/theme.js";
 import {
   Box,
@@ -8,14 +8,12 @@ import {
   TableHead,
   TableRow,
   Link,
-  Paper,
 } from "@mui/material";
 import { LoadHeroIcons, LoadAbilityIcon } from "../common/images";
 import { StyledTableCell, StyledTableRow } from "../common/styled.js";
 import hero_abilities_json from "../constants/hero_abilities.json";
 import ability_ids_json from "../constants/ability_ids.json";
 import heroes_json from "../constants/heroes.json";
-import { alpha, styled } from "@mui/material/styles";
 
 function AbilityBuildsTable({ players }) {
   var ranks = [
@@ -44,11 +42,11 @@ function AbilityBuildsTable({ players }) {
           ability_ids_json[element] ===
           hero_ab.abilities[hero_ab.abilities.length - 1]
         ) {
-          if (length >= 5 && ultiCount == 0) {
+          if (length >= 5 && ultiCount === 0) {
             ultiCount++;
             count++;
             upgrade_arr.push(element);
-          } else if (length >= 11 && ultiCount == 1) {
+          } else if (length >= 11 && ultiCount === 1) {
             ultiCount++;
             count++;
             upgrade_arr.push(element);
@@ -60,11 +58,11 @@ function AbilityBuildsTable({ players }) {
             upgrade_arr.push(undefined);
           }
         } else if (ability_ids_json[element].split("_")[0] === "special") {
-          if (length >= 9 && talentCount == 0) {
+          if (length >= 9 && talentCount === 0) {
             talentCount++;
             count++;
             upgrade_arr.push(element);
-          } else if (length >= 14 && talentCount == 1) {
+          } else if (length >= 14 && talentCount === 1) {
             talentCount++;
             count++;
             upgrade_arr.push(element);
@@ -120,6 +118,7 @@ function AbilityBuildsTable({ players }) {
                   >
                     <img
                       src={LoadHeroIcons(player.hero_id.toString().split(","))}
+                      alt=""
                       style={{
                         borderRadius: 2,
                         width: 50,
