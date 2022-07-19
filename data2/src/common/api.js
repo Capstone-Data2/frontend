@@ -1,9 +1,12 @@
 import axios from "axios";
 
+const ip = process.env.REACT_APP_BACKEND_IP;
+
 export async function getMatchesList (selected_rank) {
     var response = {}
+    console.log(ip)
     await axios
-      .get(`http://127.0.0.1:8000/matches/`, {
+      .get(`${ip}/matches/`, {
         params: { rank: selected_rank },
       })
       .then(async (res) => {
@@ -17,8 +20,9 @@ export async function getMatchesList (selected_rank) {
 
 export async function getMatchDetails(match_id){
     var response
+    console.log(ip)
     await axios
-        .get(`http://127.0.0.1:8000/matches/${match_id}`)
+        .get(`${ip}/matches/${match_id}`)
         .then((res) => {
             response = res.data
         })
@@ -31,7 +35,7 @@ export async function getMatchDetails(match_id){
 export async function getMatchLog(match_id){
     var response
     await axios
-        .get(`http://127.0.0.1:8000/matches/${match_id}/log`)
+        .get(`${ip}/matches/${match_id}/log`)
         .then((res) => {
             response = res.data
         })
