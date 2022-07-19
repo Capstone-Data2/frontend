@@ -11,7 +11,8 @@ import theme from "./app/theme.js";
 import Header from "./components/Header.js";
 import MatchesList from "./pages/matchesList/matchesList";
 import MatchOverview from "./pages/matchOverview/matchOverview";
-import MatchLog from './pages/matchLog/matchLog'
+import MatchLog from './pages/matchLog/matchLog';
+import MatchCombat from './pages/matchCombat/matchCombat.js';
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
               <Route path="matches/public" element={<MatchesList />} />
               <Route path="matches/:id/overview" element={<MatchOverview />} />
               <Route path="matches/:id/log" element={<MatchLog />} />
+              <Route path="matches/:id/combat" element={<MatchCombat />} />
               <Route
                 path="/"
                 element={<Navigate to="/matches/professional" replace />}

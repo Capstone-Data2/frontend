@@ -33,8 +33,6 @@ export default function MatchLog() {
 
     useEffect(() => {
         fetchData()
-        console.log('ran')
-        
     }, [])
 
     return (
