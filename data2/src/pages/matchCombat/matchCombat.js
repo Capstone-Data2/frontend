@@ -1,14 +1,17 @@
 import theme from "../../app/theme.js";
 import { ThemeProvider } from "@emotion/react";
 import {
-    Box, Typography,
+    Box, Typography, Button
 } from "@mui/material";
 import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import CombatDamageTable from '../../components/MatchCombatDamageTable';
+import TeamDamageTable from '../../components/MatchTeamDamageTable';
 import { useSelector } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { getMatchLog } from '../../common/api'
+import { getMatchCombatData } from '../../common/api'
+import { MatchButton } from "../../components/Buttons.js";
 
 export default function MatchCombat() {
     const match_details = useSelector(
@@ -16,15 +19,63 @@ export default function MatchCombat() {
     );
 
     const [log, setLog] = useState({})
-    
+    const [combat, setCombat] = useState({})
+    const [teamFight, setTeamFight] = useState({})
+
+    function clickButton(){
+        if (teamFight === false){
+            setTeamFight(true)
+        }
+        else{
+            setTeamFight(false)
+        }
+    }
+
+    function getButtonName(){
+        if(teamFight===false){
+            return ('Teamfights')
+        }
+        else{
+            return ('Combat Overview')
+        }
+    }
     async function fetchData() {
         var res = await getMatchLog(match_details.match_id);
         setLog(res)
+
+        var resCombat = await getMatchCombatData(match_details.match_id)
+        setCombat(resCombat)
     }
 
     useEffect(() => {
         fetchData()
+        
     }, [])
+
+    function getPageDetails(){
+        if(teamFight===false){
+            return(
+                <Box>
+                    <Typography sx={{marginTop:2}}>{'Kills / Damage'}</Typography>
+                    <CombatDamageTable players={teamHeroIds(match_details.picks_bans)} kills={log} match_details={match_details} />
+                    <Typography>Radiant</Typography>
+                    <TeamDamageTable players ={teamHeroIds(match_details.picks_bans)[0]} combat = {combat} />
+                    <Typography>Dire</Typography>
+                    <TeamDamageTable players ={teamHeroIds(match_details.picks_bans)[1]} combat = {combat} />
+                </Box>
+            )
+        }
+
+        else{
+            return(
+            <Box>
+                <Typography>Team Fights</Typography>
+                {console.log('team fights')}
+            </Box>
+            )
+        }
+        
+    }
 
     return (
 
@@ -42,9 +93,17 @@ export default function MatchCombat() {
                     backgroundColor: alpha(theme.palette.primary.main, 0.6),
                 }}
             >
-                <Typography
-                sx={{marginTop:2}}
-                >{'Damage/Kills'}</Typography>
+                <Button
+                   
+                    sx={{
+                        marginTop: 3,
+                        color: theme.palette.secondary.main,
+                        backgroundColor: theme.palette.primary.light
+                    }}
+                    onClick={() => clickButton()}
+                >{getButtonName()}</Button>
+                
+                
                 <Box
                     sx={{
                         display: "flex",
@@ -52,12 +111,18 @@ export default function MatchCombat() {
                         mx: 2,
                         justifyContent: "start",
                         flexDirection: "column",
-                        width: "60%",
+                        width: "70%",
                         borderRadius: 2,
 
                     }}>
-                    {Object.keys(log).length !== 0 && 
-                    <CombatDamageTable players={teamHeroIds(match_details.picks_bans)} kills={log} match_details={match_details} />
+                    {(Object.keys(log).length !== 0 && Object.keys(combat).length !== 0) && 
+                   
+                    <Box>
+                        {getPageDetails()}
+                    </Box>   
+                        
+                        
+                    
                     }   
                 </Box>
 
