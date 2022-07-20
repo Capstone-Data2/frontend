@@ -15,6 +15,7 @@ import MatchDetailsTable from "../../components/MatchDetailsTable";
 import AbilityBuildsTable from "../../components/AbilityBuildsTable";
 import { hoverPaper } from "../../components/HoverPaper";
 import { Loading } from "../../components/loading"
+import { getPlayerDetails } from "../../common/players";
 
 export default function MatchOverview() {
   const { id } = useParams();
@@ -24,7 +25,7 @@ export default function MatchOverview() {
   const loading = useSelector((state) => state.match_details.loading);
   const hover = useSelector((state) => state.hover);
   const dispatch = useDispatch();
-  const [page, setPage] = useState(window.location.href.split("/").pop());
+  const [page, setPage] = useState();
   let location = useLocation();
   const playersMemoized = useMemo(
     () => getPlayerDetails(match_details.players),
@@ -185,19 +186,4 @@ export default function MatchOverview() {
       )}
     </ThemeProvider>
   );
-}
-
-function getPlayerDetails(players) {
-  if (players !== undefined) {
-    var radiant_players = [];
-    var dire_players = [];
-    players.forEach((player) => {
-      if (player.is_radiant) {
-        radiant_players.push(player);
-      } else {
-        dire_players.push(player);
-      }
-    });
-    return { radiant: radiant_players, dire: dire_players };
-  }
 }
