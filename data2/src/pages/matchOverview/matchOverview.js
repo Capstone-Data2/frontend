@@ -24,6 +24,7 @@ export default function MatchOverview() {
   );
   const loading = useSelector((state) => state.match_details.loading);
   const hover = useSelector((state) => state.hover);
+  const rank = useSelector((state) => state.rank.value);
   const dispatch = useDispatch();
   const [page, setPage] = useState();
   let location = useLocation();
@@ -37,7 +38,7 @@ export default function MatchOverview() {
     if (match_details.match_id !== parseInt(id) && !loading) {
       dispatch(fetchMatchDetails(id));
     }
-  }, [dispatch, id, location, match_details, loading]);
+  }, [dispatch, id, location, match_details, loading, rank]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,7 +76,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Radiant Overview</Typography>
+                <Typography sx={{}}>{match_details.radiant_name} Overview</Typography>
                 {match_details.radiant_win && (
                   <Paper
                     elevation={3}
@@ -111,7 +112,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Dire Overview</Typography>
+                <Typography sx={{}}>{match_details.dire_name} Overview</Typography>
                 {!match_details.radiant_win && (
                   <Paper
                     elevation={3}
@@ -144,7 +145,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Radiant Ability Builds</Typography>
+                <Typography sx={{}}>{match_details.radiant_name} Ability Builds</Typography>
               </Box>
               {Object.keys(playersMemoized).length !== 0 && (
                 <AbilityBuildsTable players={playersMemoized.radiant} />
@@ -159,7 +160,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Dire Ability Builds</Typography>
+                <Typography sx={{}}>{match_details.dire_name} Ability Builds</Typography>
               </Box>
 
               {Object.keys(playersMemoized).length !== 0 && (

@@ -4,7 +4,6 @@ const ip = process.env.REACT_APP_BACKEND_IP;
 
 export async function getMatchesList (selected_rank) {
     var response = {}
-    console.log(ip)
     await axios
       .get(`${ip}/matches/`, {
         params: { rank: selected_rank },
@@ -18,14 +17,11 @@ export async function getMatchesList (selected_rank) {
     return response
   };
 
-export async function getMatchDetails(match_id, filter){
-  console.log(filter)
+export async function getMatchDetails(match_id){
     var response
-    console.log(ip)
     await axios
-        .get(`${ip}/matches/${match_id}`, {
-          params: { filter: filter },
-        })
+        .get(`${ip}/matches/${match_id}`
+        )
         .then((res) => {
             response = res.data
         })

@@ -3,8 +3,8 @@ import { getMatchDetails } from "../../common/api";
 
 export const fetchMatchDetails = createAsyncThunk(
   "matches/fetchMatchDetailsStatus",
-  async (match_id, filter, thunkAPI) => {
-    const response = await getMatchDetails(match_id, filter);
+  async (match_id, thunkAPI) => {
+    const response = await getMatchDetails(match_id);
     return response;
   }
 );

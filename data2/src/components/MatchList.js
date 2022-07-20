@@ -1,4 +1,5 @@
 import * as React from "react";
+import theme from "../app/theme.js";
 import {
   Box,
   Typography,
@@ -92,14 +93,14 @@ function MatchListTable({ type }) {
                 {TimeDifference(match.time_difference)}
               </Typography>
             </ListTableCell>
-            {type === "public" && (
+            {type === "public" && match.avg_rank_tier !== undefined && (
               <ListTableCell> {MatchRank(match)} </ListTableCell>
             )}
             {type === "professional" && (
               <ListTableCell>
-                <Typography variant="caption"> Team1 </Typography>
+                <Typography variant="caption" sx={{color: theme.palette.radiant.text}}> {match.radiant_name} </Typography>
                 <Typography variant="caption"> vs </Typography>
-                <Typography variant="caption"> Team2 </Typography>
+                <Typography variant="caption" sx={{color: theme.palette.dire.main}}> {match.dire_name} </Typography>
               </ListTableCell>
             )}
             <ListTableCell>

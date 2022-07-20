@@ -45,7 +45,7 @@ export default function MatchPerformance() {
     }, [dispatch, id, location, match_details, loading]);
 
 
-    function RenderTeamTable({ team, win, color }) {
+    function RenderTeamTable({ team, name, win, color }) {
         return (
             <Box
                 sx={{
@@ -58,7 +58,7 @@ export default function MatchPerformance() {
                 }}
             >
                 <Box sx={{ display: "flex", mb: 1 }}>
-                    <Typography sx={{}}>{team} Performance</Typography>
+                    <Typography sx={{}}>{name} Performance</Typography>
                     {win && (
                         <Paper
                             elevation={3}
@@ -106,8 +106,8 @@ export default function MatchPerformance() {
                                 "linear-gradient(to right, rgb(225, 215, 188, 0.7), rgb(215, 205, 178, 0.7));",
                         }}
                     >
-                        <RenderTeamTable team={"Radiant"} win={match_details.radiant_win} color={theme.palette.radiant.text}/>
-                        <RenderTeamTable team={"Dire"} win={!match_details.radiant_win} color={theme.palette.dire.main}/>
+                        <RenderTeamTable team={"Radiant"} name={match_details.radiant_name} win={match_details.radiant_win} color={theme.palette.radiant.text}/>
+                        <RenderTeamTable team={"Dire"} name={match_details.radiant_name} win={!match_details.radiant_win} color={theme.palette.dire.main}/>
                     </Box>
                 </Box>
             )}
