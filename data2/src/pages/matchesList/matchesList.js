@@ -20,8 +20,8 @@ export default function MatchesList() {
   useEffect(() => {
     setPage(location.pathname.split("/").pop());
     if (page === "professional") {
-      dispatch(select("8"));
-    } else if (selected_rank === "9") {
+      dispatch(select("9"));
+    } else if (page === "public") {
       dispatch(select("0"));
     }
     if (matches.rank !== selected_rank) {

@@ -15,6 +15,7 @@ import MatchDetailsTable from "../../components/MatchDetailsTable";
 import AbilityBuildsTable from "../../components/AbilityBuildsTable";
 import { hoverPaper } from "../../components/HoverPaper";
 import { Loading } from "../../components/loading"
+import { getPlayerDetails } from "../../common/players";
 
 export default function MatchOverview() {
   const { id } = useParams();
@@ -23,8 +24,9 @@ export default function MatchOverview() {
   );
   const loading = useSelector((state) => state.match_details.loading);
   const hover = useSelector((state) => state.hover);
+  const rank = useSelector((state) => state.rank.value);
   const dispatch = useDispatch();
-  const [page, setPage] = useState(window.location.href.split("/").pop());
+  const [page, setPage] = useState();
   let location = useLocation();
   const playersMemoized = useMemo(
     () => getPlayerDetails(match_details.players),
@@ -36,7 +38,7 @@ export default function MatchOverview() {
     if (match_details.match_id !== parseInt(id) && !loading) {
       dispatch(fetchMatchDetails(id));
     }
-  }, [dispatch, id, location, match_details, loading]);
+  }, [dispatch, id, location, match_details, loading, rank]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,7 +76,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Radiant Overview</Typography>
+                <Typography sx={{}}>{match_details.radiant_name} Overview</Typography>
                 {match_details.radiant_win && (
                   <Paper
                     elevation={3}
@@ -110,7 +112,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Dire Overview</Typography>
+                <Typography sx={{}}>{match_details.dire_name} Overview</Typography>
                 {!match_details.radiant_win && (
                   <Paper
                     elevation={3}
@@ -143,7 +145,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Radiant Ability Builds</Typography>
+                <Typography sx={{}}>{match_details.radiant_name} Ability Builds</Typography>
               </Box>
               {Object.keys(playersMemoized).length !== 0 && (
                 <AbilityBuildsTable players={playersMemoized.radiant} />
@@ -158,7 +160,7 @@ export default function MatchOverview() {
               }}
             >
               <Box sx={{ display: "flex", mb: 1 }}>
-                <Typography sx={{}}>Dire Ability Builds</Typography>
+                <Typography sx={{}}>{match_details.dire_name} Ability Builds</Typography>
               </Box>
 
               {Object.keys(playersMemoized).length !== 0 && (
@@ -185,19 +187,4 @@ export default function MatchOverview() {
       )}
     </ThemeProvider>
   );
-}
-
-function getPlayerDetails(players) {
-  if (players !== undefined) {
-    var radiant_players = [];
-    var dire_players = [];
-    players.forEach((player) => {
-      if (player.is_radiant) {
-        radiant_players.push(player);
-      } else {
-        dire_players.push(player);
-      }
-    });
-    return { radiant: radiant_players, dire: dire_players };
-  }
 }

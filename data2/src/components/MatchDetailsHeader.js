@@ -33,12 +33,12 @@ export default function MatchDetailsHeader({ page }) {
           <Box sx={{display: "flex", justifyContent: "center", width: "100%"}}>
           {match_details.radiant_win && 
             <Typography variant="h2" sx={{color: theme.palette.radiant.text}}>
-              Radiant Victory
+              {match_details.radiant_name} Victory
             </Typography>
             }
           {match_details.radiant_win === false && 
             <Typography variant="h2" sx={{color: theme.palette.dire.main}} >
-              Dire Victory
+              {match_details.dire_name} Victory
             </Typography>
           }
           </Box>
@@ -77,7 +77,7 @@ export default function MatchDetailsHeader({ page }) {
           />
           <MatchButton
             type={page === "performance" ? "main" : "secondary"}
-            click={() => {console.log("hi")}}
+            click={() => {navigate("/matches/"+match_details.match_id+"/performance")}}
             text="Performance"
           />
           <MatchButton
