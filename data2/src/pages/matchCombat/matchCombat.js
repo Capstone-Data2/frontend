@@ -6,18 +6,22 @@ import {
 import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import CombatDamageTable from '../../components/MatchCombatDamageTable';
 import TeamDamageTable from '../../components/MatchTeamDamageTable';
-import { useSelector } from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { getMatchLog } from '../../common/api'
 import { getMatchCombatData } from '../../common/api'
-import { MatchButton } from "../../components/Buttons.js";
+import TeamFightsList from "../../components/MatchTeamFightsList.js";
+import TeamFightTable from "../../components/MatchTeamFightTable.js";
 
 export default function MatchCombat() {
     const match_details = useSelector(
         (state) => state.match_details.match_details
     );
-
+    
+    const selected_team_fight = useSelector((state) => state.teamfight.value);
+    
     const [log, setLog] = useState({})
     const [combat, setCombat] = useState({})
     const [teamFight, setTeamFight] = useState({})
@@ -70,7 +74,37 @@ export default function MatchCombat() {
             return(
             <Box>
                 <Typography>Team Fights</Typography>
-                {console.log('team fights')}
+                <TeamFightsList teamfights={match_details.teamfights}/>
+                
+                {Object.keys(selected_team_fight).length !== 0 && 
+                
+                    <Box
+                    sx={{
+                        flexDirection: 'row',
+                        marginTop: 5,
+                    }}
+                    >   
+                        <Box
+                        sx={{
+                            width: 750,
+                            
+                        }}
+                        >
+                            <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} />
+                        </Box>
+                    
+                        <Box
+                        sx={{
+                            width: 750
+                        }}
+                        >
+                            <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} />
+                        </Box>
+                        
+                    </Box>
+                
+                }
+               
             </Box>
             )
         }

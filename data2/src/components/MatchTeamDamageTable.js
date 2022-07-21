@@ -88,14 +88,12 @@ export default function TeamDamageTable({ players, combat}) {
 
     function getDamageRecieved(abilities_dmg, player){
         var res = []
-        console.log(abilities_dmg)
         var abilities = Object.keys(abilities_dmg)
         abilities.forEach(ability => {
             var dmg = abilities_dmg[ability]
             if(ability !== 'null'){
                 res.push(
                     <Box sx={{
-                        
                         marginRight: 1
                     }}> 
                         <img
