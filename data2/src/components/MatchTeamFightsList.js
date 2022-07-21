@@ -36,9 +36,7 @@ export default function TeamFightsList({ teamfights, dire, radiant }) {
                         backgroundColor: theme.palette.secondary.main,
                         borderRadius: 2,
                         padding: 2,
-                        marginRight: 2,
-                        
-                        
+                        marginRight: 2,                        
                     }}>
                         
                         <Typography> Start time: {getTime(fight.start)}</Typography>
@@ -56,8 +54,9 @@ export default function TeamFightsList({ teamfights, dire, radiant }) {
                         borderRadius: 2,
                         padding: 2,
                         marginRight: 2,
-                        
-                        
+                        ":hover": {
+                            cursor: "pointer"
+                        }
                     }}>
                         <Typography> Start time: {getTime(fight.start)}</Typography>
                         <Typography>Total kills: {fight.deaths}</Typography>

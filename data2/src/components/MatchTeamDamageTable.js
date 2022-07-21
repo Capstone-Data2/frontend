@@ -73,10 +73,6 @@ export default function TeamDamageTable({ players, combat}) {
                         >
                             {loadHeroWithDamage(heros_hit, abilities_damage, ability)}
                         </Box>
-                        
-                        
-                        
-                        
                     </Box>
                 )
             }

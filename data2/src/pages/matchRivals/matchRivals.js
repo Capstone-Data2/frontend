@@ -51,7 +51,7 @@ export default function MatchRivals() {
     <ThemeProvider theme={theme}>
       {loading && <Loading />}
       {!loading && match_details.match_id !== 0 && (
-        <Box>
+        <Box sx={{height: 580}}>
           <MatchDetailsHeader page="rivals" />
           <Box
             sx={{
@@ -59,7 +59,8 @@ export default function MatchRivals() {
               alignItems: "center",
               textAlign: "start",
               width: "100%",
-              height: "100%",
+              height: "fit",
+              minHeight: "100%",
               flexDirection: "column",
               backgroundImage:
                 "linear-gradient(to right, rgb(225, 215, 188, 0.7), rgb(215, 205, 178, 0.7));",
@@ -70,7 +71,6 @@ export default function MatchRivals() {
                 display: "flex",
                 mt: 2,
                 mx: 2,
-                mb: 50,
                 pb: 4,
                 justifyContent: "start",
                 flexDirection: "column",
