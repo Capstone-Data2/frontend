@@ -1,4 +1,4 @@
-import { Typography, Box, Card , CardContent} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import React from "react";
 import theme from "../app/theme.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,7 @@ export default function TeamFightsList({ teamfights, dire, radiant }) {
                         
                         
                     }}>
-                        <Typography >Teamfight: {count}</Typography>
+                        
                         <Typography> Start time: {getTime(fight.start)}</Typography>
                         <Typography>Total kills: {fight.deaths}</Typography>
                         
@@ -59,7 +59,6 @@ export default function TeamFightsList({ teamfights, dire, radiant }) {
                         
                         
                     }}>
-                        <Typography >Teamfight: {count}</Typography>
                         <Typography> Start time: {getTime(fight.start)}</Typography>
                         <Typography>Total kills: {fight.deaths}</Typography>
                         

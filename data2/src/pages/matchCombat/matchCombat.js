@@ -7,7 +7,7 @@ import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import CombatDamageTable from '../../components/MatchCombatDamageTable';
 import TeamDamageTable from '../../components/MatchTeamDamageTable';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { getMatchLog } from '../../common/api'
@@ -75,43 +75,51 @@ export default function MatchCombat() {
         else{
             return(
             <Box>
-                <Typography>Team Fights</Typography>
-                <TeamFightsList teamfights={match_details.teamfights}/>
-                
+                <Box sx={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
+                    <Typography>Team Fights</Typography>
+                    <TeamFightsList teamfights={match_details.teamfights}/>
+                </Box>
                 {Object.keys(selected_team_fight).length !== 0 && 
                 
                     <Box
                     sx={{
                         flexDirection: 'row',
                         marginTop: 5,
+                        
                     }}
                     >   
-                        <Box sx={{display: 'flex', width: '100vh', justifyContent: 'space-between', marginBottom: 4}}>
-                            <Box>
+                        <Box sx={{display: 'flex', width: '150vh', justifyContent: 'space-between', marginBottom: 4}}>
+                            <Box sx={{marginLeft:20}}>
                                 <TeamMapDeaths  playersDead={selected_team_fight.players}/>
                             </Box>
-                            <Box>
+                            <Box sx={{marginRight:20}}>
                                 <TeamFightGraph team= {teamHeroIds(match_details.picks_bans)}/>
                             </Box>
                            
                             
                         </Box>
+                        <Box sx={{
+                            display: 'flex',
+                        }}>
+                            <Box
+                            sx={{
+                                width: 750,
+                                marginRight: 10
+                                
+                            }}
+                            >
+                                <Typography>Radiant Fight Overview</Typography>
+                                <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} />
+                            </Box>
                         
-                        <Box
-                        sx={{
-                            width: 750,
-                            
-                        }}
-                        >
-                            <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} />
-                        </Box>
-                    
-                        <Box
-                        sx={{
-                            width: 750
-                        }}
-                        >
-                            <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} />
+                            <Box
+                            sx={{
+                                width: 750
+                            }}
+                            >   
+                                <Typography>Dire Fight Overview</Typography>
+                                <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} />
+                            </Box>
                         </Box>
                         
                     </Box>
@@ -156,7 +164,7 @@ export default function MatchCombat() {
                         mx: 2,
                         justifyContent: "start",
                         flexDirection: "column",
-                        width: "70%",
+                        width: "95%",
                         borderRadius: 2,
 
                     }}>

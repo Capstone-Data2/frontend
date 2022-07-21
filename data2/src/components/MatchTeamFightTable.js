@@ -1,12 +1,11 @@
 import { Typography, Box, Table, TableBody, TableHead, TableRow, TableCell } from "@mui/material";
 import React from "react";
 import theme from "../app/theme.js";
-import heroes_json from "../constants/heroes.json";
-import heroes_abilities_json from "../constants/hero_abilities.json";
-import { useDispatch, useSelector } from "react-redux";
-import { fill } from '../pages/matchCombat/matchCombatSlice'
+import { useSelector } from "react-redux";
 import { LoadHeroIcons } from "../common/images";
 import { loadAbilityImg } from "../common/images";
+import { styled } from "@mui/material/styles";
+
 export default function TeamFightTable({ team, fight }) {
     const headers = [
         'Player',
@@ -18,6 +17,10 @@ export default function TeamFightTable({ team, fight }) {
         'Abilities',
         'Items'
     ]
+    const TableTypography = styled("Typography")(({ theme, width, grayscale }) => ({
+        fontSize: 11
+    }));
+
     const match_details = useSelector(
         (state) => state.match_details.match_details
     );
@@ -33,8 +36,8 @@ export default function TeamFightTable({ team, fight }) {
                 >
                     <img
                         src={loadAbilityImg(ability)}
-                        style={{ borderRadius: 2, width: 25, height: 25, borderRight: "solid" }}
-                        alt="Radiant"
+                        style={{ borderRadius: 2, width: 20, height: 20, borderRight: "solid" }}
+                        alt=""
                     />
                     <Typography>{abilities_used[ability]}</Typography>
                 </Box>
@@ -54,22 +57,24 @@ export default function TeamFightTable({ team, fight }) {
                             <img
                                 src={LoadHeroIcons([String(player)])}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                alt=""
                             />
                         </TableCell>
                         <TableCell>
-                            <Typography>{selected_team_fight.players[i].deaths}</Typography>
+                            <TableTypography
+                            >{selected_team_fight.players[i].deaths}</TableTypography>
                         </TableCell>
                         <TableCell>
-                            <Typography>{selected_team_fight.players[i].damage}</Typography>
+                            <TableTypography>{selected_team_fight.players[i].damage}</TableTypography>
                         </TableCell>
                         <TableCell>
-                            <Typography>{selected_team_fight.players[i].healing}</Typography>
+                            <TableTypography>{selected_team_fight.players[i].healing}</TableTypography>
                         </TableCell>
                         <TableCell>
-                            <Typography>{selected_team_fight.players[i].gold_delta}</Typography>
+                            <TableTypography>{selected_team_fight.players[i].gold_delta}</TableTypography>
                         </TableCell>
                         <TableCell>
-                            <Typography>{selected_team_fight.players[i].xp_delta}</Typography>
+                            <TableTypography>{selected_team_fight.players[i].xp_delta}</TableTypography>
                         </TableCell>
                         <TableCell>
                             <Box
@@ -90,13 +95,13 @@ export default function TeamFightTable({ team, fight }) {
     }
 
     return (
-        <Box>
-            <Table sx={{ width: "100%", backgroundColor: theme.palette.primary.main, mb: 4, }}>
+            <Table sx={{ width: 500, backgroundColor: theme.palette.primary.main, mb: 4, }}>
                 <TableHead>
                     <TableRow>
                         {headers.map((header) => (
                             <TableCell>
-                                <Typography>{header}</Typography>
+                                <TableTypography 
+                                >{header}</TableTypography>
                             </TableCell>
                         ))}
                     </TableRow>
@@ -110,6 +115,5 @@ export default function TeamFightTable({ team, fight }) {
 
                 </TableBody>
             </Table>
-        </Box>
     )
 }

@@ -39,10 +39,13 @@ export default function TeamMapDeaths({ playersDead }) {
         return res
     }
     return(
-        <Box sx={{ display: "flex", position: "relative", width: 300, mb: 4 }}>
-            
-            <img src={loadMap()} alt="" style={{ borderRadius: 2 }} />
-            {loadHeroesDead()}      
+        <Box>
+            <Typography>Hero Deaths</Typography>
+            <Box sx={{ display: "flex", position: "relative", width: 300, mb: 4 }}>
+                
+                <img src={loadMap()} alt="" style={{ borderRadius: 2 }} />
+                {loadHeroesDead()}      
+            </Box>
         </Box>
     )
 }

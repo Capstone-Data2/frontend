@@ -1,13 +1,8 @@
-import { Typography, Box, inputAdornmentClasses } from "@mui/material";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { Typography, Box } from "@mui/material";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Label } from 'recharts';
 import { useSelector } from "react-redux";
 
-const data = [{time: '18:00', gold_adv: 400, xp: 200}, {time: '19:00', gold_adv: 600, xp:100}, {time: '20:00', gold_adv: -300, xp: 50}]
-
 var xpData = []
-
-  
-
 
 export default function TeamFightGraph({ team }) {
     const radiant_team = team[0]
@@ -23,7 +18,6 @@ export default function TeamFightGraph({ team }) {
     const end_minutes = Math.floor(selected_team_fight.end / 60)
     
     function getXpStartEnd(){
-        //radiant adv = xpstart for radiant - xpstart for dire
         var radiantxpStart = 0
         var radiantxpEnd = 0
 
@@ -91,14 +85,18 @@ export default function TeamFightGraph({ team }) {
     return(
         <Box>
             {populateData(getXpStartEnd(), getGoldStartEnd())}
-            <Typography>Radiant Xp Advantage</Typography>
+            <Typography>Radiant XP and Gold Advantage</Typography>
             <LineChart width={400} height={400} data={xpData}>
                 <Line type="monotone" dataKey="xp" stroke="#8884d8" />
                 <Line type="monotone" dataKey="gold" stroke="#A38A00" />
-                <XAxis dataKey="time" />
+                <XAxis dataKey="time" >
+                <Label value="Minutes" offset={0} position="ottom" />
+                </XAxis>
+                <Label value="any" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <YAxis />
                 <Tooltip />
+                <Legend verticalAlign="top" />
             </LineChart>
         </Box>
     )
