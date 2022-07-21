@@ -4,7 +4,6 @@ import {
     Table,
     TableBody,
     TableCell,
-    tableCellClasses,
     TableHead,
     TableRow,
 } from "@mui/material";
@@ -37,7 +36,7 @@ export default function TeamDamageTable({ players, combat}) {
                 <img
                 src={loadSmallHeroIcon(heroes_json[hero_id].icon)}
                 style={{ borderRadius: 2, width: 25, borderRight: "solid" }}
-                alt="Radiant"
+                alt=""
                 /> 
                 <Typography sx={{
                     fontSize: 10
@@ -63,7 +62,7 @@ export default function TeamDamageTable({ players, combat}) {
                         <img
                             src={loadAbilityImg(ability)}
                             style={{ borderRadius: 2, width: 25, height: 25, borderRight: "solid" }}
-                            alt="Radiant"
+                            alt=""
                         />
                         <Typography> {'-->'}</Typography>
                         
@@ -99,7 +98,7 @@ export default function TeamDamageTable({ players, combat}) {
                         <img
                             src={loadAbilityImg(ability)}
                             style={{ borderRadius: 2, height: 25, borderRight: "solid" }}
-                            alt="Radiant"
+                            alt=""
                         />
                         <Typography> {dmg}</Typography>
                     </Box>
@@ -130,6 +129,7 @@ export default function TeamDamageTable({ players, combat}) {
                             <img
                                 src={LoadHeroIcons([String(player)])}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                alt=""
                                 />
                             </TableCell>
 

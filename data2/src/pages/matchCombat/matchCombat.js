@@ -14,6 +14,9 @@ import { getMatchLog } from '../../common/api'
 import { getMatchCombatData } from '../../common/api'
 import TeamFightsList from "../../components/MatchTeamFightsList.js";
 import TeamFightTable from "../../components/MatchTeamFightTable.js";
+import TeamMapDeaths from '../../components/MatchCombatTeamDeaths.js'
+import TeamFightGraph from "../../components/MatchFightGraph.js";
+import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 
 export default function MatchCombat() {
     const match_details = useSelector(
@@ -21,10 +24,12 @@ export default function MatchCombat() {
     );
     
     const selected_team_fight = useSelector((state) => state.teamfight.value);
-    
+    const dispatch = useDispatch()
     const [log, setLog] = useState({})
     const [combat, setCombat] = useState({})
     const [teamFight, setTeamFight] = useState({})
+    const [id, setId] = useState(window.location.href.split("/")[4]);
+    const loading = useSelector((state) => state.match_details.loading);
 
     function clickButton(){
         if (teamFight === false){
@@ -43,25 +48,30 @@ export default function MatchCombat() {
             return ('Combat Overview')
         }
     }
-    async function fetchData() {
-        var res = await getMatchLog(match_details.match_id);
-        setLog(res)
-
-        var resCombat = await getMatchCombatData(match_details.match_id)
-        setCombat(resCombat)
-    }
-
     useEffect(() => {
-        fetchData()
-        
-    }, [])
+        async function fetchData() {
+            var res = await getMatchLog(match_details.match_id);
+            setLog(res)
+    
+            var resCombat = await getMatchCombatData(match_details.match_id)
+            setCombat(resCombat)
+        }
+        setId(window.location.href.split("/")[4])
+        if (match_details.match_id !== parseInt(id) && !loading) {
+            dispatch(fetchMatchDetails(id));
+        }
+        if(match_details.match_id === parseInt(id)){
+            fetchData()
+        }
+    }, [match_details, loading, id, dispatch])
 
     function getPageDetails(){
         if(teamFight===false){
             return(
-                <Box>
+                <Box sx={{width: '70%', display: 'flex', flexDirection: 'column', ml: "auto", mr: "auto"}}>
                     <Typography sx={{marginTop:2}}>{'Kills / Damage'}</Typography>
                     <CombatDamageTable players={teamHeroIds(match_details.picks_bans)} kills={log} match_details={match_details} />
+                    
                     <Typography>Radiant</Typography>
                     <TeamDamageTable players ={teamHeroIds(match_details.picks_bans)[0]} combat = {combat} />
                     <Typography>Dire</Typography>
@@ -73,32 +83,51 @@ export default function MatchCombat() {
         else{
             return(
             <Box>
-                <Typography>Team Fights</Typography>
-                <TeamFightsList teamfights={match_details.teamfights}/>
-                
+                <Box sx={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
+                    <Typography>Team Fights</Typography>
+                    <TeamFightsList teamfights={match_details.teamfights}/>
+                </Box>
                 {Object.keys(selected_team_fight).length !== 0 && 
                 
                     <Box
                     sx={{
                         flexDirection: 'row',
                         marginTop: 5,
+                        
                     }}
                     >   
-                        <Box
-                        sx={{
-                            width: 750,
+                        <Box sx={{display: 'flex', width: '150vh', justifyContent: 'space-between', marginBottom: 4}}>
+                            <Box sx={{marginLeft:20}}>
+                                <TeamMapDeaths  playersDead={selected_team_fight.players}/>
+                            </Box>
+                            <Box sx={{marginRight:20}}>
+                                <TeamFightGraph team= {teamHeroIds(match_details.picks_bans)}/>
+                            </Box>
+                           
                             
-                        }}
-                        >
-                            <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} />
                         </Box>
-                    
-                        <Box
-                        sx={{
-                            width: 750
-                        }}
-                        >
-                            <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} />
+                        <Box sx={{
+                            display: 'flex',
+                        }}>
+                            <Box
+                            sx={{
+                                width: 750,
+                                marginRight: 10
+                                
+                            }}
+                            >
+                                <Typography>Radiant Fight Overview</Typography>
+                                <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} />
+                            </Box>
+                        
+                            <Box
+                            sx={{
+                                width: 750
+                            }}
+                            >   
+                                <Typography>Dire Fight Overview</Typography>
+                                <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} />
+                            </Box>
                         </Box>
                         
                     </Box>
@@ -143,11 +172,10 @@ export default function MatchCombat() {
                         mx: 2,
                         justifyContent: "start",
                         flexDirection: "column",
-                        width: "70%",
+                        width: "95%",
                         borderRadius: 2,
 
                     }}>
-
                     {(Object.keys(log).length !== 0 && Object.keys(combat).length !== 0) && 
                    
                     <Box>

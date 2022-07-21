@@ -4,7 +4,6 @@ import {
     Table,
     TableBody,
     TableCell,
-    tableCellClasses,
     TableHead,
     TableRow,
 } from "@mui/material";
@@ -47,7 +46,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
         var kill_counter = 0
         for (var i = 0; i < kills_array.length; i++) {
             var hero = Object.keys(kills_array[i])[0]
-            if(hero_killing == hero){
+            if(hero_killing === hero){
                 var array_of_kills_by_hero = kills_array[i][String(hero_killing)]
                 for(var k=0; k<=array_of_kills_by_hero.length -1; k++){
                     var slained_hero_id = hero_names[array_of_kills_by_hero[k].key].id
@@ -72,7 +71,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                                     <img
                                         src={LoadHeroIcons([String(player)])}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.dire.dark}}
-                                        
+                                        alt=""
                                     />
                             </TableCell>
                         ))}
@@ -86,6 +85,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                                 <img
                                     src={LoadHeroIcons([String(player)])}
                                     style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.radiant.dark}}
+                                    alt=""
                                 />
                             </TableCell>
                             {dire_players.map((dire_player)=>(
