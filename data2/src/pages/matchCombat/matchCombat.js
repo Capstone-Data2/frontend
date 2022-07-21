@@ -7,7 +7,7 @@ import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import CombatDamageTable from '../../components/MatchCombatDamageTable';
 import TeamDamageTable from '../../components/MatchTeamDamageTable';
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { getMatchLog } from '../../common/api'
@@ -16,6 +16,7 @@ import TeamFightsList from "../../components/MatchTeamFightsList.js";
 import TeamFightTable from "../../components/MatchTeamFightTable.js";
 import TeamMapDeaths from '../../components/MatchCombatTeamDeaths.js'
 import TeamFightGraph from "../../components/MatchFightGraph.js";
+import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 
 export default function MatchCombat() {
     const match_details = useSelector(
@@ -23,10 +24,12 @@ export default function MatchCombat() {
     );
     
     const selected_team_fight = useSelector((state) => state.teamfight.value);
-    
+    const dispatch = useDispatch()
     const [log, setLog] = useState({})
     const [combat, setCombat] = useState({})
     const [teamFight, setTeamFight] = useState({})
+    const [id, setId] = useState(window.location.href.split("/")[4]);
+    const loading = useSelector((state) => state.match_details.loading);
 
     function clickButton(){
         if (teamFight === false){
@@ -45,18 +48,22 @@ export default function MatchCombat() {
             return ('Combat Overview')
         }
     }
-    async function fetchData() {
-        var res = await getMatchLog(match_details.match_id);
-        setLog(res)
-
-        var resCombat = await getMatchCombatData(match_details.match_id)
-        setCombat(resCombat)
-    }
-
     useEffect(() => {
-        fetchData()
-        
-    }, [])
+        async function fetchData() {
+            var res = await getMatchLog(match_details.match_id);
+            setLog(res)
+    
+            var resCombat = await getMatchCombatData(match_details.match_id)
+            setCombat(resCombat)
+        }
+        setId(window.location.href.split("/")[4])
+        if (match_details.match_id !== parseInt(id) && !loading) {
+            dispatch(fetchMatchDetails(id));
+        }
+        if(match_details.match_id === parseInt(id)){
+            fetchData()
+        }
+    }, [match_details, loading, id, dispatch])
 
     function getPageDetails(){
         if(teamFight===false){
@@ -169,7 +176,6 @@ export default function MatchCombat() {
                         borderRadius: 2,
 
                     }}>
-
                     {(Object.keys(log).length !== 0 && Object.keys(combat).length !== 0) && 
                    
                     <Box>
