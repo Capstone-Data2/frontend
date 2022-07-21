@@ -22,6 +22,7 @@ import {
 import BackpackIcon from "@mui/icons-material/Backpack";
 import { alpha, styled } from "@mui/material/styles";
 
+
 export function importRankImgs() {
   const ranks = importImgs(
     require.context("../constants/rank_icons/", false, /\.(png|jpe?g|svg)$/)
@@ -63,7 +64,38 @@ export function importTeamIcons() {
   return team_icons;
 }
 
-export function loadTeamIcons(team) {
+export function importItemImgs() {
+  const items = importImgs(
+    require.context("../constants/item_icons/", false, /.(png|jpe?g|svg)$/)
+  );
+  return items;
+}
+
+export function importSmallHeroIcons(){
+  const small_icon = importImgs(
+    require.context("../constants/map_icons/heroes/", false, /.(png|jpe?g|svg)$/)
+  );
+  return small_icon;
+}
+
+export function loadSmallHeroIcon(icon_name){
+  var src = importSmallHeroIcons()
+  return(src[icon_name])
+}
+
+export function loadAbilityImg(ability_name){
+  var is_item = items_json[ability_name]
+  if(is_item === undefined){
+    var src = importAbilityImgs()
+    return(src[abilities_json[ability_name].img])
+  }
+  else{
+    var src2 = importItemImgs()
+    return(src2[items_json[ability_name].img])
+  }
+}
+
+export function loadTeamIcons(team){
   var srcs = importTeamIcons()
   return (srcs[team + '_icon.png'])
 }
@@ -598,6 +630,11 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
   );
 });
 
+export function loadMap(){
+  var map_srcs = ImportGameMap();
+  return map_srcs["map_img.png"]
+}
+
 export const GameMap = React.memo(function GameMap({ objectives, players }) {
   var map_srcs = ImportGameMap();
   var hero_srcs = ImportHeroMap()
@@ -726,7 +763,7 @@ function RenderStructure(structure) {
   );
 }
 
-const MapImg = styled("img")(({ theme, width, grayscale }) => ({
+export const MapImg = styled("img")(({ theme, width, grayscale }) => ({
   position: "absolute",
   width: width,
   filter: `grayscale(${grayscale}%)`,

@@ -13,20 +13,20 @@ export const matchesSlice = createSlice({
   name: 'matches',
   initialState: {
     match_list: [],
-    rank: 0,
+    selected_rank: "0",
     loading: true
   },
   reducers: {
     fill: (state, action) => {
       state.match_list = action.payload.match_list
-      state.rank = action.payload.rank
+      state.selected_rank = action.payload.rank
       state.loading = false
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMatchesList.fulfilled, (state, action) => {
       state.match_list = action.payload.match_list
-      state.rank = action.payload.rank
+      state.selected_rank = action.payload.rank
       state.loading = false
     });
     builder.addCase(fetchMatchesList.pending, (state) => {
@@ -39,7 +39,7 @@ export const matchesSlice = createSlice({
 export const rankSlice = createSlice({
   name: 'rank',
   initialState: {
-    value: "8"
+    value: "9"
   },
   reducers: {
     select: (state, action) => {

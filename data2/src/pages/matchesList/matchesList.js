@@ -21,10 +21,10 @@ export default function MatchesList() {
     setPage(location.pathname.split("/").pop());
     if (page === "professional") {
       dispatch(select("9"));
-    } else if (page === "public") {
+    } else if (page === "public" && selected_rank === "9") {
       dispatch(select("0"));
     }
-    if (matches.rank !== selected_rank) {
+    if (matches.selected_rank !== selected_rank) {
       dispatch(fetchMatchesList(selected_rank));
     }
   }, [dispatch, location, selected_rank, matches, page]);
