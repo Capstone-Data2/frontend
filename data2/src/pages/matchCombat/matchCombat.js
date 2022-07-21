@@ -61,9 +61,10 @@ export default function MatchCombat() {
     function getPageDetails(){
         if(teamFight===false){
             return(
-                <Box>
+                <Box sx={{width: '70%', display: 'flex', flexDirection: 'column', ml: "auto", mr: "auto"}}>
                     <Typography sx={{marginTop:2}}>{'Kills / Damage'}</Typography>
                     <CombatDamageTable players={teamHeroIds(match_details.picks_bans)} kills={log} match_details={match_details} />
+                    
                     <Typography>Radiant</Typography>
                     <TeamDamageTable players ={teamHeroIds(match_details.picks_bans)[0]} combat = {combat} />
                     <Typography>Dire</Typography>
