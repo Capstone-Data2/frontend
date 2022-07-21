@@ -55,7 +55,7 @@ export async function getMatchCombatData(match_id){
             console.log(error);
         });
     return response
-
+}
 export async function getMatchPerformance(match_id){
   var response
   await axios

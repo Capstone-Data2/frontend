@@ -64,13 +64,6 @@ export function importTeamIcons() {
   return team_icons;
 }
 
-export function importAbilityImgs() {
-  const abilities = importImgs(
-    require.context("../constants/ability_icons/", false, /.(png|jpe?g|svg)$/)
-  );
-  return abilities;
-}
-
 export function importItemImgs() {
   const items = importImgs(
     require.context("../constants/item_icons/", false, /.(png|jpe?g|svg)$/)
@@ -80,7 +73,7 @@ export function importItemImgs() {
 
 export function importSmallHeroIcons(){
   const small_icon = importImgs(
-    require.context("../constants/hero_icons/map/", false, /.(png|jpe?g|svg)$/)
+    require.context("../constants/map_icons/heroes/", false, /.(png|jpe?g|svg)$/)
   );
   return small_icon;
 }
@@ -108,6 +101,7 @@ export function loadTeamIcons(team){
 }
 
 export function LoadHeroIcons(heroes) {
+  console.log(heroes+ ' in images.js')
   const images = importImgs(
     require.context("../constants/hero_icons/", false, /\.(png|jpe?g|svg)$/)
   );
@@ -115,6 +109,7 @@ export function LoadHeroIcons(heroes) {
   heroes.forEach((hero) => {
     srcs.push(images[heroes_json[hero].img]);
   });
+  console.log(srcs)
   return srcs;
 }
 

@@ -128,8 +128,8 @@ export default function TeamDamageTable({ players, combat}) {
                         <TableRow>
                             <TableCell>
                             <img
-                                    src={LoadHeroIcons(String(player))}
-                                    style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
+                                src={LoadHeroIcons([String(player)])}
+                                style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 />
                             </TableCell>
 

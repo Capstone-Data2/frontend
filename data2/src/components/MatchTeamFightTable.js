@@ -28,7 +28,9 @@ export default function TeamFightTable({ team, fight }) {
         var abilities_names = Object.keys(abilities_used)
         abilities_names.forEach(ability => {
             response.push(
-                <Box>
+                <Box
+                sx={{marginRight: 1}}
+                >
                     <img
                         src={loadAbilityImg(ability)}
                         style={{ borderRadius: 2, width: 25, height: 25, borderRight: "solid" }}
@@ -50,7 +52,7 @@ export default function TeamFightTable({ team, fight }) {
                     <TableRow>
                         <TableCell>
                             <img
-                                src={LoadHeroIcons(String(player))}
+                                src={LoadHeroIcons([String(player)])}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                             />
                         </TableCell>

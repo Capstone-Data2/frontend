@@ -136,8 +136,6 @@ export default function MatchCombat() {
                     }}
                     onClick={() => clickButton()}
                 >{getButtonName()}</Button>
-                
-                
                 <Box
                     sx={{
                         display: "flex",
@@ -149,6 +147,7 @@ export default function MatchCombat() {
                         borderRadius: 2,
 
                     }}>
+
                     {(Object.keys(log).length !== 0 && Object.keys(combat).length !== 0) && 
                    
                     <Box>

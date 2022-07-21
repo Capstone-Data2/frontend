@@ -70,7 +70,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                         {dire_players.map((player) => (
                             <TableCell>
                                     <img
-                                        src={LoadHeroIcons(String(player))}
+                                        src={LoadHeroIcons([String(player)])}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.dire.dark}}
                                         
                                     />
@@ -84,7 +84,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                         <TableRow>
                             <TableCell>
                                 <img
-                                    src={LoadHeroIcons(String(player))}
+                                    src={LoadHeroIcons([String(player)])}
                                     style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.radiant.dark}}
                                 />
                             </TableCell>
