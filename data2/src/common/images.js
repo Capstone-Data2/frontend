@@ -101,7 +101,6 @@ export function loadTeamIcons(team){
 }
 
 export function LoadHeroIcons(heroes) {
-  console.log(heroes+ ' in images.js')
   const images = importImgs(
     require.context("../constants/hero_icons/", false, /\.(png|jpe?g|svg)$/)
   );
@@ -109,7 +108,6 @@ export function LoadHeroIcons(heroes) {
   heroes.forEach((hero) => {
     srcs.push(images[heroes_json[hero].img]);
   });
-  console.log(srcs)
   return srcs;
 }
 
@@ -588,6 +586,11 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
   );
 });
 
+export function loadMap(){
+  var map_srcs = ImportGameMap();
+  return map_srcs["map_img.png"]
+}
+
 export const GameMap = React.memo(function GameMap({ objectives, players }) {
   var map_srcs = ImportGameMap();
   var hero_srcs = ImportHeroMap()
@@ -716,7 +719,7 @@ function RenderStructure(structure) {
   );
 }
 
-const MapImg = styled("img")(({ theme, width, grayscale }) => ({
+export const MapImg = styled("img")(({ theme, width, grayscale }) => ({
   position: "absolute",
   width: width,
   filter: `grayscale(${grayscale}%)`,

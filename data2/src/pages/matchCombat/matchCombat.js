@@ -14,6 +14,8 @@ import { getMatchLog } from '../../common/api'
 import { getMatchCombatData } from '../../common/api'
 import TeamFightsList from "../../components/MatchTeamFightsList.js";
 import TeamFightTable from "../../components/MatchTeamFightTable.js";
+import TeamMapDeaths from '../../components/MatchCombatTeamDeaths.js'
+import TeamFightGraph from "../../components/MatchFightGraph.js";
 
 export default function MatchCombat() {
     const match_details = useSelector(
@@ -84,6 +86,17 @@ export default function MatchCombat() {
                         marginTop: 5,
                     }}
                     >   
+                        <Box sx={{display: 'flex', width: '100vh', justifyContent: 'space-between', marginBottom: 4}}>
+                            <Box>
+                                <TeamMapDeaths  playersDead={selected_team_fight.players}/>
+                            </Box>
+                            <Box>
+                                <TeamFightGraph team= {teamHeroIds(match_details.picks_bans)}/>
+                            </Box>
+                           
+                            
+                        </Box>
+                        
                         <Box
                         sx={{
                             width: 750,
