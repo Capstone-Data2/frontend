@@ -32,5 +32,30 @@ export const matchDetailsSlice = createSlice({
   },
 });
 
+export const hoverSlice = createSlice({
+  name: "hover",
+  initialState: {
+    isHovering: false,
+    type: "",
+    hovered: 0,
+    location: {x: 0, y: 0}
+  },
+  reducers: {
+    setHover: (state, action) => {
+      state.isHovering = true
+      state.type = action.payload.type
+      state.hovered = action.payload.hovered
+      state.location = action.payload.location
+    },
+    removeHover: (state) => {
+      state.isHovering = false
+      state.type = ""
+      state.hovered = 0
+      state.location = {x: 0, y: 0}
+    }
+  },
+});
+
 // Action creators are generated for each case reducer function
 export const { fill } = matchDetailsSlice.actions;
+export const { setHover, removeHover } = hoverSlice.actions;

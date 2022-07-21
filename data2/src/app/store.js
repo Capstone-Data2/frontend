@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { matchesSlice, rankSlice } from '../pages/matchesList/matchesSlice'
-import { matchDetailsSlice } from '../pages/matchOverview/matchDetailsSlice'
 import { logFilterSlice } from '../pages/matchLog/matchLogSlice'
 import { combatFilterSlice } from '../pages/matchCombat/matchCombatSlice'
+import { hoverSlice, matchDetailsSlice } from '../pages/matchOverview/matchDetailsSlice'
 
 export default configureStore({
   reducer: {
@@ -10,6 +10,7 @@ export default configureStore({
     rank: rankSlice.reducer,
     match_details: matchDetailsSlice.reducer,
     filter: logFilterSlice.reducer,
-    teamfight: combatFilterSlice.reducer
+    teamfight: combatFilterSlice.reducer,
+    hover: hoverSlice.reducer,
   },
 })

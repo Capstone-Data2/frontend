@@ -1,4 +1,5 @@
 import * as React from "react";
+import theme from "../app/theme.js";
 import {
   Box,
   Typography,
@@ -21,7 +22,7 @@ const CommonBox = styled(Box)(({ theme }) => ({
   alignItems: "center",
 }));
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const ListTableCell = styled(TableCell)(({ theme }) => ({
   
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.primary.light,
@@ -32,7 +33,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const ListTableRow = styled(TableRow)(({ theme }) => ({
   transition: theme.transitions.create(["background-color"]),
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.primary.dark,
@@ -46,72 +47,72 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function MatchListTable({ type }) {
-  const matches = useSelector((state) => state.matches.value);
+  const matches = useSelector((state) => state.matches.match_list);
   let navigate = useNavigate();
 
   return (
     <Table sx={{ width: "75%",  }} aria-label="customized table">
       <TableHead>
         <TableRow>
-          <StyledTableCell sx={{ width: "10%", borderTopLeftRadius: 5 }}>
+          <ListTableCell sx={{ width: "10%", borderTopLeftRadius: 5 }}>
             <Typography variant="subtitle2">Match ID</Typography>
-          </StyledTableCell>
+          </ListTableCell>
           {type === "public" && (
-            <StyledTableCell sx={{ width: "10%" }}>
+            <ListTableCell sx={{ width: "10%" }}>
               <Typography variant="subtitle2">Rank</Typography>
-            </StyledTableCell>
+            </ListTableCell>
           )}
           {type === "professional" && (
-            <StyledTableCell sx={{ width: "10%" }}>
+            <ListTableCell sx={{ width: "10%" }}>
               <Typography variant="subtitle2">Teams</Typography>
-            </StyledTableCell>
+            </ListTableCell>
           )}
-          <StyledTableCell sx={{ width: "10%" }}>
+          <ListTableCell sx={{ width: "10%" }}>
             <Typography variant="subtitle2">Duration</Typography>
-          </StyledTableCell>
-          <StyledTableCell sx={{ width: "30%" }}>
+          </ListTableCell>
+          <ListTableCell sx={{ width: "30%" }}>
             <Typography variant="subtitle2">Radiant</Typography>
-          </StyledTableCell>
-          <StyledTableCell sx={{ width: "30%", borderTopRightRadius: 5 }}>
+          </ListTableCell>
+          <ListTableCell sx={{ width: "30%", borderTopRightRadius: 5 }}>
             <Typography variant="subtitle2">Dire</Typography>
-          </StyledTableCell>
+          </ListTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {matches[0].map((match) => (
-          <StyledTableRow
+        {matches.map((match) => (
+          <ListTableRow
             key={match.match_id}
             onClick={() => {
               navigate(`/matches/${match.match_id}/overview`);
             }}
             sx={{ ":hover": { cursor: "pointer" } }}
           >
-            <StyledTableCell>
+            <ListTableCell>
               <Typography variant="subtitle1">{match.match_id}</Typography>
               <Typography variant="caption">
                 {TimeDifference(match.time_difference)}
               </Typography>
-            </StyledTableCell>
-            {type === "public" && (
-              <StyledTableCell> {MatchRank(match)} </StyledTableCell>
+            </ListTableCell>
+            {type === "public" && match.avg_rank_tier !== undefined && (
+              <ListTableCell> {MatchRank(match)} </ListTableCell>
             )}
             {type === "professional" && (
-              <StyledTableCell>
-                <Typography variant="caption"> Team1 </Typography>
+              <ListTableCell>
+                <Typography variant="caption" sx={{color: theme.palette.radiant.text}}> {match.radiant_name} </Typography>
                 <Typography variant="caption"> vs </Typography>
-                <Typography variant="caption"> Team2 </Typography>
-              </StyledTableCell>
+                <Typography variant="caption" sx={{color: theme.palette.dire.main}}> {match.dire_name} </Typography>
+              </ListTableCell>
             )}
-            <StyledTableCell>
+            <ListTableCell>
               <Typography> {FormatTime(match.duration)} </Typography>
-            </StyledTableCell>
-            <StyledTableCell sx={{ pt: 0, pb: 0 }}>
+            </ListTableCell>
+            <ListTableCell sx={{ pt: 0, pb: 0 }}>
               {HeroImageList(match.radiant_team)}
-            </StyledTableCell>
-            <StyledTableCell sx={{ pt: 0, pb: 0 }}>
+            </ListTableCell>
+            <ListTableCell sx={{ pt: 0, pb: 0 }}>
               {HeroImageList(match.dire_team)}
-            </StyledTableCell>
-          </StyledTableRow>
+            </ListTableCell>
+          </ListTableRow>
         ))}
       </TableBody>
     </Table>

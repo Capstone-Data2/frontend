@@ -119,7 +119,7 @@ export default function Header() {
           </HeadButton>
           <HeadButton
             onClick={() => {
-              navigate("matches/overview");
+              navigate("/meta");
             }}
           >
             Meta
