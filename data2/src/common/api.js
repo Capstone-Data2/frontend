@@ -56,3 +56,16 @@ export async function getMatchPerformance(match_id){
       })
   return response
 }
+
+export async function getMatchRivals(match_id, hero_id){
+  var response
+  await axios
+      .get(`${ip}/matches/${match_id}/rivals/${hero_id}`)
+      .then((res) => {
+          response = res.data
+      })
+      .catch((error) =>{
+          console.log(error)
+      })
+  return response
+}

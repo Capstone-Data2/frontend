@@ -82,7 +82,7 @@ function MatchPerformanceTable({ players, performance }) {
                                 </Box>
                             </StyledTableCell>
                             {headers.slice(1).map((header) => (
-                                <StyledTableCell>
+                                <StyledTableCell key={header}>
                                     <Typography sx={{ fontSize: 12 }}>{performance[player.hero_id][header]}</Typography>
                                 </StyledTableCell>
                             ))}

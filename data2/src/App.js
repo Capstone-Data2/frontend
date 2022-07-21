@@ -13,6 +13,7 @@ import MatchesList from "./pages/matchesList/matchesList";
 import MatchOverview from "./pages/matchOverview/matchOverview";
 import MatchLog from './pages/matchLog/matchLog'
 import MatchPerformance from "./pages/matchPerformance/matchPerformance";
+import MatchRivals from "./pages/matchRivals/matchRivals";
 function App() {
   return (
     <Router>
@@ -27,6 +28,7 @@ function App() {
               <Route path="matches/public" element={<MatchesList />} />
               <Route path="matches/:id/overview" element={<MatchOverview />} />
               <Route path="matches/:id/performance" element={<MatchPerformance />} />
+              <Route path="matches/:id/rivals" element={<MatchRivals />} />
               <Route path="matches/:id/log" element={<MatchLog />} />
               <Route
                 path="/"
