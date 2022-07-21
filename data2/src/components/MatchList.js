@@ -94,7 +94,7 @@ function MatchListTable({ type }) {
               </Typography>
             </ListTableCell>
             {type === "public" && match.avg_rank_tier !== undefined && (
-              <ListTableCell> {MatchRank(match)} </ListTableCell>
+              <ListTableCell> {MatchRank(match.avg_rank_tier.toString())} </ListTableCell>
             )}
             {type === "professional" && (
               <ListTableCell>

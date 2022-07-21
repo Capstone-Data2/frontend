@@ -97,7 +97,7 @@ export function loadAbilityImg(ability_name){
 
 export function loadTeamIcons(team){
   var srcs = importTeamIcons()
-  return(srcs[team+'_icon.png'])
+  return (srcs[team + '_icon.png'])
 }
 
 export function LoadHeroIcons(heroes) {
@@ -124,10 +124,10 @@ export function HeroImageList(heroes) {
   );
 }
 
-export function MatchRank(match) {
-  var rank = match.avg_rank_tier.toString();
-  rank = rank[1] > "5" ? rank[0] + "5" : rank[0] + rank[1];
+export function MatchRank(rank) {
   var ranks = importRankImgs();
+  rank = rank[1] > "5" ? rank[0] + "5" : rank[0] + rank[1];
+
   var img = "SeasonalRank" + rank[0] + "-" + rank[1] + ".png";
   return (
     <Box
@@ -193,102 +193,146 @@ export function updateAbilityImgs() {
   console.log(abilities_json);
 }
 
-export function ItemImageList(player) {
+export function ItemImageList(player, transform = 0) {
   var items = getItems(player);
   var srcs = LoadItemIcons(items, player);
 
+
+  if (transform === 0) {
+    return (
+      <Box sx={{ minWidth: 240, display: "flex" }}>
+        <Box sx={{ width: 130 }}>
+          <RenderActive player={player} srcs={srcs.active} />
+          <RenderBackpack player={player} srcs={srcs.backpack} />
+        </Box>
+        <RenderNeutral src={srcs.neutral} />
+        <RenderAghs srcs={{ scepter: srcs.scepter, shard: srcs.shard }} />
+      </Box>
+    );
+  }
+  else if (transform === 1) {
+    return (
+      <Box sx={{ minWidth: 240, display: "flex", justifyContent: "end" }}>
+        <RenderAghs right={2} srcs={{ scepter: srcs.scepter, shard: srcs.shard }} />
+        <RenderNeutral src={srcs.neutral} />
+        <Box sx={{ width: 120, display: "flex", flexDirection: "column", alignItems: "end" }}>
+          <RenderActive player={player} srcs={srcs.active} />
+          <RenderBackpack player={player} srcs={srcs.backpack} align={"end"} />
+        </Box>
+      </Box>
+    );
+  }
+}
+
+function RenderActive({ player, srcs }) {
   return (
-    <Box sx={{ minWidth: 240, display: "flex" }}>
-      <Box sx={{ width: 130 }}>
-        <ImageList
-          cols={3}
-          gap={1}
-          sx={{ marginBlock: 0, paddingInline: 0, maxWidth: 120 }}
-        >
-          {srcs.active.map((src, i) => (
-            <ImageListItem sx={{ width: "60%" }} key={player.hero_id + i}>
+    <ImageList
+      cols={3}
+      gap={1}
+      sx={{ marginBlock: 0, paddingInline: 0, maxWidth: 120 }}
+    >
+      {srcs.map((src, i) => (
+        <ImageListItem sx={{ width: "60%" }} key={player.hero_id + i}>
+          <img
+            src={src}
+            alt={src}
+            style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
+          />
+        </ImageListItem>
+      ))}
+    </ImageList>
+  )
+}
+
+function RenderBackpack({ player, srcs, align = "start" }) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        justifyContent: align,
+        alignItems: "center",
+        mt: 1,
+      }}
+    >
+      {align === "start" &&
+        <BackpackIcon sx={{ width: 20 }} />
+      }
+      {srcs.length !== 0 && (
+        <ImageList cols={3} gap={1} sx={{ marginBlock: 0 }}>
+          {srcs.map((src, i) => (
+            <ImageListItem sx={{ width: "70%" }} key={player.hero_id + i}>
               <img
                 src={src}
                 alt={src}
-                style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
+                style={{ borderRadius: 2, minWidth: 28, maxWidth: 28 }}
               />
             </ImageListItem>
           ))}
         </ImageList>
-
-        {srcs.backpack.length !== 0 && (
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "start",
-              alignItems: "center",
-              mt: 1,
-            }}
-          >
-            <BackpackIcon sx={{ width: 20 }} />
-            <ImageList cols={3} gap={1} sx={{ marginBlock: 0 }}>
-              {srcs.backpack.map((src, i) => (
-                <ImageListItem sx={{ width: "70%" }} key={player.hero_id + i}>
-                  <img
-                    src={src}
-                    alt={src}
-                    style={{ borderRadius: 2, minWidth: 28, maxWidth: 28 }}
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </Box>
-        )}
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "center", width: 40 }}>
-        <svg height="50" width="50">
-          <defs>
-            <clipPath id="circleView">
-              <circle
-                cx="20"
-                cy="23"
-                r="16"
-                stroke="black"
-                strokeWidth={3}
-                fill="none"
-              />
-            </clipPath>
-          </defs>
-
-          <image
-            className="img-circle"
-            xlinkHref={srcs.neutral}
-            alt={srcs.neutral}
-            height="46"
-            width="46"
-            clipPath="url(#circleView)"
-          />
-        </svg>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          width: 40,
-          flexDirection: "column",
-          justifyContent: "center",
-          ml: 2,
-        }}
-      >
-        <img
-          src={srcs.scepter}
-          alt={srcs.scepter}
-          style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
-        />
-        <img
-          src={srcs.shard}
-          alt={srcs.shard}
-          style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
-        />
-      </Box>
+      )}
+      {align === "end" &&
+        <BackpackIcon sx={{ width: 20 }} />
+      }
     </Box>
-  );
+  )
+}
+
+function RenderNeutral({ src }) {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center", width: 40 }}>
+      <svg height="50" width="50">
+        <defs>
+          <clipPath id="circleView">
+            <circle
+              cx="20"
+              cy="23"
+              r="16"
+              stroke="black"
+              strokeWidth={3}
+              fill="none"
+            />
+          </clipPath>
+        </defs>
+
+        <image
+          className="img-circle"
+          xlinkHref={src}
+          alt={src}
+          height="46"
+          width="46"
+          clipPath="url(#circleView)"
+        />
+      </svg>
+    </Box>
+  )
+}
+
+function RenderAghs({ srcs, right = 0 }) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        width: 40,
+        flexDirection: "column",
+        justifyContent: "center",
+        ml: 2,
+        mr: right
+      }}
+    >
+      <img
+        src={srcs.scepter}
+        alt={srcs.scepter}
+        style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
+      />
+      <img
+        src={srcs.shard}
+        alt={srcs.shard}
+        style={{ borderRadius: 2, minWidth: 34, maxWidth: 34 }}
+      />
+    </Box>
+  )
 }
 
 function getItems(player) {
@@ -382,9 +426,10 @@ export function BuffImageList(player) {
         mt: 1,
       }}
     >
-      {buffs.length !== 0 && (
-        <ImageList cols={3} gap={1} sx={{ marginBlock: 0, overflow: "hidden" }}>
-          {buffs.map((buff) => (
+
+      <ImageList cols={3} gap={1} sx={{ marginBlock: 0, overflow: "hidden" }}>
+        {buffs.length !== 0 &&
+          buffs.map((buff) => (
             <ImageListItem
               sx={{ width: "70%" }}
               key={player.hero_id + buff.permanent_buff}
@@ -407,9 +452,8 @@ export function BuffImageList(player) {
               </Typography>
             </ImageListItem>
           ))}
-        </ImageList>
-      )}
-      {buffs.length === 0 && "-"}
+          {buffs.length === 0 && "-"}
+      </ImageList>
     </Box>
   );
 }
@@ -762,11 +806,11 @@ function RenderHeroes({ srcs, players }) {
     <Box>
       {all_players.map((player, i) =>
         <MapImg
-          key={player.hero_id + i}
+          key={player.hero_id + 1}
           src={srcs[heroes_json[player.hero_id].icon]}
           width={25}
           grayscale={0}
-          sx={{left: x[i], top: y[i]}}
+          sx={{ left: x[i], top: y[i] }}
           onMouseOver={(event) =>
             dispatch(
               setHover({

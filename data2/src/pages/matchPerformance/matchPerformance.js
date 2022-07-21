@@ -16,7 +16,6 @@ export default function MatchPerformance() {
     (state) => state.match_details.match_details
   );
   const loading = useSelector((state) => state.match_details.loading);
-  const hover = useSelector((state) => state.hover);
   const dispatch = useDispatch();
   const [id, setId] = useState(window.location.href.split("/")[4]);
   const [performance, setPerformance] = useState({});
@@ -53,7 +52,6 @@ export default function MatchPerformance() {
         }}
       >
         <Box sx={{ display: "flex", mb: 1 }}>
-          {console.log(team)}
           <Typography sx={{}}>{name} Performance</Typography>
           {win && (
             <Paper
@@ -90,7 +88,6 @@ export default function MatchPerformance() {
             </Typography>
           </Paper>
         </Box>
-        {console.log(performance)}
         {Object.keys(playersMemoized).length !== 0 &&
           Object.keys(performance).length !== 0 && (
             <MatchPerformanceTable
