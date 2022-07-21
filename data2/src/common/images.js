@@ -22,6 +22,7 @@ import {
 import BackpackIcon from "@mui/icons-material/Backpack";
 import { alpha, styled } from "@mui/material/styles";
 
+
 export function importRankImgs() {
   const ranks = importImgs(
     require.context("../constants/rank_icons/", false, /\.(png|jpe?g|svg)$/)
@@ -61,6 +62,44 @@ export function importTeamIcons() {
     require.context("../constants/team_icons/", false, /.(png|jpe?g|svg)$/)
   );
   return team_icons;
+}
+
+export function importAbilityImgs() {
+  const abilities = importImgs(
+    require.context("../constants/ability_icons/", false, /.(png|jpe?g|svg)$/)
+  );
+  return abilities;
+}
+
+export function importItemImgs() {
+  const items = importImgs(
+    require.context("../constants/item_icons/", false, /.(png|jpe?g|svg)$/)
+  );
+  return items;
+}
+
+export function importSmallHeroIcons(){
+  const small_icon = importImgs(
+    require.context("../constants/hero_icons/map/", false, /.(png|jpe?g|svg)$/)
+  );
+  return small_icon;
+}
+
+export function loadSmallHeroIcon(icon_name){
+  var src = importSmallHeroIcons()
+  return(src[icon_name])
+}
+
+export function loadAbilityImg(ability_name){
+  var is_item = items_json[ability_name]
+  if(is_item === undefined){
+    var src = importAbilityImgs()
+    return(src[abilities_json[ability_name].img])
+  }
+  else{
+    var src2 = importItemImgs()
+    return(src2[items_json[ability_name].img])
+  }
 }
 
 export function loadTeamIcons(team){
