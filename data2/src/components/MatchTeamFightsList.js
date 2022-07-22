@@ -27,10 +27,11 @@ export default function TeamFightsList({ teamfights, dire, radiant }) {
     function listFights(){
         var res = []
         var count = 1
-        teamfights.forEach(fight => {
+        teamfights.forEach((fight, i) => {
             if(selected_team_fight.start === fight.start){
                 res.push(
                     <Box
+                    key={i}
                     onClick={() => clickFight(fight)}
                     sx={{
                         backgroundColor: theme.palette.secondary.main,
@@ -48,6 +49,7 @@ export default function TeamFightsList({ teamfights, dire, radiant }) {
             else{
                 res.push(
                     <Box
+                    key={i}
                     onClick={() => clickFight(fight)}
                     sx={{
                         backgroundColor: theme.palette.primary.main,

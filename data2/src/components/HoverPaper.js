@@ -17,7 +17,7 @@ export function hoverPaper(type, value, x, y) {
     }
     if (type === "talent") {
         ability = abilities_json[ability_ids_json[value]]
-        name = ability.dname
+        name = value === 730 ? "+2 Attribute" : ability.dname
     }
     if (type === "tower") {
       value = value.split("_")

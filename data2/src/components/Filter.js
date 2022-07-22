@@ -5,7 +5,6 @@ import {
 } from "@mui/material";
 
 import { LoadHeroIcons } from "../common/images";
-import { useDispatch, useSelector } from "react-redux";
 
 export function Filter({ players, header, click, clear, selected_heroes }) {
     return (

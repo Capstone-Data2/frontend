@@ -71,31 +71,31 @@ export function importItemImgs() {
   return items;
 }
 
-export function importSmallHeroIcons(){
+export function importSmallHeroIcons() {
   const small_icon = importImgs(
     require.context("../constants/map_icons/heroes/", false, /.(png|jpe?g|svg)$/)
   );
   return small_icon;
 }
 
-export function loadSmallHeroIcon(icon_name){
+export function loadSmallHeroIcon(icon_name) {
   var src = importSmallHeroIcons()
-  return(src[icon_name])
+  return (src[icon_name])
 }
 
-export function loadAbilityImg(ability_name){
+export function loadAbilityImg(ability_name) {
   var is_item = items_json[ability_name]
-  if(is_item === undefined){
+  if (is_item === undefined) {
     var src = importAbilityImgs()
-    return(src[abilities_json[ability_name].img])
+    return (src[abilities_json[ability_name].img])
   }
-  else{
+  else {
     var src2 = importItemImgs()
-    return(src2[items_json[ability_name].img])
+    return (src2[items_json[ability_name].img])
   }
 }
 
-export function loadTeamIcons(team){
+export function loadTeamIcons(team) {
   var srcs = importTeamIcons()
   return (srcs[team + '_icon.png'])
 }
@@ -181,22 +181,9 @@ export function ListRankImgs() {
   );
 }
 
-export function updateAbilityImgs() {
-  console.log(Object.keys(abilities_json).length);
-  for (const [key, value] of Object.entries(abilities_json)) {
-    if (value.img) {
-      if (value.dname) {
-        abilities_json[key].img = value.dname.replace(/ /g, "_") + "_icon.png";
-      }
-    }
-  }
-  console.log(abilities_json);
-}
-
 export function ItemImageList(player, transform = 0) {
   var items = getItems(player);
   var srcs = LoadItemIcons(items, player);
-
 
   if (transform === 0) {
     return (
@@ -452,7 +439,7 @@ export function BuffImageList(player) {
               </Typography>
             </ImageListItem>
           ))}
-          {buffs.length === 0 && "-"}
+        {buffs.length === 0 && "-"}
       </ImageList>
     </Box>
   );
@@ -464,12 +451,12 @@ export const PicksAndBansList = React.memo(function PicksAndBansList({
   return (
     <Box sx={{ width: "75%", mt: -2 }}>
       <Typography>Picks and Bans</Typography>
-      {loadPicks(picks_bans)}
+      {loadPicksBans(picks_bans)}
     </Box>
   );
 });
 
-function loadPicks(picks_bans) {
+function loadPicksBans(picks_bans) {
   var radiant_picks = [];
   var dire_picks = [];
   var bans = [];
@@ -536,16 +523,20 @@ function PickImages(w1, w2, w3, w4, srcs, mleft = 0) {
 function loadBans(bans) {
   var srcs = LoadHeroIcons(bans);
   return (
-    <Box sx={{ display: "flex" }}>
-      {srcs.map((src, i) => PickImage(src, "Ban " + (i + 1)))}
-    </Box>
+    <ImageList cols={7} gap={1}>
+      {srcs.map((src, i) => (
+        <ImageListItem sx={{ width: "100%" }} key={src}>
+          {PickImage(src, "Ban " + (i + 1), 100)}
+        </ImageListItem>
+      ))}
+    </ImageList>
   );
 }
 
-function PickImage(src, text) {
+function PickImage(src, text, grayscale = 0) {
   return (
     <Box key={src} sx={{ display: "flex", flexDirection: "column" }}>
-      <PickBanImg src={src} />
+      <PickBanImg src={src} grayscale={grayscale} />
       <Box
         sx={{
           display: "flex",
@@ -564,13 +555,14 @@ function PickImage(src, text) {
   );
 }
 
-const PickBanImg = styled("img")(({ theme, src }) => ({
+const PickBanImg = styled("img")(({ theme, src, grayscale }) => ({
   borderTopLeftRadius: 4,
   borderTopRightRadius: 4,
   width: 60,
   marginRight: 2,
   backgroundImage: src,
   marginBottom: 0,
+  filter: `grayscale(${grayscale}%)`,
 }));
 
 export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
@@ -625,12 +617,13 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
             )
           }
         />
+        
       )}
     </Box>
   );
 });
 
-export function loadMap(){
+export function loadMap() {
   var map_srcs = ImportGameMap();
   return map_srcs["map_img.png"]
 }
