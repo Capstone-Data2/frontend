@@ -22,20 +22,20 @@ export default function CombatDamageTable({ players, kills, match_details }) {
 
     function getDamageArray(hero_id, hero_killed_id) {
         var players_in_match = match_details.players
-        var damageDoneToHero = 0
-        for (var j = 0; j <= players_in_match.length - 1; j++) {
-            if (players_in_match[j].hero_id === hero_id) {
-                var hero_damage = Object.keys(players_in_match[j].damage)
+        let damageDoneToHero = 0
+        players_in_match.forEach(player => {
+            if (player.hero_id === hero_id) {
+                var hero_damage = Object.keys(player.damage)
                 hero_damage.forEach(hero_name => {
                     if (hero_name.substring(0, 13) === 'npc_dota_hero') {
                         var hero_taking_damage = hero_names[hero_name].id
                         if (hero_taking_damage === hero_killed_id) {
-                            damageDoneToHero = roundDamage(players_in_match[j].damage[hero_name])
+                            damageDoneToHero = roundDamage(player.damage[hero_name])
                         }
                     }
                 });
             }
-        }
+        });
         return damageDoneToHero
     }
 
@@ -62,8 +62,8 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                         <TableCell>
                             <Typography variant="subtitle2"></Typography>
                         </TableCell>
-                        {dire_players.map((player) => (
-                            <TableCell>
+                        {dire_players.map((player, i) => (
+                            <TableCell key={i}>
                                 <img
                                     src={LoadHeroIcons([String(player)])}
                                     style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.dire.dark }}
@@ -75,8 +75,8 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                 </TableHead>
 
                 <TableBody>
-                    {radiant_players.map((player) => (
-                        <TableRow>
+                    {radiant_players.map((player, i) => (
+                        <TableRow key={i}>
                             <TableCell>
                                 <img
                                     src={LoadHeroIcons([String(player)])}
@@ -84,8 +84,8 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                                     alt=""
                                 />
                             </TableCell>
-                            {dire_players.map((dire_player) => (
-                                <TableCell sx={{width: 70}}>
+                            {dire_players.map((dire_player, i) => (
+                                <TableCell key={i} sx={{width: 70}}>
                                     <Box
                                         sx={{
                                             flexDirection: "row",

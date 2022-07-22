@@ -2719,7 +2719,7 @@
   },
   "recipe_aether_lens": {
     "id": 233,
-    "img": "Aether_Lens_Recipe_icon.png",
+    "img": "Aether_Lens_recipe_icon.png", 
     "dname": "Aether Lens Recipe",
     "cost": 650,
     "notes": "",

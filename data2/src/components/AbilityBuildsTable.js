@@ -58,7 +58,11 @@ function AbilityBuildsTable({ players }) {
             upgrade_arr.push(undefined);
           }
         } else if (ability_ids_json[element].split("_")[0] === "special") {
-          if (length >= 9 && talentCount === 0) {
+          if(ability_ids_json[element] === "special_bonus_attributes"){
+            upgrade_arr.push(element)
+            count++
+          }
+          else if (length >= 9 && talentCount === 0) {
             talentCount++;
             count++;
             upgrade_arr.push(element);

@@ -13,7 +13,7 @@ export default function TeamMapDeaths({ playersDead }) {
     function loadHeroesDead(){
         var i = 0
         var res = []
-        playersDead.forEach(player => {
+        playersDead.forEach((player, j) => {
             if(Object.keys(player.deaths_pos).length !== 0){
                 Object.keys(player.deaths_pos).forEach(death => {
                     var hero_id = match_details.players[i].hero_id
@@ -21,7 +21,7 @@ export default function TeamMapDeaths({ playersDead }) {
                     var x_coordinate = death
                     var y_coordinate = Object.keys(player.deaths_pos[death])
                     res.push(
-                        <Box sx={{left: parseInt(x_coordinate) , top: parseInt(y_coordinate), position: 'absolute'}}>
+                        <Box key={j} sx={{left: parseInt(x_coordinate) , top: parseInt(y_coordinate), position: 'absolute'}}>
                             <MapImg
                                 width={25}
                                 grayscale={0}

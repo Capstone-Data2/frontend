@@ -17,6 +17,7 @@ const theme = createTheme({
       green: "#75F94C",
       yellow: "#DFDE6C",
       red: "#EB3223",
+      blue: "#90caf9"
     },
     radiant: {
       darker: "#225213",
