@@ -97,7 +97,7 @@ export default function MatchDetailsHeader({ page }) {
           />
           <MatchButton
             type={page === "vision" ? "main" : "secondary"}
-            click={() => {console.log("hi")}}
+            click={() => navigate("/matches/"+match_details.match_id+"/vision")}
             text="Vision"
           />
           <MatchButton

@@ -68,3 +68,16 @@ export async function getMatchPerformance(match_id){
       })
   return response
 }
+
+export async function getMatchVision(match_id){
+    var response
+    await axios
+        .get(`${ip}/matches/${match_id}/warddata`)
+        .then((res) => {
+            response = res.data
+        })
+        .catch((error) =>{
+            console.log(error)
+        })
+    return response
+  }
