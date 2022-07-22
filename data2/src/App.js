@@ -14,8 +14,10 @@ import MatchOverview from "./pages/matchOverview/matchOverview";
 import MatchLog from './pages/matchLog/matchLog';
 import MatchCombat from './pages/matchCombat/matchCombat.js';
 import MatchPerformance from "./pages/matchPerformance/matchPerformance";
+import MatchVision from './pages/matchVision/matchVision';
 import MatchRivals from "./pages/matchRivals/matchRivals";
 import MatchGraphs from "./pages/matchGraphs/matchGraphs";
+
 
 function App() {
   return (
@@ -32,9 +34,11 @@ function App() {
               <Route path="matches/:id/overview" element={<MatchOverview />} />
               <Route path="matches/:id/performance" element={<MatchPerformance />} />
               <Route path="matches/:id/rivals" element={<MatchRivals />} />
-              <Route path="matches/:id/log" element={<MatchLog />} />
               <Route path="matches/:id/combat" element={<MatchCombat />} />
               <Route path="matches/:id/graphs" element={<MatchGraphs />} />
+              <Route path="matches/:id/vision" element={<MatchVision />} />
+              <Route path="matches/:id/log" element={<MatchLog />} />
+
               <Route
                 path="/"
                 element={<Navigate to="/matches/professional" replace />}
