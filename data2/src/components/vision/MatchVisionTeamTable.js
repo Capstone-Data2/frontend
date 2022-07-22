@@ -2,8 +2,8 @@ import { Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { LoadHeroIcons } from "../../common/images";
 import { loadAbilityImg } from "../../common/images";
-import { Box, Table, TableBody, TableHead, TableRow, TableCell, Checkbox, ToggleButton } from "@mui/material";
-import CheckIcon from '@mui/icons-material/Check';
+import { Box, Table, TableBody, TableHead, TableRow, TableCell, Checkbox } from "@mui/material";
+
 import theme from "../../app/theme.js";
 import { togglePlayer, toggleTeam } from "../../pages/matchVision/matchVisionSlice";
 
@@ -11,19 +11,20 @@ export default function VisionTeamTable({ isRadiant }) {
     const match_details = useSelector(
         (state) => state.match_details.match_details
     );
+    const dispatch = useDispatch()
 
     const vision = useSelector(
         (state) => state.vision.value
     );
     var player_index = []
-    const dispatch = useDispatch()
+    
     function loadTableHeader(player, index) {
         var res = []
         if (player.is_radiant === isRadiant) {
             player_index.push(index)
 
             res.push(
-                <TableCell>
+                <TableCell key={index}>
                     <img
                         src={LoadHeroIcons([String(player.hero_id)])}
                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
@@ -39,17 +40,16 @@ export default function VisionTeamTable({ isRadiant }) {
         return (
             [...Array(5)].map((_, i) => (
                 
-                <TableCell>
+                <TableCell key={i}>
                     <Checkbox
                         checked={vision[isObs ? 'obs' : 'sentries']['isToggled'][isRadiant ? i : i + 5]}
                         sx={{
-                            color: 'red',
+                            color: 'gray',
                             '&.Mui-checked': {
-                                color: 'red',
+                                color: 'gray',
                             },
                         }}
                         onChange={() => {
-                            console.log(i)
                             dispatch(togglePlayer({
                                 method: 'toggle',
                                 isObs: isObs,
@@ -64,7 +64,7 @@ export default function VisionTeamTable({ isRadiant }) {
 
     return (
         <Box>
-            <Typography>Table</Typography>
+            <Typography>{isRadiant ? 'Radiant' : 'Dire'}</Typography>
             <Table sx={{ width: 500, backgroundColor: theme.palette.primary.main, mb: 4, }}>
                 <TableHead>
                     <TableRow>
@@ -72,29 +72,24 @@ export default function VisionTeamTable({ isRadiant }) {
                             <Checkbox
                                 checked={vision['team'][isRadiant ? "radiant" : "dire"]}
                                 sx={{
-                                    color: 'red',
+                                    color: 'gray',
                                     '&.Mui-checked': {
-                                        color: 'red',
+                                        color: 'gray',
                                     },
                                 }}
-                                onChange={() => {
+                                onChange={() => 
                                     dispatch(toggleTeam({
                                         isRadiant: isRadiant,
                                     }))
                                     
-                                    {[...Array(5)].map((_, i) => (
+                                    ([...Array(5)].map((_, i) => (
                                         dispatch(togglePlayer({
                                             method: vision['team'][isRadiant ? "radiant" : "dire"] ? 'turn_off' : 'turn_on',
                                             isObs: true,
                                             player_index: isRadiant ? i : i + 5
-                                        })),
-                                        dispatch(togglePlayer({
-                                            method: vision['team'][isRadiant ? "radiant" : "dire"] ? 'turn_off' : 'turn_on',
-                                            isObs: false,
-                                            player_index: isRadiant ? i : i + 5
                                         }))
-                                    ))}
-                                }}
+                                    )))
+                                }
 
                             />
 
