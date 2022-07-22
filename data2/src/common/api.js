@@ -47,7 +47,7 @@ export async function getMatchLog(match_id){
 export async function getMatchCombatData(match_id){
     var response
     await axios
-        .get(`http://127.0.0.1:8000/matches/${match_id}/combatdata`)
+        .get(`${ip}/matches/${match_id}/combatdata`)
         .then((res) => {
             response = res.data
         })
