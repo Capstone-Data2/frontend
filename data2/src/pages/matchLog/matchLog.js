@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 
 import { getMatchLog } from '../../common/api'
-import { MatchLogFilter } from "../../components/MatchLogFilter";
+import { Filter } from "../../components/Filter";
 import { MatchLogTable } from "../../components/MatchLogTable";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 import { Loading } from "../../components/loading"
-
+import { teamHeroIds } from "../../common/players.js";
+import { toggle, clear } from './matchLogSlice'
 
 
 export default function MatchLog() {
@@ -25,7 +26,7 @@ export default function MatchLog() {
 
     const loading = useSelector((state) => state.match_details.loading)
 
-    var selected_heros = useSelector(
+    var selected_heroes = useSelector(
         (state) => state.filter.value
     );
 
@@ -49,6 +50,14 @@ export default function MatchLog() {
         }
 
     }, [match_details.match_id, loading, dispatch, id])
+
+    function clicked(hero) {
+        dispatch(toggle(hero))
+    }
+
+    function clearSelection() {
+        dispatch(clear())
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -77,16 +86,16 @@ export default function MatchLog() {
                                 mx: 2,
                                 justifyContent: "start",
                                 flexDirection: "column",
-                                width: "50%",
+                                width: 800,
                                 height: '200px',
                                 backgroundColor: theme.palette.primary.main,
                                 borderRadius: 2,
 
                             }}>
-                            <MatchLogFilter players={teamHeroIds(match_details.picks_bans)} />
+                            <Filter players={teamHeroIds(match_details.picks_bans)} header={"Match Filter"} click={clicked} clear={clearSelection} selected_heroes={selected_heroes} />
                         </Box>
                         {Object.keys(log).length !== 0 &&
-                            <MatchLogTable players={selected_heros} log_data={log} teams={teamHeroIds(match_details.picks_bans)} />
+                            <MatchLogTable players={selected_heroes} log_data={log} teams={teamHeroIds(match_details.picks_bans)} />
                         }
                     </Box>
                 </Box>
@@ -98,18 +107,3 @@ export default function MatchLog() {
 }
 
 
-function teamHeroIds(picks_bans) {
-    let team1 = []
-    let team2 = []
-    for (let i = 0; i <= picks_bans.length - 1; i++) {
-        if (picks_bans[i].is_pick === true) {
-            if (picks_bans[i].team === 0) {
-                team1.push(String(picks_bans[i].hero_id));
-            }
-            else if (picks_bans[i].team === 1) {
-                team2.push(String(picks_bans[i].hero_id));
-            }
-        }
-    }
-    return ([team1, team2])
-}

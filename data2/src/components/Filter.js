@@ -5,13 +5,8 @@ import {
 } from "@mui/material";
 
 import { LoadHeroIcons } from "../common/images";
-import { useDispatch, useSelector } from "react-redux";
-import { toggle, clear } from '../pages/matchLog/matchLogSlice'
 
-export function MatchLogFilter({ players }) {
-    const dispatch = useDispatch()
-    const selected_heros = useSelector((state) => state.filter.value);
-
+export function Filter({ players, header, click, clear, selected_heroes }) {
     return (
         <Box>
             <Box
@@ -24,45 +19,45 @@ export function MatchLogFilter({ players }) {
                     height: '40px',
 
                 }}>
-                <Typography sx={{}}>Match Filter</Typography>
+                <Typography sx={{}}>{header}</Typography>
                 <Button size='small' variant='outlined'
-                    sx={{ marginLeft: "auto", color: 'black', variant: 'outlined' }} onClick={() => clearSelection()}>Clear selections</Button>
+                    sx={{ marginLeft: "auto", color: 'black', variant: 'outlined' }} onClick={() => clear()}>Clear selections</Button>
             </Box>
             <Box
                 sx={{
                     display: "flex",
                     flexDirection: "row",
-                    mx: 10,
                     marginTop: 2,
+                    width: "100%",
+                    mx: 2
                 }}
             >
-
-                {loadTeamIcons(players[0])}
-                <Typography sx={{ marginRight: 2 }}>Verses</Typography>
-                {loadTeamIcons(players[1])}
+                <Box sx={{display: "flex", width: "44%", right: "auto"}}>
+                    {loadTeamIcons(players[0])}
+                </Box>
+                <Box sx={{width: "10%", textAlign: "center"}}>
+                    <Typography sx={{ marginRight: 2}}>Versus</Typography>
+                </Box>
+                <Box sx={{display: "flex", width: "44%", justifyContent: "end"}}>
+                    {loadTeamIcons(players[1])}
+                </Box>
             </Box>
         </Box>
 
     );
 
-    function clicked(hero) {
-        dispatch(toggle(hero))
-    }
 
-    function clearSelection() {
-        dispatch(clear())
-    }
 
     function loadTeamIcons(players) {
         var response = [];
         for (let i = 0; i <= players.length - 1; i++) {
-            if (selected_heros.includes(players[i])) {
+            if (selected_heroes.includes(players[i])) {
                 response.push(
                     <Box key={i} sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center", border: 3 }}>
                         <img
                             src={LoadHeroIcons([players[i]])}
                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
-                            onClick={() => clicked(players[i])}
+                            onClick={() => click(players[i])}
                             alt="Hero Icon"
                         />
                     </Box>
@@ -74,7 +69,7 @@ export function MatchLogFilter({ players }) {
                         <img
                             src={LoadHeroIcons([players[i]])}
                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
-                            onClick={() => clicked(players[i])}
+                            onClick={() => click(players[i])}
                             alt="Hero Icon"
                         />
                     </Box>

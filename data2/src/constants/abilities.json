@@ -8387,7 +8387,7 @@
     "lore": "The sultry voice of Akasha beckons her opponents while stealing their souls.",
     "mc": ["100", "110", "120", "130"],
     "cd": "7",
-    "img": "Scream_Of_Pain_icon.png"
+    "img": "Scream_of_Pain_icon.png"
   },
   "queenofpain_sonic_wave": {
     "dname": "Sonic Wave",
@@ -24233,7 +24233,7 @@
     "lore": "It never matters who throws the first punch, only who throws the last.",
     "mc": "75",
     "cd": ["20", "15", "10"],
-    "img": "Walrus_PUNCH!_icon.png"
+    "img": "Walrus_Punch_icon.png"
   },
   "tusk_walrus_kick": {
     "dname": "Walrus Kick",

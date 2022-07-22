@@ -17,7 +17,7 @@ export default function TeamFightTable({ team, fight }) {
         'Abilities',
         'Items'
     ]
-    const TableTypography = styled("Typography")(({ theme, width, grayscale }) => ({
+    const TableTypography = styled(Typography)(({ theme, width, grayscale }) => ({
         fontSize: 11
     }));
 
@@ -29,9 +29,10 @@ export default function TeamFightTable({ team, fight }) {
     function abilityUses(abilities_used, target){
         var response = []
         var abilities_names = Object.keys(abilities_used)
-        abilities_names.forEach(ability => {
+        abilities_names.forEach((ability, i) => {
             response.push(
                 <Box
+                key={i}
                 sx={{marginRight: 1}}
                 >
                     <img
@@ -52,7 +53,7 @@ export default function TeamFightTable({ team, fight }) {
             
             if (player === String(match_details.players[i].hero_id)) {
                 res.push(
-                    <TableRow>
+                    <TableRow key={i}>
                         <TableCell>
                             <img
                                 src={LoadHeroIcons([String(player)])}
@@ -98,8 +99,8 @@ export default function TeamFightTable({ team, fight }) {
             <Table sx={{ width: 500, backgroundColor: theme.palette.primary.main, mb: 4, }}>
                 <TableHead>
                     <TableRow>
-                        {headers.map((header) => (
-                            <TableCell>
+                        {headers.map((header, i) => (
+                            <TableCell key={i}>
                                 <TableTypography 
                                 >{header}</TableTypography>
                             </TableCell>
