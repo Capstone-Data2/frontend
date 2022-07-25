@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
-import { getMatchVision } from '../../common/api'
+import { getMatchVision } from '../../functions/api'
 
 import VisionWardMap from "../../components/vision/MatchVisionMap.js";
 import VisionTeamTable from '../../components/vision/MatchVisionTeamTable.js';

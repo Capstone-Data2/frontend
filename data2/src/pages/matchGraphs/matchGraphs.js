@@ -7,7 +7,7 @@ import theme from "../../app/theme.js";
 import { Box } from "@mui/material";
 import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import { Loading } from "../../components/common/loading";
-import { getPlayerDetails } from "../../common/players";
+import { getPlayerDetails } from "../../functions/players";
 import { RenderGraphs } from "../../components/graphs/RenderGraphs";
 
 export default function MatchGraphs() {

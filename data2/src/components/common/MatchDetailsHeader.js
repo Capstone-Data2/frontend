@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { FormatTime, TimeDifference } from "../../common/time";
+import { FormatTime, TimeDifference } from "../../functions/time";
 import { MatchButton } from "./Buttons";
 
 export default function MatchDetailsHeader({ page }) {

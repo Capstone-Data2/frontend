@@ -9,8 +9,7 @@ import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
-import { getMatchLog } from '../../common/api'
-import { getMatchCombatData } from '../../common/api'
+import { getMatchLog, getMatchCombatData } from '../../functions/api'
 import TeamFightsList from "../../components/combat/MatchTeamFightsList.js";
 import TeamFightTable from "../../components/combat/MatchTeamFightTable.js";
 import TeamMapDeaths from '../../components/combat/MatchCombatTeamDeaths.js'

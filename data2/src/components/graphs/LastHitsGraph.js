@@ -1,7 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, } from 'recharts';
 import { CustomTooltip } from '../common/graphs.js';
-import { findHeroNames } from '../../common/players.js';
+import { findHeroNames } from '../../functions/players.js';
 
 export function LastHitsGraph({ players }) {
     var heroes = findHeroNames(players)

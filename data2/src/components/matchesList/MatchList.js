@@ -13,7 +13,7 @@ import {
 import { alpha, styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import { MatchRank, HeroImageList } from "../common/images";
-import { TimeDifference, FormatTime } from "../../common/time";
+import { TimeDifference, FormatTime } from "../../functions/time";
 import { useNavigate } from "react-router-dom";
 
 const CommonBox = styled(Box)(({ theme }) => ({

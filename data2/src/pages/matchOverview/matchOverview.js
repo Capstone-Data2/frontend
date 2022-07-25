@@ -15,7 +15,7 @@ import MatchDetailsTable from "../../components/overview/MatchDetailsTable";
 import AbilityBuildsTable from "../../components/overview/AbilityBuildsTable";
 import { hoverPaper } from "../../components/overview/HoverPaper";
 import { Loading } from "../../components/common/loading"
-import { getPlayerDetails } from "../../common/players";
+import { getPlayerDetails } from "../../functions/players";
 
 export default function MatchOverview() {
   const { id } = useParams();

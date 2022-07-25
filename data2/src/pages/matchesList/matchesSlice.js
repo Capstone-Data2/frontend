@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { getMatchesList } from '../../common/api';
+import { getMatchesList } from '../../functions/api';
 
 export const fetchMatchesList = createAsyncThunk(
   "matches/fetchMatchesListStatus",

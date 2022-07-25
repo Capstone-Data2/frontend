@@ -7,12 +7,12 @@ import { alpha } from "@mui/material/styles";
 import {
     Box,
 } from "@mui/material";
-import { getMatchLog } from '../../common/api'
+import { getMatchLog } from '../../functions/api'
 import { MatchLogTable } from "../../components/log/MatchLogTable";
 import { Filter } from "../../components/common/Filter";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 import { Loading } from "../../components/common/loading"
-import { teamHeroIds } from "../../common/players.js";
+import { teamHeroIds } from "../../functions/players.js";
 import { toggle, clear } from './matchLogSlice'
 
 

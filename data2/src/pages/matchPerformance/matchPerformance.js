@@ -7,9 +7,9 @@ import theme from "../../app/theme.js";
 import { Box, Typography, Paper } from "@mui/material";
 import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import { Loading } from "../../components/common/loading";
-import { getMatchPerformance } from "../../common/api";
+import { getMatchPerformance } from "../../functions/api";
 import MatchPerformanceTable from "../../components/performance/MatchPerformanceTable";
-import { getPlayerDetails } from "../../common/players";
+import { getPlayerDetails } from "../../functions/players";
 
 export default function MatchPerformance() {
   const match_details = useSelector(
