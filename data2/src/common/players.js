@@ -1,3 +1,6 @@
+import heroes_json from "../constants/heroes.json"
+import player_colors_json from "../constants/player_colors.json"
+
 export function getPlayerDetails(players) {
     if (players !== undefined) {
       var radiant_players = [];
@@ -27,4 +30,15 @@ export function teamHeroIds(picks_bans) {
       }
   }
   return ([team1, team2])
+}
+
+export function findHeroNames(players) {
+  let heroes = []
+  players.radiant.forEach((player, i) => {
+      heroes.push({ name: heroes_json[player.hero_id].localized_name, color: Object.values(player_colors_json)[i], team: "radiant", gold_t: player.gold_t, xp_t: player.xp_t, lh_t: player.lh_t })
+  });
+  players.dire.forEach((player, i) => {
+      heroes.push({ name: heroes_json[player.hero_id].localized_name, color: Object.values(player_colors_json).splice(5)[i], team: "dire", gold_t: player.gold_t, xp_t: player.xp_t, lh_t: player.lh_t })
+  })
+  return heroes
 }

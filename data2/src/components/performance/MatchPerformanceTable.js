@@ -1,5 +1,5 @@
 import React from "react";
-import theme from "../app/theme.js";
+import theme from "../../app/theme.js";
 import {
     Box,
     Typography,

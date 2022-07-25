@@ -1,4 +1,4 @@
-import { loadMap } from "../../common/images";
+import { loadMap } from "../common/images";
 import { Box } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useSelector } from "react-redux";

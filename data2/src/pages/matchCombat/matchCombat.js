@@ -3,10 +3,9 @@ import { ThemeProvider } from "@emotion/react";
 import {
     Box, Typography, Button
 } from "@mui/material";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
 import CombatDamageTable from '../../components/combat/MatchCombatDamageTable';
 import TeamDamageTable from '../../components/combat/MatchTeamDamageTable';
-
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { LoadHeroIcons } from "../../common/images";
-import { loadAbilityImg } from "../../common/images";
+import { LoadHeroIcons } from "../common/images";
+import { loadAbilityImg } from "../common/images";
 import { Box, Table, TableBody, TableHead, TableRow, TableCell, Checkbox } from "@mui/material";
 
 import theme from "../../app/theme.js";

@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import theme from "../../app/theme.js";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";

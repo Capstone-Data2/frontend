@@ -4,7 +4,7 @@ import {
     Button,
 } from "@mui/material";
 
-import { LoadHeroIcons } from "../common/images";
+import { LoadHeroIcons } from "./images";
 
 export function Filter({ players, header, click, clear, selected_heroes }) {
     return (

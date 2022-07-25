@@ -2,17 +2,16 @@ import { ThemeProvider } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import theme from "../../app/theme.js";
 import { useSelector, useDispatch } from "react-redux";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import { alpha } from "@mui/material/styles";
 import {
     Box,
 } from "@mui/material";
-
 import { getMatchLog } from '../../common/api'
-import { Filter } from "../../components/Filter";
 import { MatchLogTable } from "../../components/log/MatchLogTable";
+import { Filter } from "../../components/common/Filter";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
-import { Loading } from "../../components/loading"
+import { Loading } from "../../components/common/loading"
 import { teamHeroIds } from "../../common/players.js";
 import { toggle, clear } from './matchLogSlice'
 

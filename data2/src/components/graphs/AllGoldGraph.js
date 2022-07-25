@@ -1,6 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, } from 'recharts';
-import { CustomTooltip, findHeroNames } from '../../common/graphs.js';
+import { CustomTooltip } from '../common/graphs.js';
+import { findHeroNames } from '../../common/players.js';
 
 export function AllGoldGraph({ players }) {
     var heroes = findHeroNames(players)

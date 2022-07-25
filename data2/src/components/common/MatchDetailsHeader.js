@@ -1,12 +1,12 @@
 import React from "react";
-import theme from "../app/theme.js";
+import theme from "../../app/theme.js";
 import { useSelector } from "react-redux";
 import {
   Box,
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { FormatTime, TimeDifference } from "../common/time";
+import { FormatTime, TimeDifference } from "../../common/time";
 import { MatchButton } from "./Buttons";
 
 export default function MatchDetailsHeader({ page }) {
