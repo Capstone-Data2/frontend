@@ -1,9 +1,9 @@
 import { Typography, Box } from "@mui/material";
-import { loadMap }from "../../common/images";
-import { loadSmallHeroIcon } from "../../common/images";
+import { loadMap }from "../common/images";
+import { loadSmallHeroIcon } from "../common/images";
 import { useSelector } from "react-redux";
 import heroes_json from "../../constants/heroes.json";
-import { MapImg } from "../../common/images";
+import { MapImg } from "../common/images";
 export default function TeamMapDeaths({ playersDead }) {
     const match_details = useSelector(
         (state) => state.match_details.match_details

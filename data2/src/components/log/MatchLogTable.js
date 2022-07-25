@@ -3,8 +3,8 @@ import {
     Typography,
 } from "@mui/material";
 
-import { LoadHeroIcons } from "../../common/images";
-import { loadTeamIcons } from "../../common/images";
+import { LoadHeroIcons } from "../common/images";
+import { loadTeamIcons } from "../common/images";
 import hero_names from '../../constants/hero_names.json'
 import theme from "../../app/theme.js";
 

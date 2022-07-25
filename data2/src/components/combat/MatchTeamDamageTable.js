@@ -8,9 +8,9 @@ import {
     TableRow,
 } from "@mui/material";
 import theme from "../../app/theme.js";
-import { LoadHeroIcons } from "../../common/images";
-import { loadAbilityImg } from "../../common/images";
-import { loadSmallHeroIcon } from "../../common/images";
+import { LoadHeroIcons } from "../common/images";
+import { loadAbilityImg } from "../common/images";
+import { loadSmallHeroIcon } from "../common/images";
 
 import heroes_json from "../../constants/heroes.json";
 import hero_names_json from "../../constants/hero_names.json";
