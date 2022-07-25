@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { select, fetchMatchesList } from "./matchesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ListRankImgs } from "../../common/images";
+import { ListRankImgs } from "../../components/common/images";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import { useNavigate, useLocation } from "react-router-dom";
-import { CommonBox, MatchListTable } from "../../components/MatchList";
-import { MatchButton } from "../../components/Buttons";
-import { Loading } from "../../components/loading"
+import { CommonBox, MatchListTable } from "../../components/matchesList/MatchList";
+import { MatchButton } from "../../components/common/Buttons";
+import { Loading } from "../../components/common/loading"
 
 export default function MatchesList() {
   const matches = useSelector((state) => state.matches);

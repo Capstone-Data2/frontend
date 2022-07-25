@@ -3,7 +3,7 @@ import { ThemeProvider } from "@emotion/react";
 import {
     Box, Typography, Button
 } from "@mui/material";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import CombatDamageTable from '../../components/MatchCombatDamageTable';
 import TeamDamageTable from '../../components/MatchTeamDamageTable';
 

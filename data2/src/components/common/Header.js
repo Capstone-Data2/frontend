@@ -1,7 +1,7 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import { ReactComponent as SteamIcon } from "../steam.svg";
+import { ReactComponent as SteamIcon } from "../../steam.svg";
 import {
   Typography,
   Toolbar,

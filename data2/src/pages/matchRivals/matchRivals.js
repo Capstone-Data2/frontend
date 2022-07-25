@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import { Box, Typography } from "@mui/material";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
-import { Loading } from "../../components/loading";
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
+import { Loading } from "../../components/common/loading";
 import { getMatchRivals } from "../../common/api";
 import { teamHeroIds } from "../../common/players";
-import { Filter } from "../../components/Filter";
-import { MatchRank, ItemImageList, BuffImageList } from "../../common/images";
+import { Filter } from "../../components/common/Filter";
+import { MatchRank, ItemImageList, BuffImageList } from "../../components/common/images";
 import { NetGoldXPGraph, LastHitsGraph } from "../../components/rivals/RivalGraphs";
 
 export default function MatchRivals() {

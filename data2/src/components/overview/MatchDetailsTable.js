@@ -1,6 +1,6 @@
 import React from "react";
 import { alpha } from "@mui/material/styles";
-import theme from "../app/theme.js";
+import theme from "../../app/theme.js";
 import {
     Box,
     Typography,

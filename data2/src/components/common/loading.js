@@ -2,7 +2,7 @@ import {
     Box,
     CircularProgress,
 } from "@mui/material";
-import theme from "../app/theme.js";
+import theme from "../../app/theme.js";
 
 export function Loading() {
     return (
