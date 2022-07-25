@@ -10,7 +10,7 @@ import {
 
 import { getMatchLog } from '../../common/api'
 import { Filter } from "../../components/Filter";
-import { MatchLogTable } from "../../components/MatchLogTable";
+import { MatchLogTable } from "../../components/log/MatchLogTable";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 import { Loading } from "../../components/loading"
 import { teamHeroIds } from "../../common/players.js";

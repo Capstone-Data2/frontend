@@ -7,9 +7,9 @@ import {
     TableHead,
     TableRow,
 } from "@mui/material";
-import theme from "../app/theme.js";
-import { LoadHeroIcons } from "../common/images";
-import hero_names from '../constants/hero_names.json'
+import theme from "../../app/theme.js";
+import { LoadHeroIcons } from "../../common/images";
+import hero_names from '../../constants/hero_names.json'
 
 export default function CombatDamageTable({ players, kills, match_details }) {
     const radiant_players = players[0]
