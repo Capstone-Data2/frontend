@@ -1,9 +1,9 @@
 import { Typography, Box, Table, TableBody, TableHead, TableRow, TableCell } from "@mui/material";
 import React from "react";
-import theme from "../app/theme.js";
+import theme from "../../app/theme.js";
 import { useSelector } from "react-redux";
-import { LoadHeroIcons } from "../common/images";
-import { loadAbilityImg } from "../common/images";
+import { LoadHeroIcons } from "../../common/images";
+import { loadAbilityImg } from "../../common/images";
 import { styled } from "@mui/material/styles";
 
 export default function TeamFightTable({ team, fight }) {

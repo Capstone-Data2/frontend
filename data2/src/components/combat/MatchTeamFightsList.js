@@ -1,8 +1,8 @@
 import { Typography, Box } from "@mui/material";
 import React from "react";
-import theme from "../app/theme.js";
+import theme from "../../app/theme.js";
 import { useDispatch, useSelector } from "react-redux";
-import { fill } from '../pages/matchCombat/matchCombatSlice'
+import { fill } from '../../pages/matchCombat/matchCombatSlice'
 
 export default function TeamFightsList({ teamfights, dire, radiant }) {
     

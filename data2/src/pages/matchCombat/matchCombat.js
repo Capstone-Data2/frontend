@@ -3,19 +3,18 @@ import { ThemeProvider } from "@emotion/react";
 import {
     Box, Typography, Button
 } from "@mui/material";
+import CombatDamageTable from '../../components/combat/MatchCombatDamageTable';
+import TeamDamageTable from '../../components/combat/MatchTeamDamageTable';
 import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
-import CombatDamageTable from '../../components/MatchCombatDamageTable';
-import TeamDamageTable from '../../components/MatchTeamDamageTable';
-
 import { useSelector, useDispatch } from "react-redux";
 import { alpha } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { getMatchLog } from '../../common/api'
 import { getMatchCombatData } from '../../common/api'
-import TeamFightsList from "../../components/MatchTeamFightsList.js";
-import TeamFightTable from "../../components/MatchTeamFightTable.js";
-import TeamMapDeaths from '../../components/MatchCombatTeamDeaths.js'
-import TeamFightGraph from "../../components/MatchFightGraph.js";
+import TeamFightsList from "../../components/combat/MatchTeamFightsList.js";
+import TeamFightTable from "../../components/combat/MatchTeamFightTable.js";
+import TeamMapDeaths from '../../components/combat/MatchCombatTeamDeaths.js'
+import TeamFightGraph from "../../components/combat/MatchFightGraph.js";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 
 export default function MatchCombat() {
