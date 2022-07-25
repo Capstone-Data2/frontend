@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import { Box, Typography, Paper } from "@mui/material";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
-import { Loading } from "../../components/loading";
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
+import { Loading } from "../../components/common/loading";
 import { getMatchPerformance } from "../../common/api";
-import MatchPerformanceTable from "../../components/MatchPerformanceTable";
+import MatchPerformanceTable from "../../components/performance/MatchPerformanceTable";
 import { getPlayerDetails } from "../../common/players";
 
 export default function MatchPerformance() {

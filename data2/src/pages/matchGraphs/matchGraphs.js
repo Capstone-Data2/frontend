@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import { Box } from "@mui/material";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
-import { Loading } from "../../components/loading";
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
+import { Loading } from "../../components/common/loading";
 import { getPlayerDetails } from "../../common/players";
 import { RenderGraphs } from "../../components/graphs/RenderGraphs";
 

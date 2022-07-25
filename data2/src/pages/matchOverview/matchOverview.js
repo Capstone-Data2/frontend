@@ -9,12 +9,12 @@ import {
   Typography,
   Paper,
 } from "@mui/material";
-import MatchDetailsHeader from "../../components/MatchDetailsHeader";
-import { PicksAndBansList, GameMap } from "../../common/images";
-import MatchDetailsTable from "../../components/MatchDetailsTable";
-import AbilityBuildsTable from "../../components/AbilityBuildsTable";
-import { hoverPaper } from "../../components/HoverPaper";
-import { Loading } from "../../components/loading"
+import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
+import { PicksAndBansList, GameMap } from "../../components/common/images";
+import MatchDetailsTable from "../../components/overview/MatchDetailsTable";
+import AbilityBuildsTable from "../../components/overview/AbilityBuildsTable";
+import { hoverPaper } from "../../components/overview/HoverPaper";
+import { Loading } from "../../components/common/loading"
 import { getPlayerDetails } from "../../common/players";
 
 export default function MatchOverview() {

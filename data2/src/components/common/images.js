@@ -7,46 +7,46 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import heroes_json from "../constants/heroes.json";
-import items_json from "../constants/items.json";
-import item_ids_json from "../constants/item_ids.json";
-import permanent_buffs_json from "../constants/permanent_buffs.json";
-import abilities_json from "../constants/abilities.json";
-import ability_ids_json from "../constants/ability_ids.json";
-import theme from "../app/theme";
-import { select } from "../pages/matchesList/matchesSlice";
+import heroes_json from "../../constants/heroes.json";
+import items_json from "../../constants/items.json";
+import item_ids_json from "../../constants/item_ids.json";
+import permanent_buffs_json from "../../constants/permanent_buffs.json";
+import abilities_json from "../../constants/abilities.json";
+import ability_ids_json from "../../constants/ability_ids.json";
+import theme from "../../app/theme";
+import { select } from "../../pages/matchesList/matchesSlice";
 import {
   removeHover,
   setHover,
-} from "../pages/matchOverview/matchDetailsSlice";
+} from "../../pages/matchOverview/matchDetailsSlice";
 import BackpackIcon from "@mui/icons-material/Backpack";
 import { alpha, styled } from "@mui/material/styles";
 
 
 export function importRankImgs() {
   const ranks = importImgs(
-    require.context("../constants/rank_icons/", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/rank_icons/", false, /\.(png|jpe?g|svg)$/)
   );
   return ranks;
 }
 
 export function importAbilityImgs() {
   const abilities = importImgs(
-    require.context("../constants/ability_icons/", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/ability_icons/", false, /\.(png|jpe?g|svg)$/)
   );
   return abilities;
 }
 
 function ImportGameMap() {
   const map = importImgs(
-    require.context("../constants/map_icons/", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/map_icons/", false, /\.(png|jpe?g|svg)$/)
   );
   return map;
 }
 
 function ImportHeroMap() {
   const heroes = importImgs(
-    require.context("../constants/map_icons/heroes", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/map_icons/heroes", false, /\.(png|jpe?g|svg)$/)
   );
   return heroes;
 }
@@ -59,21 +59,21 @@ export function importImgs(r) {
 
 export function importTeamIcons() {
   const team_icons = importImgs(
-    require.context("../constants/team_icons/", false, /.(png|jpe?g|svg)$/)
+    require.context("../../constants/team_icons/", false, /.(png|jpe?g|svg)$/)
   );
   return team_icons;
 }
 
 export function importItemImgs() {
   const items = importImgs(
-    require.context("../constants/item_icons/", false, /.(png|jpe?g|svg)$/)
+    require.context("../../constants/item_icons/", false, /.(png|jpe?g|svg)$/)
   );
   return items;
 }
 
 export function importSmallHeroIcons() {
   const small_icon = importImgs(
-    require.context("../constants/map_icons/heroes/", false, /.(png|jpe?g|svg)$/)
+    require.context("../../constants/map_icons/heroes/", false, /.(png|jpe?g|svg)$/)
   );
   return small_icon;
 }
@@ -102,7 +102,7 @@ export function loadTeamIcons(team) {
 
 export function LoadHeroIcons(heroes) {
   const images = importImgs(
-    require.context("../constants/hero_icons/", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/hero_icons/", false, /\.(png|jpe?g|svg)$/)
   );
   var srcs = [];
   heroes.forEach((hero) => {
@@ -338,7 +338,7 @@ function getItems(player) {
 
 function LoadItemIcons(items, player) {
   const images = importImgs(
-    require.context("../constants/item_icons", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/item_icons", false, /\.(png|jpe?g|svg)$/)
   );
   var active_srcs = [];
   items.active.forEach((item) => {
@@ -390,7 +390,7 @@ function LoadItemIcons(items, player) {
 
 export function BuffImageList(player) {
   const images = importImgs(
-    require.context("../constants/buff_icons", false, /\.(png|jpe?g|svg)$/)
+    require.context("../../constants/buff_icons", false, /\.(png|jpe?g|svg)$/)
   );
   var buffs = [];
   player.permanent_buffs.forEach((buff) => {

@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./app/theme.js";
-import Header from "./components/Header.js";
+import Header from "./components/common/Header.js";
 import MatchesList from "./pages/matchesList/matchesList";
 import MatchOverview from "./pages/matchOverview/matchOverview";
 import MatchLog from './pages/matchLog/matchLog';
