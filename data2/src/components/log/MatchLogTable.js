@@ -8,25 +8,85 @@ import { loadTeamIcons } from "../common/images";
 import hero_names from '../../constants/hero_names.json'
 import theme from "../../app/theme.js";
 import { getTowerName, isSelected, creepIsRadiant, sortResponseByTime, runeName } from "./tableFunctions";
+import  { getTime }  from '../../functions/time.js'
+
 export function MatchLogTable({ players, log_data, teams }) {
     const radiant = teams[0]
     const dire = teams[1]
 
-    function getTime(seconds) {
-        var minutes = Math.floor(seconds / 60);
-        var sec = seconds - minutes * 60;
-        if (sec < 10) {
-            return (String(minutes) + ':0' + String(sec))
+    function getTowerName(rawName) {
+        var array_name = rawName.split('_')
+        var team = ''
+        var tower = ''
+        var tier = ''
+        if (array_name.length === 5) {
+            if (array_name[2] === 'goodguys') {
+                team = 'Radiant '
+            }
+            else {
+                team = 'Dire '
+            }
+            tier = 'Tier ' + array_name[3][5]
+            tower = array_name[4]
+            return (team + tier + ' ' + tower)
         }
-        else {
-            return (String(minutes) + ':' + String(sec))
-        }
+        else if (array_name.length === 6) {
+            if (array_name[2] === 'goodguys') {
+                team = 'Radiant '
+            }
+            else {
+                team = 'Dire '
+            }
 
+            tier = array_name[3] + ' Barracks'
+            tower = array_name[5]
+            return (team + tier + ' ' + tower)
+        }
+        else if (array_name.length === 4) {
+            if (array_name[2] === 'goodguys') {
+                team = 'Radiant '
+            }
+            else {
+                team = 'Dire '
+            }
+
+            if (array_name[3][5] === '4') {
+                tier = 'Tier ' + array_name[3][5]
+            }
+            else {
+                tier = 'Ancient'
+            }
+            return (team + tier + ' ')
+        }
     }
 
-    
+    function creepIsRadiant(buildingInfo) {
+        var team = buildingInfo.unit.split('_')
+        if (team[3] === 'badguys') {
+            return false
+        }
+        else {
+            return true
+        }
+    }
 
+    function sortResponseByTime(res, time_in_seconds) {
+        for (var i = 0; i < time_in_seconds.length; i++) {
+            for (var j = 0; j < (time_in_seconds.length - i - 1); j++) {
+                if (time_in_seconds[j] > time_in_seconds[j + 1]) {
 
+                    var temp = time_in_seconds[j]
+                    time_in_seconds[j] = time_in_seconds[j + 1]
+                    time_in_seconds[j + 1] = temp
+
+                    var resTemp = res[j]
+                    res[j] = res[j + 1]
+                    res[j + 1] = resTemp
+                }
+            }
+        }
+        return res
+    }
 
     function loadLog() {
         var res = []

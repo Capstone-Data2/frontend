@@ -3,23 +3,11 @@ import React from "react";
 import theme from "../../app/theme.js";
 import { useDispatch, useSelector } from "react-redux";
 import { fill } from '../../pages/matchCombat/matchCombatSlice'
-
+import {getTime} from '../../functions/time'
 export default function TeamFightsList({ teamfights, dire, radiant }) {
     
     const dispatch = useDispatch()
     const selected_team_fight = useSelector((state) => state.teamfight.value);
-    
-    function getTime(seconds) {
-        var minutes = Math.floor(seconds / 60);
-        var sec = seconds - minutes * 60;
-        if (sec < 10) {
-            return (String(minutes) + ':0' + String(sec))
-        }
-        else {
-            return (String(minutes) + ':' + String(sec))
-        }
-
-    }
 
     function clickFight(fight){
         dispatch(fill(fight))

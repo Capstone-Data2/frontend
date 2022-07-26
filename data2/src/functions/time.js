@@ -27,3 +27,15 @@ export function TimeDifference(time=null) {
     }
   }
 }
+
+export function getTime(seconds) {
+  var minutes = Math.floor(seconds / 60);
+  var sec = seconds - minutes * 60;
+  if (sec < 10) {
+      return (String(minutes) + ':0' + String(sec))
+  }
+  else {
+      return (String(minutes) + ':' + String(sec))
+  }
+
+}
