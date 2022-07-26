@@ -4,7 +4,6 @@
  */
 
 module.exports = {
-
   testTimeout: 20000,
 
   // All imported modules in your tests should be mocked automatically
@@ -20,7 +19,7 @@ module.exports = {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  //collectCoverage: true,
+  collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
@@ -179,7 +178,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.(js|jsx)$": "babel-jest"
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
