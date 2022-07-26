@@ -6,7 +6,7 @@ import { LoadHeroIcons } from "../common/images";
 import { loadAbilityImg } from "../common/images";
 import { styled } from "@mui/material/styles";
 
-export default function TeamFightTable({ team, fight }) {
+export default function TeamFightTable({ team, fight, images }) {
     const headers = [
         'Player',
         'Deaths',
@@ -26,17 +26,17 @@ export default function TeamFightTable({ team, fight }) {
     );
     const selected_team_fight = useSelector((state) => state.teamfight.value);
 
-    function abilityUses(abilities_used, target){
+    function abilityUses(abilities_used, images) {
         var response = []
         var abilities_names = Object.keys(abilities_used)
         abilities_names.forEach((ability, i) => {
             response.push(
                 <Box
-                key={i}
-                sx={{marginRight: 1}}
+                    key={i}
+                    sx={{ marginRight: 1 }}
                 >
                     <img
-                        src={loadAbilityImg(ability)}
+                        src={loadAbilityImg(ability, images)}
                         style={{ borderRadius: 2, width: 20, height: 20, borderRight: "solid" }}
                         alt=""
                     />
@@ -47,16 +47,16 @@ export default function TeamFightTable({ team, fight }) {
         return response
     }
 
-    function loadHeroRows(player) {
+    function loadHeroRows(player, images) {
         var res = []
         for (var i = 0; i <= match_details.players.length - 1; i++) {
-            
+
             if (player === String(match_details.players[i].hero_id)) {
                 res.push(
                     <TableRow key={i}>
                         <TableCell>
                             <img
-                                src={LoadHeroIcons([String(player)])}
+                                src={LoadHeroIcons([String(player)], images)}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 alt=""
                             />
@@ -79,13 +79,13 @@ export default function TeamFightTable({ team, fight }) {
                         </TableCell>
                         <TableCell>
                             <Box
-                            sx={{display: 'flex'}}
-                            >{abilityUses(selected_team_fight.players[i].ability_uses)}</Box>
+                                sx={{ display: 'flex' }}
+                            >{abilityUses(selected_team_fight.players[i].ability_uses, images)}</Box>
                         </TableCell>
                         <TableCell>
                             <Box
-                            sx={{display: 'flex'}}
-                            >{abilityUses(selected_team_fight.players[i].item_uses)}</Box>
+                                sx={{ display: 'flex' }}
+                            >{abilityUses(selected_team_fight.players[i].item_uses, images)}</Box>
                         </TableCell>
                     </TableRow>
 
@@ -96,25 +96,25 @@ export default function TeamFightTable({ team, fight }) {
     }
 
     return (
-            <Table sx={{ width: 500, backgroundColor: theme.palette.primary.main, mb: 4, }}>
-                <TableHead>
-                    <TableRow>
-                        {headers.map((header, i) => (
-                            <TableCell key={i}>
-                                <TableTypography 
-                                >{header}</TableTypography>
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-
-                <TableBody>
-                    
-                    {team.map((player) => (
-                        loadHeroRows(player)
+        <Table sx={{ width: 500, backgroundColor: theme.palette.primary.main, mb: 4, }}>
+            <TableHead>
+                <TableRow>
+                    {headers.map((header, i) => (
+                        <TableCell key={i}>
+                            <TableTypography
+                            >{header}</TableTypography>
+                        </TableCell>
                     ))}
+                </TableRow>
+            </TableHead>
 
-                </TableBody>
-            </Table>
+            <TableBody>
+
+                {team.map((player) => (
+                    loadHeroRows(player, images)
+                ))}
+
+            </TableBody>
+        </Table>
     )
 }

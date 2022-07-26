@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { teamHeroIds } from "../../functions/players";
 import { Filter } from "../../components/common/Filter";
 import { MatchRank, ItemImageList, BuffImageList } from "../../components/common/images";
 import { NetGoldXPGraph, LastHitsGraph } from "../../components/rivals/RivalGraphs";
+import { importIcons } from "../../functions/getIcons";
 
 export default function MatchRivals() {
   const match_details = useSelector(
@@ -23,6 +24,10 @@ export default function MatchRivals() {
   const [selectedHeroes, setSelectedHeroes] = useState([])
   const [selectedPlayers, setSelectedPlayers] = useState({})
   let location = useLocation();
+  const images = useMemo(
+    () => importIcons(),
+    []
+  );
 
   useEffect(() => {
     setId(window.location.href.split("/")[4]);
@@ -80,9 +85,9 @@ export default function MatchRivals() {
                 borderRadius: 2,
 
               }}>
-              <Filter players={teamHeroIds(match_details.picks_bans)} header={"Match Rivals"} click={onClick} clear={onClear} selected_heroes={selectedHeroes} />
+              <Filter players={teamHeroIds(match_details.picks_bans)} header={"Match Rivals"} click={onClick} clear={onClear} selected_heroes={selectedHeroes} images={images} />
               {Object.keys(selectedPlayers).length !== 0 &&
-                <RenderRivals rivals={selectedPlayers} />
+                <RenderRivals rivals={selectedPlayers} images={images} />
               }
 
             </Box>
@@ -94,17 +99,17 @@ export default function MatchRivals() {
 }
 
 
-function RenderRivals({ rivals }) {
+function RenderRivals({ rivals, images }) {
   return (
     <Box sx={{ display: "flex" }}>
-      <RivalStats player={rivals.radiant} type={"radiant"} />
+      <RivalStats player={rivals.radiant} type={"radiant"} images={images} />
       <RivalGraphs players={rivals}/>
-      <RivalStats player={rivals.dire} type={"dire"} />
+      <RivalStats player={rivals.dire} type={"dire"} images={images} />
     </Box>
   )
 }
 
-function RivalStats({ player, type }) {
+function RivalStats({ player, type, images }) {
   var align
   if (type === "radiant") {
     align = "start"
@@ -115,16 +120,16 @@ function RivalStats({ player, type }) {
 
   return (
     <Box sx={{ width: "33%" }}>
-      <RenderStats player={player} align={align} />
+      <RenderStats player={player} align={align} images={images} />
     </Box>
   )
 }
 
-function RenderStats({ player, align }) {
+function RenderStats({ player, align, images }) {
   var flip = align === "start" ? 0 : 1
   var stats = {
     "User: ": player.name,
-    "Rank": MatchRank(player.rank_tier.toString()),
+    "Rank": MatchRank(player.rank_tier.toString(), images),
     "Position: ": "",
     "ML Score: ": player.predicted_win,
     "Level: ": player.level,
@@ -155,8 +160,8 @@ function RenderStats({ player, align }) {
     "Roaming: ": "",
     "Observers Placed: ": "",
     "Sentries Placed: ": "",
-    "Items": ItemImageList(player, flip),
-    "Permanent Buffs": BuffImageList(player),
+    "Items": ItemImageList(player, images, flip),
+    "Permanent Buffs": BuffImageList(player, images),
   }
 
   if(player.ml_lane_role <= 3){

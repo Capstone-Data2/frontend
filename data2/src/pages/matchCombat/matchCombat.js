@@ -8,13 +8,14 @@ import TeamDamageTable from '../../components/combat/MatchTeamDamageTable';
 import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { alpha } from "@mui/material/styles";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { getMatchLog, getMatchCombatData } from '../../functions/api'
 import TeamFightsList from "../../components/combat/MatchTeamFightsList.js";
 import TeamFightTable from "../../components/combat/MatchTeamFightTable.js";
 import TeamMapDeaths from '../../components/combat/MatchCombatTeamDeaths.js'
 import TeamFightGraph from "../../components/combat/MatchFightGraph.js";
 import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
+import { importIcons } from "../../functions/getIcons.js";
 
 export default function MatchCombat() {
     const match_details = useSelector(
@@ -28,6 +29,10 @@ export default function MatchCombat() {
     const [teamFight, setTeamFight] = useState({})
     const [id, setId] = useState(window.location.href.split("/")[4]);
     const loading = useSelector((state) => state.match_details.loading);
+    const images = useMemo(
+        () => importIcons(),
+        []
+      );
 
     function clickButton() {
         if (teamFight === false) {
@@ -69,12 +74,12 @@ export default function MatchCombat() {
                 <Box sx={{ width: '70%', display: 'flex', flexDirection: 'column', justifyContent: "center", ml: "auto", mr: "auto" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", ml: "auto", mr: "auto" }}>
                         <Typography sx={{ marginTop: 2 }}>{'Kills / Damage'}</Typography>
-                        <CombatDamageTable players={teamHeroIds(match_details.picks_bans)} kills={log} match_details={match_details} />
+                        <CombatDamageTable players={teamHeroIds(match_details.picks_bans)} kills={log} match_details={match_details} images={images} />
                     </Box>
                     <Typography>Radiant</Typography>
-                    <TeamDamageTable players={teamHeroIds(match_details.picks_bans)[0]} combat={combat} />
+                    <TeamDamageTable players={teamHeroIds(match_details.picks_bans)[0]} combat={combat} images={images} />
                     <Typography>Dire</Typography>
-                    <TeamDamageTable players={teamHeroIds(match_details.picks_bans)[1]} combat={combat} />
+                    <TeamDamageTable players={teamHeroIds(match_details.picks_bans)[1]} combat={combat} images={images} />
                 </Box>
             )
         }
@@ -84,7 +89,7 @@ export default function MatchCombat() {
                 <Box>
                     <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography>Team Fights</Typography>
-                        <TeamFightsList teamfights={match_details.teamfights} />
+                        <TeamFightsList teamfights={match_details.teamfights} images={images} />
                     </Box>
                     {Object.keys(selected_team_fight).length !== 0 &&
 
@@ -97,10 +102,10 @@ export default function MatchCombat() {
                         >
                             <Box sx={{ display: 'flex', width: '150vh', justifyContent: 'space-between', marginBottom: 4 }}>
                                 <Box sx={{ marginLeft: 20 }}>
-                                    <TeamMapDeaths playersDead={selected_team_fight.players} />
+                                    <TeamMapDeaths playersDead={selected_team_fight.players} images={images} />
                                 </Box>
                                 <Box sx={{ marginRight: 20 }}>
-                                    <TeamFightGraph team={teamHeroIds(match_details.picks_bans)} />
+                                    <TeamFightGraph team={teamHeroIds(match_details.picks_bans)} images={images} />
                                 </Box>
 
 
@@ -116,7 +121,7 @@ export default function MatchCombat() {
                                     }}
                                 >
                                     <Typography>Radiant Fight Overview</Typography>
-                                    <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} />
+                                    <TeamFightTable team={teamHeroIds(match_details.picks_bans)[0]} fight={selected_team_fight} images={images} />
                                 </Box>
 
                                 <Box
@@ -125,7 +130,7 @@ export default function MatchCombat() {
                                     }}
                                 >
                                     <Typography>Dire Fight Overview</Typography>
-                                    <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} />
+                                    <TeamFightTable team={teamHeroIds(match_details.picks_bans)[1]} fight={selected_team_fight} images={images} />
                                 </Box>
                             </Box>
 

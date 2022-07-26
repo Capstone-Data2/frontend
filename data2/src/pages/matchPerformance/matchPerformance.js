@@ -10,6 +10,7 @@ import { Loading } from "../../components/common/loading";
 import { getMatchPerformance } from "../../functions/api";
 import MatchPerformanceTable from "../../components/performance/MatchPerformanceTable";
 import { getPlayerDetails } from "../../functions/players";
+import { importIcons } from "../../functions/getIcons";
 
 export default function MatchPerformance() {
   const match_details = useSelector(
@@ -23,6 +24,10 @@ export default function MatchPerformance() {
   const playersMemoized = useMemo(
     () => getPlayerDetails(match_details.players),
     [match_details]
+  );
+  const images = useMemo(
+    () => importIcons(),
+    []
   );
 
   useEffect(() => {
@@ -84,7 +89,7 @@ export default function MatchPerformance() {
               variant="caption"
               sx={{ color: theme.palette.common.white }}
             >
-                Team ML Performance Score: {match_details[`${team}_win_proba`]}/5
+              Team ML Performance Score: {match_details[`${team}_win_proba`]}/5
             </Typography>
           </Paper>
         </Box>
@@ -95,6 +100,7 @@ export default function MatchPerformance() {
               performance={performance}
               team={team}
               match_details={match_details}
+              images={images}
             />
           )}
       </Box>

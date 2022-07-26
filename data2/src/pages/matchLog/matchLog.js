@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import theme from "../../app/theme.js";
 import { useSelector, useDispatch } from "react-redux";
 import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
@@ -14,6 +14,7 @@ import { fetchMatchDetails } from "../matchOverview/matchDetailsSlice";
 import { Loading } from "../../components/common/loading"
 import { teamHeroIds } from "../../functions/players.js";
 import { toggle, clear } from './matchLogSlice'
+import { importIcons } from "../../functions/getIcons.js";
 
 
 export default function MatchLog() {
@@ -35,6 +36,11 @@ export default function MatchLog() {
 
     const [id, setId] = useState(window.location.href.split("/")[4]);
 
+    const images = useMemo(
+        () => importIcons(),
+        []
+    );
+
     useEffect(() => {
         async function fetchData() {
             var res = await getMatchLog(match_details.match_id);
@@ -44,7 +50,7 @@ export default function MatchLog() {
         if (match_details.match_id !== parseInt(id) && !loading) {
             dispatch(fetchMatchDetails(id));
         }
-        if(match_details.match_id === parseInt(id)){
+        if (match_details.match_id === parseInt(id)) {
             fetchData()
         }
 
@@ -91,10 +97,10 @@ export default function MatchLog() {
                                 borderRadius: 2,
 
                             }}>
-                            <Filter players={teamHeroIds(match_details.picks_bans)} header={"Match Filter"} click={clicked} clear={clearSelection} selected_heroes={selected_heroes} />
+                            <Filter players={teamHeroIds(match_details.picks_bans)} header={"Match Filter"} click={clicked} clear={clearSelection} selected_heroes={selected_heroes} images={images}/>
                         </Box>
                         {Object.keys(log).length !== 0 &&
-                            <MatchLogTable players={selected_heroes} log_data={log} teams={teamHeroIds(match_details.picks_bans)} />
+                            <MatchLogTable players={selected_heroes} log_data={log} teams={teamHeroIds(match_details.picks_bans)} images={images} />
                         }
                     </Box>
                 </Box>

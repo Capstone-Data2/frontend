@@ -12,7 +12,7 @@ module.exports = {
   testTimeout: 20000,
   moduleNameMapper: {
     'd3': '<rootDir>/node_modules/d3/dist/d3.min.js',
-},
+  },
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/l8/wkpjl0m91hq3kqw9cqznlsv00000gn/T/jest_dx",
 
@@ -68,7 +68,9 @@ module.exports = {
   // globalTeardown: undefined,
 
   // A set of global variables that need to be available in all test environments
-  // globals: {},
+  globals: {
+    ip: "http://localhost:3000", //  "https://frontend-blue-seven.vercel.app/"
+  },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
   // maxWorkers: "50%",
@@ -103,7 +105,7 @@ module.exports = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: "jest-puppeteer"
+  preset: "jest-puppeteer",
 
   // Run tests from one or more projects
   // projects: undefined,

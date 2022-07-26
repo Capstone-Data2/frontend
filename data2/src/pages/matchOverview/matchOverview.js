@@ -16,6 +16,7 @@ import AbilityBuildsTable from "../../components/overview/AbilityBuildsTable";
 import { hoverPaper } from "../../components/overview/HoverPaper";
 import { Loading } from "../../components/common/loading"
 import { getPlayerDetails } from "../../functions/players";
+import { importIcons } from "../../functions/getIcons"
 
 export default function MatchOverview() {
   const { id } = useParams();
@@ -31,6 +32,10 @@ export default function MatchOverview() {
   const playersMemoized = useMemo(
     () => getPlayerDetails(match_details.players),
     [match_details]
+  );
+  const images = useMemo(
+    () => importIcons(),
+    []
   );
 
   useEffect(() => {
@@ -97,10 +102,10 @@ export default function MatchOverview() {
                 )}
               </Box>
               {Object.keys(playersMemoized).length !== 0 && (
-                <MatchDetailsTable players={playersMemoized.radiant} />
+                <MatchDetailsTable players={playersMemoized.radiant} images={images}/>
               )}
             </Box>
-            <PicksAndBansList picks_bans={match_details.picks_bans} />
+            <PicksAndBansList picks_bans={match_details.picks_bans} images={images}/>
             <Box
               sx={{
                 display: "flex",
@@ -133,7 +138,7 @@ export default function MatchOverview() {
                 )}
               </Box>
               {Object.keys(playersMemoized).length !== 0 && (
-                <MatchDetailsTable players={playersMemoized.dire} />
+                <MatchDetailsTable players={playersMemoized.dire} images={images}/>
               )}
             </Box>
             <Box
@@ -148,7 +153,7 @@ export default function MatchOverview() {
                 <Typography sx={{}}>{match_details.radiant_name} Ability Builds</Typography>
               </Box>
               {Object.keys(playersMemoized).length !== 0 && (
-                <AbilityBuildsTable players={playersMemoized.radiant} />
+                <AbilityBuildsTable players={playersMemoized.radiant} images={images} />
               )}
             </Box>
             <Box
@@ -164,7 +169,7 @@ export default function MatchOverview() {
               </Box>
 
               {Object.keys(playersMemoized).length !== 0 && (
-                <AbilityBuildsTable players={playersMemoized.dire} />
+                <AbilityBuildsTable players={playersMemoized.dire} images={images} />
               )}
             </Box>
             <Box
@@ -179,7 +184,7 @@ export default function MatchOverview() {
                 <Typography sx={{}}>Building Map</Typography>
               </Box>
               {Object.keys(playersMemoized).length !== 0 && (
-                <GameMap objectives={match_details.objectives} players={playersMemoized}/>
+                <GameMap objectives={match_details.objectives} players={playersMemoized} images={images}/>
               )}
               </Box>
           </Box>

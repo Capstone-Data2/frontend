@@ -23,7 +23,7 @@ var headers = [
     'RECEIVED'
 ]
 
-export default function TeamDamageTable({ players, combat}) {
+export default function TeamDamageTable({ players, combat, images }) {
 
 
     function loadHeroWithDamage(heros_hit, abilities_damage, ability ){
@@ -34,7 +34,7 @@ export default function TeamDamageTable({ players, combat}) {
             response.push(
                 <Box key={i}>
                 <img
-                src={loadSmallHeroIcon(heroes_json[hero_id].icon)}
+                src={loadSmallHeroIcon(heroes_json[hero_id].icon, images)}
                 style={{ borderRadius: 2, width: 25, borderRight: "solid" }}
                 alt=""
                 /> 
@@ -48,7 +48,7 @@ export default function TeamDamageTable({ players, combat}) {
         return response
     }
 
-    function getDamageDealt(abilities_damage, player){
+    function getDamageDealt(abilities_damage, player, images){
         var res = []
         var abilities = Object.keys(abilities_damage)
         abilities.forEach((ability, i) => {
@@ -60,7 +60,7 @@ export default function TeamDamageTable({ players, combat}) {
                         marginTop: 1
                     }}> 
                         <img
-                            src={loadAbilityImg(ability)}
+                            src={loadAbilityImg(ability, images)}
                             style={{ borderRadius: 2, width: 25, height: 25, borderRight: "solid" }}
                             alt=""
                         />
@@ -81,7 +81,7 @@ export default function TeamDamageTable({ players, combat}) {
        return res
     }
 
-    function getDamageRecieved(abilities_dmg, player){
+    function getDamageRecieved(abilities_dmg, player, images){
         var res = []
         var abilities = Object.keys(abilities_dmg)
         abilities.forEach((ability, i) => {
@@ -92,7 +92,7 @@ export default function TeamDamageTable({ players, combat}) {
                         marginRight: 1
                     }}> 
                         <img
-                            src={loadAbilityImg(ability)}
+                            src={loadAbilityImg(ability, images)}
                             style={{ borderRadius: 2, height: 25, borderRight: "solid" }}
                             alt=""
                         />
@@ -123,7 +123,7 @@ export default function TeamDamageTable({ players, combat}) {
                         <TableRow key={i}>
                             <TableCell>
                             <img
-                                src={LoadHeroIcons([String(player)])}
+                                src={LoadHeroIcons([String(player)], images)}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 alt=""
                                 />
@@ -134,7 +134,7 @@ export default function TeamDamageTable({ players, combat}) {
                                 sx={{flexDirection: 'column'}}
                                 >
                                     <Box>
-                                    {getDamageDealt(combat.damage_targets[String(player)], player)}
+                                    {getDamageDealt(combat.damage_targets[String(player)], player, images)}
                                     </Box>
                                 </Box>
                             </TableCell>
@@ -143,7 +143,7 @@ export default function TeamDamageTable({ players, combat}) {
                                 <Box
                                 sx={{display: 'flex'}}
                                 >
-                                    {getDamageRecieved(combat.damage_inflictor_received[String(player)], player)}
+                                    {getDamageRecieved(combat.damage_inflictor_received[String(player)], player, images)}
                                 </Box>
                         
                             </TableCell>

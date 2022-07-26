@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { select, fetchMatchesList } from "./matchesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ListRankImgs } from "../../components/common/images";
@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { CommonBox, MatchListTable } from "../../components/matchesList/MatchList";
 import { MatchButton } from "../../components/common/Buttons";
 import { Loading } from "../../components/common/loading"
+import { importIcons } from "../../functions/getIcons";
 
 export default function MatchesList() {
   const matches = useSelector((state) => state.matches);
@@ -16,6 +17,10 @@ export default function MatchesList() {
   let navigate = useNavigate();
   const [page, setPage] = useState(window.location.href.split("/").pop());
   let location = useLocation();
+  const images = useMemo(
+    () => importIcons(),
+    []
+  );
 
   useEffect(() => {
     setPage(location.pathname.split("/").pop());
@@ -78,7 +83,7 @@ export default function MatchesList() {
               <ListRankImgs />
             </CommonBox>
           )}
-          <MatchListTable type={page} />
+          <MatchListTable type={page} images={images} />
         </CommonBox>
       }
     </ThemeProvider>
