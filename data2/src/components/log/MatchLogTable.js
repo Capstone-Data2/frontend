@@ -7,7 +7,9 @@ import { LoadHeroIcons } from "../common/images";
 import { loadTeamIcons } from "../common/images";
 import hero_names from '../../constants/hero_names.json'
 import theme from "../../app/theme.js";
+import { getTowerName, isSelected, creepIsRadiant, sortResponseByTime, runeName } from "./tableFunctions";
 import  { getTime }  from '../../functions/time.js'
+
 export function MatchLogTable({ players, log_data, teams }) {
     const radiant = teams[0]
     const dire = teams[1]
@@ -84,45 +86,6 @@ export function MatchLogTable({ players, log_data, teams }) {
             }
         }
         return res
-    }
-
-    function isSelected(hero_id, array_players) {
-        
-        for (var o = 0; o <= array_players.length - 1; o++) {
-            
-            if (array_players[o] === String(hero_id)) {
-                
-                return true
-            }
-        }
-        return false
-    }
-
-    function runeName(key){
-        if(key==='0'){
-            return('Double Damage Rune')
-        }
-        else if(key==='1'){
-            return('Haste Rune')
-        }
-        else if(key==='2'){
-            return('Illusion Rune')
-        }
-        else if(key==='3'){
-            return('Invisibility Rune')
-        }
-        else if(key==='4'){
-            return('Regeneration Rune')
-        }
-        else if(key==='5'){
-            return('Gold Rune')
-        }
-        else if(key==='6'){
-            return('Arcane Rune')
-        }
-        else if(key==='7'){
-            return('Water Rune')
-        }
     }
 
     function loadLog() {
