@@ -4,14 +4,15 @@
  */
 
 module.exports = {
-  testTimeout: 20000,
-
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
   // Stop running tests after `n` failures
   // bail: 0,
-
+  testTimeout: 20000,
+  moduleNameMapper: {
+    'd3': '<rootDir>/node_modules/d3/dist/d3.min.js',
+  },
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/l8/wkpjl0m91hq3kqw9cqznlsv00000gn/T/jest_dx",
 
@@ -25,7 +26,7 @@ module.exports = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  //coverageDirectory: "coverage",
+  coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -177,9 +178,7 @@ module.exports = {
   // testRunner: "jest-circus/runner",
 
   // A map from regular expressions to paths to transformers
-  transform: {
-    "^.+\\.(js|jsx)$": "babel-jest",
-  },
+  // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
