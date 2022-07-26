@@ -8,7 +8,7 @@ import { loadTeamIcons } from "../common/images";
 import hero_names from '../../constants/hero_names.json'
 import theme from "../../app/theme.js";
 
-export function MatchLogTable({ players, log_data, teams }) {
+export function MatchLogTable({ players, log_data, teams, images }) {
     const radiant = teams[0]
     const dire = teams[1]
 
@@ -152,7 +152,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                             res.push(
                                 <Box key={i+"i"} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
                                     <img
-                                        src={loadTeamIcons('radiant')}
+                                        src={loadTeamIcons('radiant', images)}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         alt="Radiant"
                                         
@@ -173,7 +173,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                                     <Typography>{getTime(buildings_array[i].time)} {getTowerName(buildings_array[i].tower)}</Typography>
                                     <Typography>{' <--Destroyed-- '}</Typography>
                                     <img
-                                        src={loadTeamIcons('dire')}
+                                        src={loadTeamIcons('dire', images)}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         alt="Dire"
                                         
@@ -191,7 +191,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                             res.push(
                                 <Box key={i+"i"} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
                                     <img
-                                        src={LoadHeroIcons([String(hero_id)])}
+                                        src={LoadHeroIcons([String(hero_id)], images)}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         alt="Radiant Hero Destroying Tower"
                                     />
@@ -207,7 +207,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                                 <Box key={i+"i"} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
                                     <Typography>{getTime(buildings_array[i].time)} {getTowerName(buildings_array[i].tower)}{' <--Destroyed--'}</Typography>
                                     <img
-                                        src={LoadHeroIcons([String(hero_id)])}
+                                        src={LoadHeroIcons([String(hero_id)], images)}
                                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         alt="Dire Hero Destroying Tower"
                                     />
@@ -233,13 +233,13 @@ export function MatchLogTable({ players, log_data, teams }) {
                                 res.push(
                                     <Box key={p+k+hero_killing} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
                                         <img
-                                            src={LoadHeroIcons([String(hero_killing)])}
+                                            src={LoadHeroIcons([String(hero_killing)], images)}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Hero Killing"
                                         />
                                         <Typography> {' --Killed--> '} </Typography>
                                         <img
-                                            src={LoadHeroIcons([String(slained_hero_id)])}
+                                            src={LoadHeroIcons([String(slained_hero_id)], images)}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Slained Hero"
                                         />
@@ -260,13 +260,13 @@ export function MatchLogTable({ players, log_data, teams }) {
                                             sx={{marginRight: 1}}
                                         > {getTime(array_of_kills[p].time)} </Typography>
                                         <img
-                                            src={LoadHeroIcons([String(slained_hero_id)])}
+                                            src={LoadHeroIcons([String(slained_hero_id)], images)}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Slained Hero"
                                         />
                                         <Typography> {' <--Killed-- '} </Typography>
                                         <img
-                                            src={LoadHeroIcons([String(hero_killing)])}
+                                            src={LoadHeroIcons([String(hero_killing)], images)}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Hero Killing"
                                         />
@@ -295,7 +295,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                                 res.push(
                                     <Box key={(d+l+hero_picking)+1000} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
                                         <img
-                                            src={LoadHeroIcons([String(hero_picking)])}
+                                            src={LoadHeroIcons([String(hero_picking)], images)}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Radiant Hero Rune"
                                         />
@@ -312,7 +312,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                                     <Box key={(d+l+hero_picking)+1000} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
                                         <Typography>  {getTime(array_of_pickups[d].time)} Activated {runeName(String(rune))} -</Typography>
                                         <img
-                                            src={LoadHeroIcons([String(hero_picking)])}
+                                            src={LoadHeroIcons([String(hero_picking)], images)}
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                             alt="Dire Hero Rune"
                                         />
@@ -334,7 +334,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                     res.push(
                         <Box key={n+"n"} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center" }}>
                             <img
-                                src={loadTeamIcons('radiant')}
+                                src={loadTeamIcons('radiant', images)}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 alt="Radiant Roshan Kill"
                             />
@@ -348,7 +348,7 @@ export function MatchLogTable({ players, log_data, teams }) {
                         <Box key={n+"n"} sx={{ minWidth: 450, maxWidth: 450, height: 65, minHeight: 65, marginRight: 2, display: "flex", alignItems: "center", justifyContent: "end" }}>
                             <Typography>{getTime(roshans_array[n].rosh_kill_time)} Slained Roshan</Typography>
                             <img
-                                src={loadTeamIcons('dire')}
+                                src={loadTeamIcons('dire', images)}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 alt="Dire Roshan Kill"
                             />

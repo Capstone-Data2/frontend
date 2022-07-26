@@ -22,88 +22,25 @@ import {
 import BackpackIcon from "@mui/icons-material/Backpack";
 import { alpha, styled } from "@mui/material/styles";
 
-
-export function importRankImgs() {
-  const ranks = importImgs(
-    require.context("../../constants/rank_icons/", false, /\.(png|jpe?g|svg)$/)
-  );
-  return ranks;
+export function loadSmallHeroIcon(icon_name, images) {
+  return (images[icon_name])
 }
 
-export function importAbilityImgs() {
-  const abilities = importImgs(
-    require.context("../../constants/ability_icons/", false, /\.(png|jpe?g|svg)$/)
-  );
-  return abilities;
-}
-
-function ImportGameMap() {
-  const map = importImgs(
-    require.context("../../constants/map_icons/", false, /\.(png|jpe?g|svg)$/)
-  );
-  return map;
-}
-
-function ImportHeroMap() {
-  const heroes = importImgs(
-    require.context("../../constants/map_icons/heroes", false, /\.(png|jpe?g|svg)$/)
-  );
-  return heroes;
-}
-
-export function importImgs(r) {
-  let images = {};
-  r.keys().map((item) => (images[item.replace("./", "")] = r(item)));
-  return images;
-}
-
-export function importTeamIcons() {
-  const team_icons = importImgs(
-    require.context("../../constants/team_icons/", false, /.(png|jpe?g|svg)$/)
-  );
-  return team_icons;
-}
-
-export function importItemImgs() {
-  const items = importImgs(
-    require.context("../../constants/item_icons/", false, /.(png|jpe?g|svg)$/)
-  );
-  return items;
-}
-
-export function importSmallHeroIcons() {
-  const small_icon = importImgs(
-    require.context("../../constants/map_icons/heroes/", false, /.(png|jpe?g|svg)$/)
-  );
-  return small_icon;
-}
-
-export function loadSmallHeroIcon(icon_name) {
-  var src = importSmallHeroIcons()
-  return (src[icon_name])
-}
-
-export function loadAbilityImg(ability_name) {
+export function loadAbilityImg(ability_name, images) {
   var is_item = items_json[ability_name]
   if (is_item === undefined) {
-    var src = importAbilityImgs()
-    return (src[abilities_json[ability_name].img])
+    return (images[abilities_json[ability_name].img])
   }
   else {
-    var src2 = importItemImgs()
-    return (src2[items_json[ability_name].img])
+    return (images[items_json[ability_name].img])
   }
 }
 
-export function loadTeamIcons(team) {
-  var srcs = importTeamIcons()
-  return (srcs[team + '_icon.png'])
+export function loadTeamIcons(team, images) {
+  return (images[team + '_icon.png'])
 }
 
-export function LoadHeroIcons(heroes) {
-  const images = importImgs(
-    require.context("../../constants/hero_icons/", false, /\.(png|jpe?g|svg)$/)
-  );
+export function LoadHeroIcons(heroes, images) {
   var srcs = [];
   heroes.forEach((hero) => {
     srcs.push(images[heroes_json[hero].img]);
@@ -111,8 +48,8 @@ export function LoadHeroIcons(heroes) {
   return srcs;
 }
 
-export function HeroImageList(heroes) {
-  var srcs = LoadHeroIcons(heroes.split(","));
+export function HeroImageList(heroes, images) {
+  var srcs = LoadHeroIcons(heroes.split(","), images);
   return (
     <ImageList cols={5} gap={1}>
       {srcs.map((src) => (
@@ -124,8 +61,7 @@ export function HeroImageList(heroes) {
   );
 }
 
-export function MatchRank(rank) {
-  var ranks = importRankImgs();
+export function MatchRank(rank, images) {
   rank = rank[1] > "5" ? rank[0] + "5" : rank[0] + rank[1];
 
   var img = "SeasonalRank" + rank[0] + "-" + rank[1] + ".png";
@@ -137,17 +73,16 @@ export function MatchRank(rank) {
         width: 50,
       }}
       alt={img}
-      src={ranks[img]}
+      src={images[img]}
     />
   );
 }
 
-export function ListRankImgs() {
+export function ListRankImgs(images) {
   const selected_rank = useSelector((state) => state.rank.value);
   const dispatch = useDispatch();
 
-  var ranks = importRankImgs();
-  var rank_icons = Object.keys(ranks).filter((rank) => {
+  var rank_icons = Object.keys(images).filter((rank) => {
     if (rank.split("-")[1] === "0.png") {
       return rank;
     }
@@ -162,7 +97,7 @@ export function ListRankImgs() {
     <ImageList cols={9} gap={4}>
       {rank_icons.map((rank) => (
         <ImageListItem sx={{ width: "100%" }} key={rank}>
-          <img src={ranks[rank]} alt={"ranks"} style={{ borderRadius: 2 }} />
+          <img src={images[rank]} alt={"ranks"} style={{ borderRadius: 2 }} />
           <Radio
             checked={selected_rank === rank.split("-")[0].split("k")[1]}
             onChange={handleChange}
@@ -181,9 +116,9 @@ export function ListRankImgs() {
   );
 }
 
-export function ItemImageList(player, transform = 0) {
+export function ItemImageList(player, images, transform = 0,) {
   var items = getItems(player);
-  var srcs = LoadItemIcons(items, player);
+  var srcs = LoadItemIcons(items, player, images);
 
   if (transform === 0) {
     return (
@@ -336,10 +271,7 @@ function getItems(player) {
   return { active: active, neutral: neutral, backpack: backpack };
 }
 
-function LoadItemIcons(items, player) {
-  const images = importImgs(
-    require.context("../../constants/item_icons", false, /\.(png|jpe?g|svg)$/)
-  );
+function LoadItemIcons(items, player, images) {
   var active_srcs = [];
   items.active.forEach((item) => {
     if (item !== 0) {
@@ -388,10 +320,7 @@ function LoadItemIcons(items, player) {
   };
 }
 
-export function BuffImageList(player) {
-  const images = importImgs(
-    require.context("../../constants/buff_icons", false, /\.(png|jpe?g|svg)$/)
-  );
+export function BuffImageList(player, images) {
   var buffs = [];
   player.permanent_buffs.forEach((buff) => {
     if (buff.permanent_buff !== 12 && buff.permanent_buff !== 2) {
@@ -446,17 +375,17 @@ export function BuffImageList(player) {
 }
 
 export const PicksAndBansList = React.memo(function PicksAndBansList({
-  picks_bans,
+  picks_bans, images
 }) {
   return (
     <Box sx={{ width: "75%", mt: -2 }}>
       <Typography>Picks and Bans</Typography>
-      {loadPicksBans(picks_bans)}
+      {loadPicksBans(picks_bans, images)}
     </Box>
   );
 });
 
-function loadPicksBans(picks_bans) {
+function loadPicksBans(picks_bans, images) {
   var radiant_picks = [];
   var dire_picks = [];
   var bans = [];
@@ -482,23 +411,23 @@ function loadPicksBans(picks_bans) {
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", width: 720 }}>
-        {loadRadiantPicks(radiant_picks)}
-        {loadDirePicks(dire_picks)}
+        {loadRadiantPicks(radiant_picks, images)}
+        {loadDirePicks(dire_picks, images)}
       </Box>
       <Box sx={{ display: "flex", width: 600, mb: 2, ml: 2 }}>
-        {loadBans(bans)}
+        {loadBans(bans, images)}
       </Box>
     </Box>
   );
 }
 
-function loadRadiantPicks(radiant_picks) {
-  var srcs = LoadHeroIcons(radiant_picks);
+function loadRadiantPicks(radiant_picks, images) {
+  var srcs = LoadHeroIcons(radiant_picks, images);
   return PickImages(640, 255, 255, 120, srcs);
 }
 
-function loadDirePicks(dire_picks) {
-  var srcs = LoadHeroIcons(dire_picks);
+function loadDirePicks(dire_picks, images) {
+  var srcs = LoadHeroIcons(dire_picks, images);
   return PickImages(640, 255, 195, 60, srcs, 16);
 }
 
@@ -520,8 +449,8 @@ function PickImages(w1, w2, w3, w4, srcs, mleft = 0) {
   );
 }
 
-function loadBans(bans) {
-  var srcs = LoadHeroIcons(bans);
+function loadBans(bans, images) {
+  var srcs = LoadHeroIcons(bans, images);
   return (
     <ImageList cols={7} gap={1}>
       {srcs.map((src, i) => (
@@ -566,11 +495,9 @@ const PickBanImg = styled("img")(({ theme, src, grayscale }) => ({
 }));
 
 export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
-  ability,
+  ability, images
 }) {
   const dispatch = useDispatch();
-  var srcs = importAbilityImgs();
-
   return (
     <Box
       sx={{ minWidth: 15, maxWidth: 15 }}
@@ -578,7 +505,7 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
     >
       {ability_ids_json[ability].split("_")[0] === "special" && (
         <img
-          src={srcs["talent_tree.svg"]}
+          src={images["talent_tree.svg"]}
           style={{
             borderRadius: 2,
             height: 30,
@@ -599,7 +526,7 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
       )}
       {ability_ids_json[ability].split("_")[0] !== "special" && (
         <img
-          src={srcs[abilities_json[ability_ids_json[ability]].img]}
+          src={images[abilities_json[ability_ids_json[ability]].img]}
           style={{
             borderRadius: 2,
             width: 30,
@@ -623,14 +550,11 @@ export const LoadAbilityIcon = React.memo(function LoadAbilityIcon({
   );
 });
 
-export function loadMap() {
-  var map_srcs = ImportGameMap();
-  return map_srcs["map_img.png"]
+export function loadMap(images) {
+  return images["map_img.png"]
 }
 
-export const GameMap = React.memo(function GameMap({ objectives, players }) {
-  var map_srcs = ImportGameMap();
-  var hero_srcs = ImportHeroMap()
+export const GameMap = React.memo(function GameMap({ objectives, players, images }) {
   var destroyed_obj = []
   objectives.forEach((objective) => {
     if (objective.type === "building_kill") {
@@ -639,9 +563,9 @@ export const GameMap = React.memo(function GameMap({ objectives, players }) {
   });
   return (
     <Box sx={{ display: "flex", position: "relative", width: 300, mb: 4 }}>
-      <img src={map_srcs["map_img.png"]} alt="" style={{ borderRadius: 2 }} />
-      {renderStructures(map_srcs, destroyed_obj)}
-      <RenderHeroes srcs={hero_srcs} players={players} />
+      <img src={images["map_img.png"]} alt="" style={{ borderRadius: 2 }} />
+      {renderStructures(images, destroyed_obj)}
+      <RenderHeroes srcs={images} players={players} />
     </Box>
   );
 });

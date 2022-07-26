@@ -3,7 +3,7 @@ import theme from "../../app/theme.js";
 import MatchDetailsHeader from "../../components/common/MatchDetailsHeader";
 
 import { useSelector, useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import {
     Box, Slider
 } from "@mui/material";
@@ -13,10 +13,7 @@ import { getMatchVision } from '../../functions/api'
 
 import VisionWardMap from "../../components/vision/MatchVisionMap.js";
 import VisionTeamTable from '../../components/vision/MatchVisionTeamTable.js';
-
-
-
-
+import { importIcons } from "../../functions/getIcons.js";
 
 export default function MatchVision() {
     const dispatch = useDispatch()
@@ -29,6 +26,11 @@ export default function MatchVision() {
     const [time, setTime] = useState({})
     const [id, setId] = useState(window.location.href.split("/")[4]);
     const minutes = Math.floor(match_details.duration / 60);
+    const images = useMemo(
+        () => importIcons(),
+        []
+      );
+
     useEffect(() => {
         async function fetchData() {
             var res = await getMatchVision(match_details.match_id);
@@ -63,7 +65,6 @@ export default function MatchVision() {
         return marks
     }
 
-
     return (
         <ThemeProvider theme={theme}>
             <MatchDetailsHeader page='vision' />
@@ -80,7 +81,7 @@ export default function MatchVision() {
                         marginLeft: 20,
                         padding: 10
                     }}>
-                        <VisionWardMap vision={vision} time={time} />
+                        <VisionWardMap vision={vision} time={time} images={images} />
 
                     </Box>
 
@@ -101,8 +102,8 @@ export default function MatchVision() {
                             marks={getMarks()}
                             color="secondary"
                         />
-                        <VisionTeamTable isRadiant={true} />
-                        <VisionTeamTable isRadiant={false} />
+                        <VisionTeamTable isRadiant={true} images={images} />
+                        <VisionTeamTable isRadiant={false} images={images} />
                     </Box>
 
                 </Box>

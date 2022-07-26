@@ -1,8 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+describe('App.js', () => {
+  beforeAll(async () => {
+    await page.goto("http://localhost:3000");
+  });
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  it('should be titled "Data2"', async () => {
+    await expect(page.title()).resolves.toMatch('Data2');
+  });
+  it('should be redirected to matches/professional', async () => {
+    await expect(page.url()).toMatch('http://localhost:3000/matches/professional');
+  });
 });

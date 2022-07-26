@@ -6,7 +6,7 @@ import {
 
 import { LoadHeroIcons } from "./images";
 
-export function Filter({ players, header, click, clear, selected_heroes }) {
+export function Filter({ players, header, click, clear, selected_heroes, images }) {
     return (
         <Box>
             <Box
@@ -55,7 +55,7 @@ export function Filter({ players, header, click, clear, selected_heroes }) {
                 response.push(
                     <Box key={i} sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center", border: 3 }}>
                         <img
-                            src={LoadHeroIcons([players[i]])}
+                            src={LoadHeroIcons([players[i]], images)}
                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                             onClick={() => click(players[i])}
                             alt="Hero Icon"
@@ -67,7 +67,7 @@ export function Filter({ players, header, click, clear, selected_heroes }) {
                 response.push(
                     <Box key={i} sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>
                         <img
-                            src={LoadHeroIcons([players[i]])}
+                            src={LoadHeroIcons([players[i]], images)}
                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                             onClick={() => click(players[i])}
                             alt="Hero Icon"

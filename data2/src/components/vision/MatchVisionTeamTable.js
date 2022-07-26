@@ -7,7 +7,7 @@ import { Box, Table, TableBody, TableHead, TableRow, TableCell, Checkbox } from 
 import theme from "../../app/theme.js";
 import { togglePlayer, toggleTeam } from "../../pages/matchVision/matchVisionSlice";
 
-export default function VisionTeamTable({ isRadiant }) {
+export default function VisionTeamTable({ isRadiant, images }) {
     const match_details = useSelector(
         (state) => state.match_details.match_details
     );
@@ -26,7 +26,7 @@ export default function VisionTeamTable({ isRadiant }) {
             res.push(
                 <TableCell key={index}>
                     <img
-                        src={LoadHeroIcons([String(player.hero_id)])}
+                        src={LoadHeroIcons([String(player.hero_id)], images)}
                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                         alt=""
                     />
@@ -105,7 +105,7 @@ export default function VisionTeamTable({ isRadiant }) {
                     <TableRow>
                         <TableCell>
                             <img
-                                src={loadAbilityImg('ward_observer')}
+                                src={loadAbilityImg('ward_observer', images)}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 alt=""
                             />
@@ -117,7 +117,7 @@ export default function VisionTeamTable({ isRadiant }) {
                     <TableRow>
                         <TableCell>
                             <img
-                                src={loadAbilityImg('ward_sentry')}
+                                src={loadAbilityImg('ward_sentry', images)}
                                 style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                 alt=""
                             />

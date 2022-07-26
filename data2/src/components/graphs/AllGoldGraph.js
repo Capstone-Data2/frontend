@@ -2,10 +2,11 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine, } from 'recharts';
 import { CustomTooltip } from '../common/graphs.js';
 import { findHeroNames } from '../../functions/players.js';
+import { sanitizeGraph } from '../../functions/sanitizeGraph.js';
 
 export function AllGoldGraph({ players }) {
     var heroes = findHeroNames(players)
-    var sanitized_data = sanitizeGold(players, heroes)
+    var sanitized_data = sanitizeGraph(players, heroes, "gold_t")
     return (
         <ResponsiveContainer width="100%" height="80%">
             <LineChart
@@ -30,18 +31,3 @@ export function AllGoldGraph({ players }) {
     );
 }
 
-function sanitizeGold(players, heroes) {
-    var data = []
-    var array = [...Array(players.radiant[0].gold_t.length)]
-    array.forEach((_, i) => {
-        let hero_data = {}
-        heroes.forEach(hero => {
-            hero_data[hero.name] = hero.gold_t[i]
-        })
-        data.push({
-            name: i + ":00",
-            ...hero_data
-        })
-    });
-    return data
-}

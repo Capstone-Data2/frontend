@@ -46,7 +46,7 @@ const ListTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function MatchListTable({ type }) {
+function MatchListTable({ type, images }) {
   const matches = useSelector((state) => state.matches.match_list);
   let navigate = useNavigate();
 
@@ -94,7 +94,7 @@ function MatchListTable({ type }) {
               </Typography>
             </ListTableCell>
             {type === "public" && match.avg_rank_tier !== undefined && (
-              <ListTableCell> {MatchRank(match.avg_rank_tier.toString())} </ListTableCell>
+              <ListTableCell> {MatchRank(match.avg_rank_tier.toString(), images)} </ListTableCell>
             )}
             {type === "professional" && (
               <ListTableCell>
@@ -107,10 +107,10 @@ function MatchListTable({ type }) {
               <Typography> {FormatTime(match.duration)} </Typography>
             </ListTableCell>
             <ListTableCell sx={{ pt: 0, pb: 0 }}>
-              {HeroImageList(match.radiant_team)}
+              {HeroImageList(match.radiant_team, images)}
             </ListTableCell>
             <ListTableCell sx={{ pt: 0, pb: 0 }}>
-              {HeroImageList(match.dire_team)}
+              {HeroImageList(match.dire_team, images)}
             </ListTableCell>
           </ListTableRow>
         ))}

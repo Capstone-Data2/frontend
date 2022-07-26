@@ -14,7 +14,7 @@ import { ItemImageList, LoadHeroIcons, BuffImageList } from "../common/images";
 import ProgressBar from "./ProgressBar";
 import { StyledTableCell, StyledTableRow } from "../common/styled.js";
 
-function MatchDetailsTable({ players }) {
+function MatchDetailsTable({ players, images }) {
     var headers = [
         "Player",
         "Level",
@@ -57,7 +57,7 @@ function MatchDetailsTable({ players }) {
                                 <Box sx={{ display: "flex" }}>
                                     <Box sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>
                                         <img
-                                            src={LoadHeroIcons(player.hero_id.toString().split(","))}
+                                            src={LoadHeroIcons(player.hero_id.toString().split(","), images)}
                                             alt=""
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         />
@@ -120,10 +120,10 @@ function MatchDetailsTable({ players }) {
                                 </Box>
                             </StyledTableCell>
                             <StyledTableCell sx={{}}>
-                                {ItemImageList(player)}
+                                {ItemImageList(player, images)}
                             </StyledTableCell>
                             <StyledTableCell sx={{}}>
-                                {BuffImageList(player)}
+                                {BuffImageList(player, images)}
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}

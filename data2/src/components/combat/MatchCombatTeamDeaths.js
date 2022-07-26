@@ -4,13 +4,13 @@ import { loadSmallHeroIcon } from "../common/images";
 import { useSelector } from "react-redux";
 import heroes_json from "../../constants/heroes.json";
 import { MapImg } from "../common/images";
-export default function TeamMapDeaths({ playersDead }) {
+export default function TeamMapDeaths({ playersDead, images }) {
     const match_details = useSelector(
         (state) => state.match_details.match_details
     );
     
     
-    function loadHeroesDead(){
+    function loadHeroesDead(images){
         var i = 0
         var res = []
         playersDead.forEach((player, j) => {
@@ -25,7 +25,7 @@ export default function TeamMapDeaths({ playersDead }) {
                             <MapImg
                                 width={25}
                                 grayscale={0}
-                                src={loadSmallHeroIcon(imgsrc)}
+                                src={loadSmallHeroIcon(imgsrc, images)}
                     
                              />
                         </Box>  
@@ -43,8 +43,8 @@ export default function TeamMapDeaths({ playersDead }) {
             <Typography>Hero Deaths</Typography>
             <Box sx={{ display: "flex", position: "relative", width: 300, mb: 4 }}>
                 
-                <img src={loadMap()} alt="" style={{ borderRadius: 2 }} />
-                {loadHeroesDead()}      
+                <img src={loadMap(images)} alt="" style={{ borderRadius: 2 }} />
+                {loadHeroesDead(images)}      
             </Box>
         </Box>
     )

@@ -2,7 +2,7 @@ import { loadMap } from "../common/images";
 import { Box } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useSelector } from "react-redux";
-export default function VisionWardMap({vision, time }) {
+export default function VisionWardMap({vision, time, images }) {
     
     function getColor(isRadiant, isObs){
         return isRadiant ? isObs ? '#00FF00' : '#ADD8E6' : isObs ? '#ff0000' : '#ADD8E6'
@@ -127,7 +127,7 @@ export default function VisionWardMap({vision, time }) {
     
     return (
         <Box sx={{ display: "flex", position: "relative", width:400, }}>
-            <img src={loadMap()} alt="" style={{ borderRadius: 2, width: 400 }} />
+            <img src={loadMap(images)} alt="" style={{ borderRadius: 2, width: 400 }} />
             {renderWards(loadWards(), time)}
         </Box>
 

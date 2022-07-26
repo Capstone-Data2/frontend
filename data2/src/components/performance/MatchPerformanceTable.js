@@ -12,7 +12,7 @@ import {
 import { LoadHeroIcons } from "../common/images";
 import { StyledTableCell, StyledTableRow } from "../common/styled.js";
 
-function MatchPerformanceTable({ players, performance }) {
+function MatchPerformanceTable({ players, performance, images }) {
     var headers = [
         "Player",
         "GPM",
@@ -63,7 +63,7 @@ function MatchPerformanceTable({ players, performance }) {
                                 <Box sx={{ display: "flex" }}>
                                     <Box sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>
                                         <img
-                                            src={LoadHeroIcons(player.hero_id.toString().split(","))}
+                                            src={LoadHeroIcons(player.hero_id.toString().split(","), images)}
                                             alt=""
                                             style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                                         />

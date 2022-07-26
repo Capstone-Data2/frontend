@@ -11,7 +11,7 @@ import theme from "../../app/theme.js";
 import { LoadHeroIcons } from "../common/images";
 import hero_names from '../../constants/hero_names.json'
 
-export default function CombatDamageTable({ players, kills, match_details }) {
+export default function CombatDamageTable({ players, kills, match_details, images }) {
     const radiant_players = players[0]
     const dire_players = players[1]
     var kills_array = kills['Kills'];
@@ -65,7 +65,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                         {dire_players.map((player, i) => (
                             <TableCell key={i}>
                                 <img
-                                    src={LoadHeroIcons([String(player)])}
+                                    src={LoadHeroIcons([String(player)], images)}
                                     style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.dire.dark }}
                                     alt=""
                                 />
@@ -79,7 +79,7 @@ export default function CombatDamageTable({ players, kills, match_details }) {
                         <TableRow key={i}>
                             <TableCell>
                                 <img
-                                    src={LoadHeroIcons([String(player)])}
+                                    src={LoadHeroIcons([String(player)], images)}
                                     style={{ borderRadius: 2, width: 50, borderRight: "solid", border: '3px solid', borderColor: theme.palette.radiant.dark }}
                                     alt=""
                                 />
