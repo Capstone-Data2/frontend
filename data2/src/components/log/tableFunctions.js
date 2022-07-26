@@ -40,7 +40,7 @@ export function getTowerName(rawName) {
         else {
             tier = 'Ancient'
         }
-        return (team + tier + ' ')
+        return (team + tier)
     }
 }
 

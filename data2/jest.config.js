@@ -10,6 +10,9 @@ module.exports = {
   // Stop running tests after `n` failures
   // bail: 0,
   testTimeout: 20000,
+  moduleNameMapper: {
+    'd3': '<rootDir>/node_modules/d3/dist/d3.min.js',
+},
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/l8/wkpjl0m91hq3kqw9cqznlsv00000gn/T/jest_dx",
 
