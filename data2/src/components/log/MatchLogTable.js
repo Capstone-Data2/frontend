@@ -7,22 +7,10 @@ import { LoadHeroIcons } from "../common/images";
 import { loadTeamIcons } from "../common/images";
 import hero_names from '../../constants/hero_names.json'
 import theme from "../../app/theme.js";
-
+import  { getTime }  from '../../functions/time.js'
 export function MatchLogTable({ players, log_data, teams }) {
     const radiant = teams[0]
     const dire = teams[1]
-
-    function getTime(seconds) {
-        var minutes = Math.floor(seconds / 60);
-        var sec = seconds - minutes * 60;
-        if (sec < 10) {
-            return (String(minutes) + ':0' + String(sec))
-        }
-        else {
-            return (String(minutes) + ':' + String(sec))
-        }
-
-    }
 
     function getTowerName(rawName) {
         var array_name = rawName.split('_')
