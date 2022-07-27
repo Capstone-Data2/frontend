@@ -80,7 +80,7 @@ export default function MatchesList() {
                 width: "40%",
               }}
             >
-              <ListRankImgs />
+              <ListRankImgs images={images} />
             </CommonBox>
           )}
           <MatchListTable type={page} images={images} />

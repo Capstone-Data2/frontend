@@ -78,10 +78,9 @@ export function MatchRank(rank, images) {
   );
 }
 
-export function ListRankImgs(images) {
+export function ListRankImgs({images}) {
   const selected_rank = useSelector((state) => state.rank.value);
   const dispatch = useDispatch();
-
   var rank_icons = Object.keys(images).filter((rank) => {
     if (rank.split("-")[1] === "0.png") {
       return rank;
@@ -92,7 +91,6 @@ export function ListRankImgs(images) {
   const handleChange = (event) => {
     dispatch(select(event.target.value));
   };
-
   return (
     <ImageList cols={9} gap={4}>
       {rank_icons.map((rank) => (
