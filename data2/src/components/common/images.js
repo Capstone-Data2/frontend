@@ -61,16 +61,16 @@ export function HeroImageList(heroes, images) {
   );
 }
 
-export function MatchRank(rank, images) {
+export function MatchRank(rank, images, height = 50, width = 50) {
   rank = rank[1] > "5" ? rank[0] + "5" : rank[0] + rank[1];
-
+  
   var img = "SeasonalRank" + rank[0] + "-" + rank[1] + ".png";
   return (
     <Box
       component="img"
       sx={{
-        height: 50,
-        width: 50,
+        height: height,
+        width: width,
       }}
       alt={img}
       src={images[img]}

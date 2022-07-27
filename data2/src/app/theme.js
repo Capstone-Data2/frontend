@@ -41,8 +41,16 @@ const theme = createTheme({
       fontSize: 32,
       fontWeight: 600,
     },
+    h3: {
+      fontSize: 24,
+      fontWeight: 600,
+    },
     subtitle2: {
       fontSize: 16,
+      fontWeight: 500,
+    },
+    subtitle3: {
+      fontSize: 18,
       fontWeight: 500,
     },
     match_time: {

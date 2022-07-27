@@ -1,7 +1,6 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import { ReactComponent as SteamIcon } from "../../steam.svg";
 import {
   Typography,
   Toolbar,
@@ -91,7 +90,10 @@ const LoginButton = styled(Button)(({ theme }) => ({
 
 export default function Header() {
   let navigate = useNavigate();
-
+  let search = ''
+  const handleChange = (e) => {
+    search = e.target.value
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -137,15 +139,18 @@ export default function Header() {
                 <SearchIcon />
               </IconWrapper>
               <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
+                placeholder="Player Alias / Match ID"
+                inputProps={{ "aria-label": "Player Alias / Match ID" }}
+                onChange={handleChange}
               />
             </Wrapper>
             <Wrapper sx={{ backgroundColor: "transparent" }}>
-              <IconWrapper sx={{ paddingLeft: 1 }}>
-                <SteamIcon height="16" fill="white" />
-              </IconWrapper>
-              <LoginButton>Login</LoginButton>
+              <LoginButton
+                onClick={() => 
+                  {if(search !== ''){
+                    navigate("/search/"+search)
+                  }}}
+              >Search</LoginButton>
             </Wrapper>
           </Box>
         </Bar>
