@@ -23,10 +23,33 @@ export async function getMatchDetails(match_id){
         .get(`${ip}/matches/${match_id}`
         )
         .then((res) => {
-            response = res.data
+            if(res.status === 204){
+                response = 'Match Not Found'
+            }
+            else{
+                response = res.data
+            }
         })
         .catch((error) => {
             console.log(error);
+        });
+    return response
+}
+
+export async function postMatch(match_id){
+    var response
+    await axios
+        .post(`${ip}/matches/${match_id}`)
+        .then((res) =>{
+            if(res.status === 201){
+                response = res
+            }
+            else{
+                response = 'Error with the match'
+            }
+        })
+        .catch((error) => {
+            console.log(error)
         });
     return response
 }
@@ -94,4 +117,17 @@ export async function getMatchRivals(match_id, hero_id){
           console.log(error)
       })
   return response
+}
+
+export async function getPlayerQuery(player){
+    var response
+    await axios
+        .get(`https://api.opendota.com/api/search?q=${player}`)
+        .then((res)=>{
+            response = res.data
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+    return response
 }
