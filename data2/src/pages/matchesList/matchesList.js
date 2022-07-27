@@ -23,6 +23,7 @@ export default function MatchesList() {
   );
 
   useEffect(() => {
+    console.log("hi")
     setPage(location.pathname.split("/").pop());
     if (page === "professional") {
       dispatch(select("9"));
