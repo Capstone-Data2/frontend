@@ -17,6 +17,7 @@ import MatchPerformance from "./pages/matchPerformance/matchPerformance";
 import MatchVision from './pages/matchVision/matchVision';
 import MatchRivals from "./pages/matchRivals/matchRivals";
 import MatchGraphs from "./pages/matchGraphs/matchGraphs";
+import Search from "./pages/search/search";
 import Profile from "./pages/profile/profile";
 
 
@@ -39,6 +40,7 @@ function App() {
               <Route path="matches/:id/graphs" element={<MatchGraphs />} />
               <Route path="matches/:id/vision" element={<MatchVision />} />
               <Route path="matches/:id/log" element={<MatchLog />} />
+              <Route path="search/:query/" element={<Search />} />
               <Route path="profile/:id" element={<Profile />}/>
 
               <Route
