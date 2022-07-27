@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getMatchDetails } from "../../functions/api";
+import { getMatchDetails, postMatch } from "../../functions/api";
 
 export const fetchMatchDetails = createAsyncThunk(
   "matches/fetchMatchDetailsStatus",
   async (match_id, thunkAPI) => {
     const response = await getMatchDetails(match_id);
+    if (response === "Match Not Found"){
+      await postMatch(match_id)
+    }
     return response;
   }
 );

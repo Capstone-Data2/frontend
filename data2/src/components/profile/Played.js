@@ -13,7 +13,7 @@ export function Played({ type, data, images }) {
     var clickable = false
     let navigate = useNavigate()
     if (type === "hero"){
-        [...Array(10)].map((_, i) => {
+        [...Array(10)].forEach((_, i) => {
             var hero = data[i]
             var hero_data = {avatar: images[heroes_json[hero.hero_id].img], name: heroes_json[hero.hero_id].localized_name, with_games: hero.games, with_win: hero.win, last_played: hero.last_played}
             table_data.push(hero_data)
@@ -21,7 +21,7 @@ export function Played({ type, data, images }) {
         })
     }
     else if(type === "peer"){
-        [...Array(data.length > 5 ? 5: data.length)].map((_, i) => {
+        [...Array(data.length > 5 ? 5: data.length)].forEach((_,i) => {
             var peer = data[i]
             var peer_data = {account_id: peer.account_id, avatar: peer.avatar, name: peer.personaname, with_games: peer.with_games, with_win: peer.with_win, last_played: peer.last_played}
             table_data.push(peer_data)

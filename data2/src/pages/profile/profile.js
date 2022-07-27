@@ -29,17 +29,17 @@ export default function Profile() {
   const loading = useSelector((state) => state.profile.loading);
 
   useEffect(() => {
-    if ((Object.keys(profile).length === 0 && loading === false) || profile.account_id !== account_id) {
+    if ((profile.profile.account_id !== parseInt(account_id) && !loading)) {
       dispatch(fetchProfileData(account_id));
     }
-  }, [account_id]);
+  }, [dispatch, profile, loading, account_id]);
 
   return (
     <ThemeProvider theme={theme}>
       {loading &&
         <Loading />
       }
-      {!loading && Object.keys(profile).length !== 0 && (
+      {!loading && profile.profile.account_id !== 0 && (
         <Box>
           <Box sx={{ backgroundColor: theme.palette.primary.main, display: "flex", justifyContent: "center" }}>
             <Box sx={{ display: "flex", pt: 4, width: "60%" }}>

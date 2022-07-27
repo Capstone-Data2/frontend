@@ -33,7 +33,7 @@ export function RecentMatches({ images }) {
             </TableHead>
             <TableBody>
                 {recent_matches.map(match => (
-                    <StyledTableRow key={match.match_id} sx={{":hover":{cursor: "pointer"}}} onClick={() => navigate(`/matches/${match.match_id}/overview`)}>
+                    <StyledTableRow key={match.match_id} sx={{":hover":{cursor: (match.lobby_type >= 5 && match.lobby_type <=7)? "pointer" : "auto"}}} onClick={() => (match.lobby_type >= 5 && match.lobby_type <=7)? navigate(`/search/${match.match_id}`) : undefined}>
                         <StyledTableCell sx={{ minWidth: 150, height: 33 }}>
                             <Box sx={{ display: "flex" }}>
                                 <Box sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>

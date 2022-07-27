@@ -45,6 +45,7 @@ export async function postMatch(match_id){
                 response = res
             }
             else{
+                console.log("hi")
                 response = 'Error with the match'
             }
         })
@@ -105,19 +106,6 @@ export async function getMatchVision(match_id) {
     return response
 }
 
-export async function getMatchRivals(match_id, hero_id) {
-    var response
-    await axios
-        .get(`${ip}/matches/${match_id}/rivals/${hero_id}`)
-        .then((res) => {
-            response = res.data
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    return response
-}
-
 export async function getMatchRivals(match_id, hero_id){
   var response
   await axios
@@ -140,7 +128,8 @@ export async function getPlayerQuery(player){
         })
         .catch((error)=>{
             console.log(error)
-        }
+        })
+    return response
 }
 
 export async function getProfileData(account_id) {

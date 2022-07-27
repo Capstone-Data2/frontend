@@ -12,7 +12,7 @@ export const fetchProfileData = createAsyncThunk(
 export const profileSlice = createSlice({
   name: "profile",
   initialState: {
-    profile: {},
+    profile: {profile: {account_id: 0}},
     wl: {},
     recent_matches: {},
     heroes: {},
