@@ -4,15 +4,12 @@ import {
     Box, Typography,
 } from "@mui/material";
 import heroes_json from "../../constants/heroes.json"
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { importIcons } from "../../functions/getIcons.js";
 import { LoadHeroIcons } from "../../components/common/images.js";
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
@@ -23,7 +20,7 @@ export default function TeamBuilder() {
     );
     const [radiantSelect, setRadiant] = useState('')
     const [direSelect, setDire] = useState('')
-    const [heroclicked, setClick] = useState({})
+    const [heroclicked, setClick] = useState('')
     const [open, setOpen] = React.useState(false);
 
 
@@ -95,9 +92,11 @@ export default function TeamBuilder() {
 
     function loadHeroes() {
         var response = []
+        var count = 0
         for (const key in heroes_json) {
             response.push(
                 <img
+                    key = {count}
                     src={LoadHeroIcons([String(heroes_json[key].id)], images)}
                     style={{ borderRadius: 2, width: 50, borderRight: "solid", borderColor: 'black', marginTop: 8, marginLeft: 8, marginRight: 8 }}
                     alt="Hero"
@@ -105,12 +104,13 @@ export default function TeamBuilder() {
 
                 />
             )
+            count = count +1
         }
         return response
     }
 
     function loadPopup() {
-        if (heroclicked !== {}) {
+        if (heroclicked !== '') {
             return (
                 <Dialog
                     open={open}
@@ -119,7 +119,7 @@ export default function TeamBuilder() {
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle>
-                        {heroclicked}
+                        {heroes_json[String(heroclicked)].localized_name}
                     </DialogTitle>
                     <DialogActions>
                         <Button onClick={() => clickTeam(heroclicked, true)}>Radiant</Button>
@@ -143,11 +143,13 @@ export default function TeamBuilder() {
 
     function loadTeams(heroes, isRadiant) {
         var res = []
+        
         if (heroes !== '') {
-            (heroes.split(',')).forEach(hero => {
+            (heroes.split(',')).forEach((hero, i) => {
                 res.push(
-                    <Box>
+                    <Box key ={i}>
                         <img
+                            
                             src={LoadHeroIcons([String(hero)], images)}
                             style={{ borderRadius: 2, width: 50, borderRight: "solid", borderColor: 'black', marginTop: 8, marginLeft: 8, marginRight: 8 }}
                             alt="Hero"
@@ -180,14 +182,14 @@ export default function TeamBuilder() {
         var dots = []
         for (var i = 0; i <= count - 1; i++) {
             dots.push(
-                <Box sx={{ width: 10, height: 10, backgroundColor: 'black', marginRight: 1 }}>
+                <Box key={i}sx={{ width: 10, height: 10, backgroundColor: 'black', marginRight: 1 }}>
 
                 </Box>
             )
         }
         for (var j = count; j <= 4; j++) {
             dots.push(
-                <Box sx={{ width: 9, height: 9, border: 1, borderColor: 'black', marginRight: 1 }}>
+                <Box key ={j}sx={{ width: 9, height: 9, border: 1, borderColor: 'black', marginRight: 1 }}>
 
                 </Box>
             )
@@ -196,10 +198,10 @@ export default function TeamBuilder() {
     }
     function loadStats(stats) {
         var res = []
+        var count = 0
         for (const key in stats) {
-            console.log(key + '----------' + stats[key])
             res.push(
-                <Box sx={{ marginTop: 1 }}>
+                <Box key={count} sx={{ marginTop: 1 }}>
                     <Box>
                         {key}
                     </Box>
@@ -209,6 +211,7 @@ export default function TeamBuilder() {
 
                 </Box>
             )
+            count = count +1
         }
         return res
     }

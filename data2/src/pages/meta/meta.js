@@ -1,15 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../../app/theme.js";
 import {
   Box,
-  Typography,
 } from "@mui/material";
 import { Loading } from "../../components/common/loading"
 import { importIcons } from "../../functions/getIcons"
-import { alpha } from "@mui/material";
-import { MatchRank } from "../../components/common/images.js";
 import { getMetaData } from "../../functions/api.js";
 import { CommonBox } from "../../components/matchesList/MatchList.js";
 import { MatchButton } from "../../components/common/Buttons.js";
@@ -18,7 +14,6 @@ import MetaTable from "../../components/meta/MetaTable.js";
 
 export default function Meta() {
   const [hero_stats, setHeroStats] = useState([])
-  const dispatch = useDispatch();
   const [page, setPage] = useState();
   const images = useMemo(
     () => importIcons(),

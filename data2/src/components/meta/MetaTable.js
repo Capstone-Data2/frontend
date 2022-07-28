@@ -140,6 +140,9 @@ function MetaTableBody({ order, orderBy, rows, images, type }) {
                             </StyledTableRow>
                         );
                     }
+                    else{
+                        return undefined
+                    }
                 })}
         </TableBody>
     );
@@ -169,13 +172,13 @@ function getPercent(value, total) {
     return (Math.round((value / total) * 10000) / 100)
 }
 
-function createData(hero, total_matches, type, total_immda, total_legarch, total_crugh) {
+function createData(selected_hero, total_matches, type, total_immda, total_legarch, total_crugh) {
+    var hero = selected_hero.hero_id
     if (type === "professional") {
-        var propb = getPercent((hero.pro_pick + hero.pro_ban), total_matches)
-        var prop = getPercent(hero.pro_pick, total_matches)
-        var prob = getPercent(hero.pro_ban, total_matches)
-        var prow = getPercent(hero.pro_win, hero.pro_pick)
-        var hero = hero.hero_id
+        var propb = getPercent((selected_hero.pro_pick + selected_hero.pro_ban), total_matches)
+        var prop = getPercent(selected_hero.pro_pick, total_matches)
+        var prob = getPercent(selected_hero.pro_ban, total_matches)
+        var prow = getPercent(selected_hero.pro_win, selected_hero.pro_pick)
         return {
             hero,
             propb,
@@ -185,11 +188,7 @@ function createData(hero, total_matches, type, total_immda, total_legarch, total
         };
     }
     else if (type === "public") {
-        console.log(total_matches)
-        console.log(total_immda)
-        console.log(total_legarch)
-        console.log(total_crugh)
-        var matches = findHeroMatches(hero)
+        var matches = findHeroMatches(selected_hero)
         var overallp = getPercent(matches.pick.overall, total_matches)
         var overallw = getPercent(matches.win.overall, matches.pick.overall)
         var immdap = getPercent(matches.pick.immda, total_immda)
@@ -198,7 +197,6 @@ function createData(hero, total_matches, type, total_immda, total_legarch, total
         var legarchw = getPercent(matches.win.legarch, matches.pick.legarch)
         var crughp = getPercent(matches.pick.crugh, total_crugh)
         var crughw = getPercent(matches.win.crugh, matches.pick.crugh)
-        var hero = hero.hero_id
         return {
             hero,
             overallp,
