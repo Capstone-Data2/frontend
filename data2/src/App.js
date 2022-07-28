@@ -20,6 +20,7 @@ import MatchGraphs from "./pages/matchGraphs/matchGraphs";
 import Search from "./pages/search/search";
 import Profile from "./pages/profile/profile";
 import Meta from "./pages/meta/meta";
+import TeamBuilder from "./pages/teamBuilder/teamBuilder";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
               <Route path="profile/:id" element={<Profile />}/>
               <Route path="meta/professional" element={<Meta />}/>
               <Route path="meta/public" element={<Meta />}/>
+              <Route path="teambuilder" element={<TeamBuilder />}/>
 
               <Route
                 path="/"
