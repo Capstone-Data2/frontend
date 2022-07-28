@@ -150,3 +150,13 @@ export async function getProfileData(account_id) {
         })
     return response
 }
+
+export async function getMetaData() {
+    var response = {}
+    await axios
+        .get("https://api.opendota.com/api/heroStats")
+        .then(res => {
+            response = res.data
+        })
+    return response
+}
