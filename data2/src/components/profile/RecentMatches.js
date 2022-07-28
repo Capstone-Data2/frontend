@@ -2,12 +2,11 @@ import { Table, TableBody, TableHead, Typography, Box } from "@mui/material";
 import theme from "../../app/theme";
 import { StyledTableCell, StyledTableRow } from "../common/styled";
 import { LoadHeroIcons } from "../common/images";
-import { FormatTime } from "../../functions/time";
+import { FormatTime, UnixTimeDifference } from "../../functions/time";
 import heroes_json from "../../constants/heroes.json"
 import { useSelector } from "react-redux";
 import { alpha } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 
 export function RecentMatches({ images }) {
     const recent_matches = useSelector((state) => state.profile.recent_matches);
@@ -45,6 +44,9 @@ export function RecentMatches({ images }) {
                                 </Box>
                                 <Box sx={{ display: "flex", flexDirection: "column", backgroundCol: "red", height: "100%", width: 105, lineHeight: 1.2 }}>
                                     <Typography variant="caption" sx={{ overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: "nowrap", color: theme.palette.secondary.light, fontWeight: 500, fontSize: 14 }}>{heroes_json[match.hero_id].localized_name}</Typography>
+                                    <Typography variant="caption">
+                                        {UnixTimeDifference(match.start_time)}
+                                    </Typography>
                                 </Box>
                             </Box>
                         </StyledTableCell>

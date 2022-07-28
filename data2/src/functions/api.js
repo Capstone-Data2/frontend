@@ -45,7 +45,6 @@ export async function postMatch(match_id){
                 response = res
             }
             else{
-                console.log("hi")
                 response = 'Error with the match'
             }
         })

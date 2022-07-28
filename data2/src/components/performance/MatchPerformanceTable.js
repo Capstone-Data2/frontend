@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { LoadHeroIcons } from "../common/images";
 import { StyledTableCell, StyledTableRow } from "../common/styled.js";
+import { useNavigate } from "react-router-dom";
 
 function MatchPerformanceTable({ players, performance, images }) {
     var headers = [
@@ -43,6 +44,7 @@ function MatchPerformanceTable({ players, performance, images }) {
         "Divine",
         "Immortal"
     ]
+    let navigate = useNavigate()
 
     return (
         <Table sx={{ minWidth: 1160, maxWidth: "100%", backgroundColor: "white", mb: 4, }}>
@@ -71,7 +73,7 @@ function MatchPerformanceTable({ players, performance, images }) {
                                     <Box sx={{ display: "flex", flexDirection: "column", backgroundCol: "red", height: "100%", width: 70, lineHeight: 1.2 }}>
                                         <Typography variant="caption" sx={{ overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: "nowrap", fontWeight: 500, fontSize: 14 }}>
                                             {player.personaname !== "Unknown" &&
-                                                <Link sx={{ color: theme.palette.secondary.dark, transition: theme.transitions.create(["color"]), ":hover": { cursor: "pointer", color: theme.palette.secondary.main } }} underline="none">{player.personaname}</Link>
+                                                <Link sx={{ color: theme.palette.secondary.dark, transition: theme.transitions.create(["color"]), ":hover": { cursor: "pointer", color: theme.palette.secondary.main } }} underline="none" onClick={() => navigate(`/profile/${player.account_id}`)}>{player.personaname}</Link>
                                             }
                                             {player.personaname === "Unknown" &&
                                                 player.personaname

@@ -2,6 +2,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "../../app/theme.js";
 import {
     Box,
+    CircularProgress
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -34,9 +35,9 @@ export default function Search() {
     }
     function makeListItems(queries) {
         let res = []
-        queries.forEach(query => {
+        queries.forEach((query, i) => {
             res.push(
-                <ListItem alignItems="flex-start" onClick={() => navigate("/profile/" + query.account_id)}>
+                <ListItem key={query + i} alignItems="flex-start" onClick={() => navigate("/profile/" + query.account_id)}>
                     <ListItemAvatar>
                         <Avatar alt="Remy Sharp" src={query.avatarfull} />
                     </ListItemAvatar>
@@ -46,24 +47,29 @@ export default function Search() {
                     />
                 </ListItem>
             )
-            res.push(<Divider variant="inset" component="li" />)
+            res.push(<Divider key={i} variant="inset" component="li" />)
         });
         res.pop()
         return res
     }
     function loadPlayerOrMatch(query) {
         if (query.length === 10 && isNaN(query) === false) {
-            if(found===false){
-                return(
+            if (found === false) {
+                return (
                     <Alert severity="error">The match does not exist or isn't a ranked game.</Alert>
                 )
             }
-            else{
-                return(
-                <Alert severity="info">You are being redirected.</Alert>
+            else {
+                return (
+                    <Box>
+                        <Alert severity="info">You are being redirected, this might take a while.</Alert>
+                        <Box sx={{display:"flex", justifyContent: "center", mt: 4}}>
+                            <CircularProgress sx={{ color: "black" }} />
+                        </Box>
+                    </Box>
                 )
             }
-            
+
         }
         else {
             return (
@@ -94,22 +100,22 @@ export default function Search() {
             setQueries(res)
             if (query.length === 10 && isNaN(query) === false) {
                 res = await getMatchDetails(query)
-                if(res === 'Match Not Found'){
+                if (res === 'Match Not Found') {
                     res = await postMatch(query)
-                    if(res === 'Error with the match'){
+                    if (res === 'Error with the match') {
                         setFound(false)
                     }
-                    else if(res === undefined){
+                    else if (res === undefined) {
                         setFound(false)
                     }
-                    else{
+                    else {
                         setFound(true)
-                        navigate('/matches/'+query+'/overview')
+                        navigate('/matches/' + query + '/overview')
                     }
                 }
-                else{
+                else {
                     setFound(true)
-                    navigate('/matches/'+res.match_id+'/overview')
+                    navigate('/matches/' + res.match_id + '/overview')
                 }
             }
         }
