@@ -45,7 +45,6 @@ export async function postMatch(match_id){
                 response = res
             }
             else{
-                console.log("hi")
                 response = 'Error with the match'
             }
         })
@@ -148,6 +147,16 @@ export async function getProfileData(account_id) {
                 var key = endpoints[i].split("/").at(-1) === account_id ? "profile" : endpoints[i].split("/").at(-1)
                 response[key] = r.data
             });
+        })
+    return response
+}
+
+export async function getMetaData() {
+    var response = {}
+    await axios
+        .get("https://api.opendota.com/api/heroStats")
+        .then(res => {
+            response = res.data
         })
     return response
 }

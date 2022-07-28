@@ -19,6 +19,7 @@ import MatchRivals from "./pages/matchRivals/matchRivals";
 import MatchGraphs from "./pages/matchGraphs/matchGraphs";
 import Search from "./pages/search/search";
 import Profile from "./pages/profile/profile";
+import Meta from "./pages/meta/meta";
 import TeamBuilder from "./pages/teamBuilder/teamBuilder";
 
 
@@ -43,8 +44,9 @@ function App() {
               <Route path="matches/:id/log" element={<MatchLog />} />
               <Route path="search/:query/" element={<Search />} />
               <Route path="profile/:id" element={<Profile />}/>
+              <Route path="meta/professional" element={<Meta />}/>
+              <Route path="meta/public" element={<Meta />}/>
               <Route path="teambuilder" element={<TeamBuilder />}/>
-
 
               <Route
                 path="/"

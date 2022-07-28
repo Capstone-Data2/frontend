@@ -121,7 +121,7 @@ export default function Header() {
           </HeadButton>
           <HeadButton
             onClick={() => {
-              navigate("/meta");
+              navigate("/meta/professional");
             }}
           >
             Meta
