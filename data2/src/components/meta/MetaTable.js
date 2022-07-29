@@ -82,6 +82,7 @@ function MetaTableHead({ order, orderBy, onRequestSort, headCells }) {
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
                         <TableSortLabel
+                            id={headCell.id}
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={createSortHandler(headCell.id)}
@@ -154,13 +155,13 @@ function HeroCell({ row, images, width }) {
             <Box sx={{ display: "flex" }}>
                 <Box sx={{ minWidth: 50, maxWidth: 50, marginRight: 2, display: "flex", alignItems: "center" }}>
                     <img
-                        src={LoadHeroIcons(row.hero.toString().split(","), images)}
+                        src={LoadHeroIcons(row.hero_id.toString().split(","), images)}
                         alt=""
                         style={{ borderRadius: 2, width: 50, borderRight: "solid" }}
                     />
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "column", backgroundCol: "red", height: "100%", width: width, lineHeight: 1.2 }}>
-                    <Typography variant="caption" sx={{ overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: "nowrap", color: theme.palette.secondary.light, fontWeight: 500, fontSize: 14 }}>{heroes_json[row.hero].localized_name}</Typography>
+                    <Typography id="hero-name" variant="caption" sx={{ overflow: "hidden", textOverflow: 'ellipsis', whiteSpace: "nowrap", color: theme.palette.secondary.light, fontWeight: 500, fontSize: 14 }}>{heroes_json[row.hero_id].localized_name}</Typography>
                 </Box>
             </Box>
         </StyledTableCell>
@@ -173,14 +174,14 @@ function getPercent(value, total) {
 }
 
 function createData(selected_hero, total_matches, type, total_immda, total_legarch, total_crugh) {
-    var hero = selected_hero.hero_id
+    var hero_id = selected_hero.hero_id
     if (type === "professional") {
         var propb = getPercent((selected_hero.pro_pick + selected_hero.pro_ban), total_matches)
         var prop = getPercent(selected_hero.pro_pick, total_matches)
         var prob = getPercent(selected_hero.pro_ban, total_matches)
         var prow = getPercent(selected_hero.pro_win, selected_hero.pro_pick)
         return {
-            hero,
+            hero_id,
             propb,
             prop,
             prob,
@@ -198,7 +199,7 @@ function createData(selected_hero, total_matches, type, total_immda, total_legar
         var crughp = getPercent(matches.pick.crugh, total_crugh)
         var crughw = getPercent(matches.win.crugh, matches.pick.crugh)
         return {
-            hero,
+            hero_id,
             overallp,
             overallw,
             immdap,
@@ -281,7 +282,7 @@ function stableSort(array, comparator) {
 
 const pro_headers = [
     {
-        id: 'hero',
+        id: 'hero_id',
         numeric: false,
         pad: true,
         label: 'HERO',

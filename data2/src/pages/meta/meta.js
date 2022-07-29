@@ -49,6 +49,7 @@ export default function Meta() {
             }}
           >
             <MatchButton
+              id = {"professional"}
               type={page === "professional" ? "main" : "secondary"}
               click={() => {
                 navigate("/meta/professional");
@@ -56,6 +57,7 @@ export default function Meta() {
               text="Professional"
             />
             <MatchButton
+              id = {"public"}
               type={page === "public" ? "main" : "secondary"}
               click={() => {
                 navigate("/meta/public");
