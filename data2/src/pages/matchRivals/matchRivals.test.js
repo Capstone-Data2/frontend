@@ -10,6 +10,7 @@ expect.extend({ toMatchImageSnapshot });
 describe('matchPerformance.js', () => {
     beforeEach(async () => {
         await page.goto("http://localhost:3000/matches/6674090917/rivals");
+        await page.setViewport({width: 1200, height: 800})
     });
 
     it('should display correct default page', async () => {
