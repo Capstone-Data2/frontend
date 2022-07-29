@@ -9,17 +9,17 @@ describe('matchesList.js', () => {
     });
 
     it('should get to public matches', async () => { 
-        await page.waitForSelector('#root > div > div > main > div > div.MuiBox-root.css-2bm4dc > button.MuiButton-root.MuiButton-main.MuiButton-mainMain.MuiButton-sizeMedium.MuiButton-mainSizeMedium.MuiButtonBase-root.css-1svd5gi-MuiButtonBase-root-MuiButton-root')
-        await expect(page).toClick('button', { text: 'Public Matches' }, { timeout: 6000 })
+        await page.waitForSelector('#public')
+        await expect(page).toClick('#public', { timeout: 6000 })
         expect(page.url()).toMatch(`${globals.ip}/matches/public`);
     });
 
     it('should get to professional matches', async () => {
         jest.setTimeout(6000)
-        await page.waitForSelector('#root > div > div > main > div > div.MuiBox-root.css-2bm4dc > button.MuiButton-root.MuiButton-main.MuiButton-mainMain.MuiButton-sizeMedium.MuiButton-mainSizeMedium.MuiButtonBase-root.css-1svd5gi-MuiButtonBase-root-MuiButton-root')
-        await expect(page).toClick('button', { text: 'Public Matches' }, { timeout: 12000 })
-        await page.waitForSelector('#root > div > div > main > div > div.MuiBox-root.css-2bm4dc > button.MuiButton-root.MuiButton-main.MuiButton-mainSecondary.MuiButton-sizeMedium.MuiButton-mainSizeMedium.MuiButtonBase-root.css-1y1b1k5-MuiButtonBase-root-MuiButton-root')
-        await expect(page).toClick('button', { text: 'Professional' }, { timeout: 12000 })
+        await page.waitForSelector('#public')
+        await expect(page).toClick('#public', { timeout: 12000 })
+        await page.waitForSelector('#professional')
+        await expect(page).toClick('#professional', { timeout: 12000 })
         expect(page.url()).toMatch(`${globals.ip}/matches/professional`);
     });
 

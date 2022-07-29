@@ -57,6 +57,7 @@ export default function MatchesList() {
             }}
           >
             <MatchButton
+              id={"professional"}
               type={page === "professional" ? "main" : "secondary"}
               click={() => {
                 navigate("/matches/professional");
@@ -64,6 +65,7 @@ export default function MatchesList() {
               text="Professional"
             />
             <MatchButton
+              id={"public"}
               type={page === "public" ? "main" : "secondary"}
               click={() => {
                 navigate("/matches/public");

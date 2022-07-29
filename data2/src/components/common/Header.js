@@ -96,7 +96,7 @@ export default function Header() {
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar id="navbar" position="static">
         <Bar>
           <TitleButton
             noWrap
@@ -112,21 +112,21 @@ export default function Header() {
           >
             Data 2
           </TitleButton>
-          <HeadButton
+          <HeadButton id = "matches"
             onClick={() => {
-              navigate("/matches");
+              navigate("/matches/professional");
             }}
           >
             Matches
           </HeadButton>
-          <HeadButton
+          <HeadButton id = "meta"
             onClick={() => {
               navigate("/meta/professional");
             }}
           >
             Meta
           </HeadButton>
-          <HeadButton
+          <HeadButton id = "teambuilder"
             onClick={() => {
               navigate("/teambuilder");
             }}
