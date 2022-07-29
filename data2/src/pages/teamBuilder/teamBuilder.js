@@ -96,6 +96,7 @@ export default function TeamBuilder() {
         for (const key in heroes_json) {
             response.push(
                 <img
+                    id={"hero-image-"+String(heroes_json[key].id)}
                     key = {count}
                     src={LoadHeroIcons([String(heroes_json[key].id)], images)}
                     style={{ borderRadius: 2, width: 50, borderRight: "solid", borderColor: 'black', marginTop: 8, marginLeft: 8, marginRight: 8 }}
@@ -122,8 +123,8 @@ export default function TeamBuilder() {
                         {heroes_json[String(heroclicked)].localized_name}
                     </DialogTitle>
                     <DialogActions>
-                        <Button onClick={() => clickTeam(heroclicked, true)}>Radiant</Button>
-                        <Button onClick={() => clickTeam(heroclicked, false)}>Dire</Button>
+                        <Button id='radiant-button-popup' onClick={() => clickTeam(heroclicked, true)}>Radiant</Button>
+                        <Button id='dire-button-popup' onClick={() => clickTeam(heroclicked, false)}>Dire</Button>
                     </DialogActions>
                 </Dialog>
             )
@@ -147,9 +148,9 @@ export default function TeamBuilder() {
         if (heroes !== '') {
             (heroes.split(',')).forEach((hero, i) => {
                 res.push(
-                    <Box key ={i}>
+                    <Box  key={i}>
                         <img
-                            
+                            id ={'hero_selection_'+i}
                             src={LoadHeroIcons([String(hero)], images)}
                             style={{ borderRadius: 2, width: 50, borderRight: "solid", borderColor: 'black', marginTop: 8, marginLeft: 8, marginRight: 8 }}
                             alt="Hero"
@@ -236,7 +237,7 @@ export default function TeamBuilder() {
                     display: "flex",
                     justifyContent: 'center',
                 }}>
-                    <Box sx={{
+                    <Box id= 'radiant-stats' sx={{
                         width: 220,
                         height: 300,
                         backgroundColor: '',
@@ -252,7 +253,7 @@ export default function TeamBuilder() {
                         marginTop: 20,
                     }}>
                         <Typography>Radiant</Typography>
-                        <Box sx={{
+                        <Box id='radiant-heroes' sx={{
                             width: 500,
                             height: 50,
                             marginRight: 5,
@@ -273,7 +274,7 @@ export default function TeamBuilder() {
                     }}>
 
                         <Typography>Dire</Typography>
-                        <Box sx={{
+                        <Box id='dire-heroes' sx={{
                             width: 500,
                             height: 50,
 
@@ -288,7 +289,7 @@ export default function TeamBuilder() {
                         </Box>
                     </Box>
 
-                    <Box sx={{
+                    <Box id='dire-stats' sx={{
                         width: 220,
                         height: 300,
                         backgroundColor: '',
@@ -307,7 +308,7 @@ export default function TeamBuilder() {
                 }}>
 
 
-                    <Box
+                    <Box id='all-hero-images'
                         sx={{
                             width: '75%',
                             backgroundColor: '',
